@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+
+<div class="row">
+
+    <div class="col-sm-6 col-sm-offset-3">
+
+<h1>Search Posts</h1>
+<form method="GET" action="" class="row">
+  <div class="col-sm-6">
+  <div class="input-group">
+  <input class="form-control" type="text" name="q" placeholder="Search Posts" value='{{ request.GET.q }}'/>
+  <span class="input-group-btn">
+  <input class="btn btn-default" type="submit" value="Search" />
+</span>
+</div>
+</div>
+{% if user.is_superuser %}<a class="btn btn-success" href="{% url 'posts:create' %}">make new post</a>{% endif %}
+</form>
+
+
+    {% for object in object_list %}
+	
+
+
+    <div class="thumbnail">
+    	{% if object.image %}
+      <img src="{{ object.image.url }}" class="img-responsive" />
+      {% endif %}
+      <div class="caption post-detail-item">
+        <h3><a href="{{ object.get_absolute_url }}">{{ object.title }}</a> <small>{{ object.timestamp | timesince }} ago</small></h3>
+        <p>{{ object.user.get_full_name }}</p>
+        {{ object.get_markdown }}
+        <p><a href="{{ object.get_absolute_url }}" class="btn btn-primary" role="button">View</a></p>
+      </div>
+    </div>
+
+
+
+
+{% endfor %}
+
+
+
+  </div>
+
+
+</div>
+
+<div style="text-align:center;" class="container">
+
+<div class="pagination">
+    <span class="step-links">
+        {% if object_list.has_previous %}
+            <a href="?page={{ object_list.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}.
+        </span>
+
+        {% if object_list.has_next %}
+            <a href="?page={{ object_list.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+
+</div>
+
+{% endblock %}

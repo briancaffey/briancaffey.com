@@ -1,0 +1,133 @@
+{% load staticfiles %}
+
+<html> 
+<head>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+
+
+
+<title>{% block head %}Brian's Blog{% endblock %}</title>
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
+
+{% block head_extra %}{% endblock %}
+</head>
+<body>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=1386104138094549";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+{% include 'nav.html' %}
+
+
+
+	<div class="container">
+
+{% include 'messages.html' %}
+
+		{% block content %}
+
+
+		
+
+
+
+
+		{% endblock content %}
+	</div>
+
+
+<script
+  src="http://code.jquery.com/jquery-1.12.4.min.js"
+  integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+  crossorigin="anonymous"></script>
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.min.js"></script>
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+	$(".content-markdown").each(function(){
+			var content = $(this).text()
+			console.log(content)
+			var markedContent = marked(content)
+			console.log(markedContent)
+			$(this).html(markedContent)
+		});
+	$(".post-detail-item img").each(function(){
+			$(this).addClass("img-responsive");
+	});
+
+	//content
+
+
+	//title
+
+	var contentInput = $("#id_content");
+
+
+
+	function setContent(value){
+		var markedContent = marked(value)
+		$("#preview-content").html(markedContent)
+		$("#preview-content img").each(function(){
+			$(this).addClass("img-responsive")
+		})
+	}
+	setContent(contentInput.val())
+
+	contentInput.keyup(function(){
+		var newContent = $(this).val()
+		setContent(newContent)
+	})
+
+
+	var titleInput = $("#id_title");
+
+
+
+	function setTitle(value) {
+		$("#preview-title").text(value)
+	}
+
+	setTitle(titleInput.val())
+
+	titleInput.keyup(function(){
+		var newContent = $(this).val()
+		setTitle(newContent)
+	})
+
+
+	$(".comment-reply-btn").click(function(event){
+		event.preventDefault();
+		$(this).parent().next().next(".comment-reply").fadeToggle();
+	})
+
+
+
+})
+
+</script>
+
+	
+</body>
+</html>
+
+
+
+
+

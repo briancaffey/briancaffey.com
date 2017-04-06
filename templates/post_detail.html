@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load urlify %}
+
+{% block head %}{{ instance.title }} | {{ block.super }}{% endblock %}
+
+{% block content %}
+
+
+
+<div class="col-sm-6 col-sm-offset-3">
+	<p><a class="btn btn-default" href="{% url 'posts:list'%}">back to posts</a></p>
+	<hr>
+	{% if instance.image %}
+	<img src="{{ instance.image.url }}" class="img-responsive" />
+	{% endif %}
+		<h1>{{ instance.title }} </h1>
+		{% if instance.draft %}<span style="color:red;">DRAFT</span>{% endif %}
+		<p>by {{ instance.user.get_full_name }} <small>on {{ instance.publish }}</small></p>
+		<div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+		<div class="post-detail-item">{{ instance.get_markdown }}</div>	
+		<a class="btn btn-primary" href="{% url 'posts:update' slug=instance.slug %}">Update</a>
+
+
+		<hr>
+
+		<a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">Share on Facebook</a>
+
+		<a href="https://twitter.com/home?status={{ instance.title | truncatechars:30 | urlify }}%20{{ request.build_absolute_uri }}">Share on Twitter</a>
+
+
+		<a href='https://plus.google.com/share?url={{ request.build_absolute_uri }}'>Share on Google+</a>
+
+
+		<a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ instance.title | urlify }}&summary={{ instance.content | truncatechars:50 | urlify }}&source={{ request.build_absolute_uri }}">
+		Share on Linkedin</a>
+
+
+		<a href='http://www.reddit.com/submit?url={{ request.build_absolute_uri }}&title={{ instance.title | urlify }}'>Share on Reddit</a>
+
+		<hr>
+		<div>
+			<p class="lead">Comments</p>
+			<form method="POST" action=".">{% csrf_token %}
+				{{ comment_form | crispy }}
+				<input type="submit" value="comment" class="btn btn-default"></input>
+			</form>
+			{% for comment in comments %}
+			{% if comment.is_parent %}
+				<blockquote>
+	  			<p>{{ comment.content }}</p>
+				<small>via {{ comment.user }} | {{ comment.timestamp | timesince }} ago | <a class="comment-reply-btn" href="#">Reply</a></small>
+				{% for reply in comment.children %}
+					<blockquote>
+					<p>{{ reply.content }}</p>
+					<small>via {{ reply.user }} | {{ reply.timestamp | timesince }} ago</small>
+						{% for reply2 in reply.children %}
+						<blockquote>
+							<p>{{ reply2.content }}</p>
+							<small>via {{ reply2.user }} | {{ reply2.timestamp | timesince }} ago</small>
+						</blockquote>
+						{% endfor %}
+							<form method="POST" action=".">{% csrf_token %}
+							{{ comment_form | crispy }}
+							<input type="hidden" name="parent_id" value="{{ reply.id }}">
+							<input type="submit" value="reply" class="btn btn-default"></input>	
+							</form>
+					</blockquote>
+				{% endfor %}
+				
+
+				<hr>
+				<div class='comment-reply'>
+				<form method="POST" action=".">{% csrf_token %}
+
+				{{ comment_form | crispy }}
+				<input type="hidden" name="parent_id" value="{{ comment.id }}">
+				<input type="submit" value="reply" class="btn btn-default"></input>	
+				</form>
+				</div>
+				</blockquote>
+
+			<hr>
+
+			{% endif %}
+
+			{% endfor %}
+			
+
+		</div>
+
+
+		<!-- <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div> -->
+
+
+<div>
+{% endblock content %}
