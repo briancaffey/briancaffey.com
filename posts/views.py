@@ -10,6 +10,7 @@ from django.shortcuts import render
 from comments.models import Comment
 from comments.forms import CommentForm
 from django.contrib.contenttypes.models import ContentType
+from django.utils.text import slugify
 
 
 from .forms import PostForm
@@ -83,6 +84,7 @@ def posts_update(request, slug=None):
 	form = PostForm(request.POST or None, request.FILES or None, instance=instance)
 	if form.is_valid(): 
 		instance.user = request.user
+		instance.slug = slugify(instance.title)
 		instance = form.save(commit=False)
 
 		instance.save()
@@ -104,9 +106,6 @@ def posts_search(request):
 
 	query = request.GET.get('q')
 
-
-
-
 	today = timezone.now().date()
 
 	# queryset_list = Post.objects.active()
@@ -126,8 +125,8 @@ def posts_search(request):
 			).distinct()
 
 
-	else: 
-		queryset_list = Post.objects.none()
+	# else: 
+	# 	queryset_list = Post.objects.none()
 
 
 	paginator = Paginator(queryset_list, 5) # Show 25 contacts per page

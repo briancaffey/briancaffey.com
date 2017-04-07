@@ -15,7 +15,7 @@ urlpatterns = [
     url(r'^$', posts_list, name='list'),
     url(r'^(?P<slug>.+)/edit/$', posts_update, name='update'),
     url(r'^(?P<slug>.+)/delete/$', post_delete),
-    url(r'^detail/(?P<slug>.+)/$', posts_detail, name='detail'),
+    url(r'^(?P<slug>.+)/$', posts_detail, name='detail'),
     url(r'^search/$', posts_search, name="search"),
 
 ]

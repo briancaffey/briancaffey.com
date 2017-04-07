@@ -29,13 +29,14 @@
 
     <div class="thumbnail">
     	{% if object.image %}
-      <img src="{{ object.image.url }}" class="img-responsive" />
+      <a href="{{ object.get_absolute_url }}"><img src="{{ object.image.url }}" class="img-responsive" /></a>
       {% endif %}
       <div class="caption post-detail-item">
         <h3><a href="{{ object.get_absolute_url }}">{{ object.title }}</a> <small>{{ object.timestamp | timesince }} ago</small></h3>
         <p>{{ object.user.get_full_name }}</p>
         {{ object.get_markdown }}
         <p><a href="{{ object.get_absolute_url }}" class="btn btn-primary" role="button">View</a> {{ object.comments.count }} comments</p>
+        {% if user.is_superuser %}<p><a class="btn btn-warning" href="{% url 'posts:update' slug=object.slug %}">Update</a></p>{% endif %}
       </div>
     </div>
 

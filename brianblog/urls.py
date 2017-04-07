@@ -21,8 +21,9 @@ from posts import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^posts/', include('posts.urls', namespace="posts")),
+    url(r'^blog/', include('posts.urls', namespace="posts")),
     url(r'^', include('home.urls', namespace="home" )),
+    url(r'^projects/', include('projects.urls', namespace='projects')),
 ]
 
 if settings.DEBUG:
