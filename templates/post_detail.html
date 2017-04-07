@@ -40,7 +40,7 @@
 
 		<hr>
 		<div>
-			<p class="lead">Comments</p>
+			<p class="lead">{{ comments.all.count }} Comments</p>
 			<form method="POST" action=".">{% csrf_token %}
 				{{ comment_form | crispy }}
 				<input type="submit" value="comment" class="btn btn-default"></input>
@@ -49,35 +49,36 @@
 			{% if comment.is_parent %}
 				<blockquote>
 	  			<p>{{ comment.content }}</p>
-				<small>via {{ comment.user }} | {{ comment.timestamp | timesince }} ago | <a class="comment-reply-btn" href="#">Reply</a></small>
-				{% for reply in comment.children %}
-					<blockquote>
-					<p>{{ reply.content }}</p>
-					<small>via {{ reply.user }} | {{ reply.timestamp | timesince }} ago</small>
-						{% for reply2 in reply.children %}
-						<blockquote>
-							<p>{{ reply2.content }}</p>
-							<small>via {{ reply2.user }} | {{ reply2.timestamp | timesince }} ago</small>
-						</blockquote>
-						{% endfor %}
-							<form method="POST" action=".">{% csrf_token %}
-							{{ comment_form | crispy }}
-							<input type="hidden" name="parent_id" value="{{ reply.id }}">
-							<input type="submit" value="reply" class="btn btn-default"></input>	
-							</form>
-					</blockquote>
-				{% endfor %}
-				
+				<small>via {{ comment.user }} | {{ comment.timestamp | timesince }} ago | <a class="comment-reply-btn" href="#">Reply</a> | <a href="{% url 'comments:thread' pk=comment.id %}">Thread</a></small>
 
-				<hr>
+				<br />
 				<div class='comment-reply'>
 				<form method="POST" action=".">{% csrf_token %}
 
 				{{ comment_form | crispy }}
-				<input type="hidden" name="parent_id" value="{{ comment.id }}">
+				<input type="hidden" name="parent_id" value="{{ comment.id }}"></input>
 				<input type="submit" value="reply" class="btn btn-default"></input>	
 				</form>
 				</div>
+
+
+				{% for reply in comment.children %}
+
+				<blockquote>
+
+				
+
+
+					<p>{{ reply.content }}</p>
+					<small>via {{ reply.user }} | {{ reply.timestamp | timesince }} ago</small>
+
+				</blockquote>
+					
+				{% endfor %}
+				
+
+
+
 				</blockquote>
 
 			
@@ -93,5 +94,5 @@
 		<!-- <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div> -->
 
 
-<div>
+</div>
 {% endblock content %}

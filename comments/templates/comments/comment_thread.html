@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load urlify %}
+
+{% block head %}{{ instance.title }} | {{ block.super }}{% endblock %}
+
+{% block content %}
+
+
+
+<h2>A comment on <a href="{% url 'posts:detail' slug=comment.content_object.slug %}">{{ comment.content_object.title }}</a></h2>
+
+<div class="">  <!-- col-sm-6 col-sm-offset-3 -->
+
+
+			{% if comment.is_parent %}
+
+	  			<h4>{{ comment.content }}</h4>
+				<small>via {{ comment.user }} | {{ comment.timestamp | timesince }} ago</small>
+
+				<br />
+
+
+				{% for reply in comment.children %}
+
+				<blockquote>
+
+				
+
+
+					<p>{{ reply.content }}</p>
+					<small>via {{ reply.user }} | {{ reply.timestamp | timesince }} ago</small>
+
+				</blockquote>
+					
+				{% endfor %}
+				
+
+			
+
+			{% endif %}
+
+
+
+<!-- 		<a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">Share on Facebook</a>
+
+		<a href="https://twitter.com/home?status={{ instance.title | truncatechars:30 | urlify }}%20{{ request.build_absolute_uri }}">Share on Twitter</a>
+
+
+		<a href='https://plus.google.com/share?url={{ request.build_absolute_uri }}'>Share on Google+</a>
+
+
+		<a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ instance.title | urlify }}&summary={{ instance.content | truncatechars:50 | urlify }}&source={{ request.build_absolute_uri }}">
+		Share on Linkedin</a>
+
+
+		<a href='http://www.reddit.com/submit?url={{ request.build_absolute_uri }}&title={{ instance.title | urlify }}'>Share on Reddit</a>
+ -->
+		
+
+
+		<!-- <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div> -->
+
+
+</div>
+{% endblock content %}
