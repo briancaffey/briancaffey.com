@@ -19,6 +19,14 @@
 				<small>via {{ comment.user }} | {{ comment.timestamp | timesince }} ago</small>
 
 				<br />
+				
+				<form method="POST" action=".">{% csrf_token %}
+
+				{{ form | crispy }}
+				<input type="hidden" name="parent_id" value="{{ comment.id }}"></input>
+				<input type="submit" value="reply" class="btn btn-default"></input>	
+				</form>
+
 
 
 				{% for reply in comment.children %}

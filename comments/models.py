@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
@@ -32,6 +33,11 @@ class Comment(models.Model):
 
 	def children(self):
 		return Comment.objects.filter(parent=self)
+
+
+	def get_absolute_url(self):
+		return reverse('comments:thread', kwargs={'pk':self.id})
+
 
 	@property
 	def is_parent(self):

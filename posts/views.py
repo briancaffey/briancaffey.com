@@ -13,7 +13,10 @@ from django.contrib.contenttypes.models import ContentType
 from django.utils.text import slugify
 
 
+
 from .forms import PostForm
+
+
 
 def posts_create(request):
 	if not request.user.is_staff or not request.user.is_superuser:
@@ -157,6 +160,9 @@ def posts_detail(request, slug):
 		if not request.user.is_staff or not request.user.is_superuser:
 			raise Http404
 	share_string = quote_plus(instance.content)
+
+
+
 	initial_data = {
 		'content_type':instance.get_content_type, 
 		'object_id':instance.id

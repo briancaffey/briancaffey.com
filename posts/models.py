@@ -10,6 +10,7 @@ from comments.models import Comment
 from django.contrib.contenttypes.models import ContentType
 # Create your models here.
 
+from .utils import get_read_time
 
 class PostManager(models.Manager):
 
@@ -34,6 +35,7 @@ class Post(models.Model):
 	content = models.TextField()
 	draft = models.BooleanField(default=False)
 	publish = models.DateField(auto_now=False, auto_now_add=False)
+	read_time = models.TimeField(null=True, blank=True)
 	updated = models.DateTimeField(auto_now=True, auto_now_add=False)
 	timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
 
@@ -81,5 +83,9 @@ def pre_save_post_receiver(sender, instance, *args, **kwargs):
 	if not instance.slug:
 		instance.slug = create_slug(instance)
 
+	if instance.content:
+		html_sring = instance.get_markdown()
+		read_time = get_read_time(html_sring)
+		instance.read_time = read_time
 
 pre_save.connect(pre_save_post_receiver, sender=Post) 

@@ -15,6 +15,7 @@
 	<img src="{{ instance.image.url }}" class="img-responsive" />
 	{% endif %}
 		<h1>{{ instance.title }} </h1>
+		<small>Read time: {{ instance.read_time | time:"i" }} minutes</small><br />
 		{% if instance.draft %}<span style="color:red;">DRAFT</span>{% endif %}
 		<p>by {{ instance.user.get_full_name }} <small>on {{ instance.publish }}</small></p>
 		<div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
@@ -49,7 +50,7 @@
 			{% if comment.is_parent %}
 				<blockquote>
 	  			<p>{{ comment.content }}</p>
-				<small>via {{ comment.user }} | {{ comment.timestamp | timesince }} ago | <a class="comment-reply-btn" href="#">Reply</a> | <a href="{% url 'comments:thread' pk=comment.id %}">Thread</a></small>
+				<small>via {{ comment.user }} | {{ comment.timestamp | timesince }} ago | <a class="comment-reply-btn" href="#">Reply</a> | <a href="{% url 'comments:thread' pk=comment.id %}">Thread</a> | {% if user == comment.user %}<a href="{% url 'comments:delete' pk=comment.id %}">Delete</a>{% endif %}</small>
 
 				<br />
 				<div class='comment-reply'>
@@ -70,7 +71,7 @@
 
 
 					<p>{{ reply.content }}</p>
-					<small>via {{ reply.user }} | {{ reply.timestamp | timesince }} ago</small>
+					<small>via {{ reply.user }} | {{ reply.timestamp | timesince }} ago | {% if user == comment.user %}<a href="{% url 'comments:delete' pk=reply.id %}">Delete</a>{% endif %}</small>
 
 				</blockquote>
 					
