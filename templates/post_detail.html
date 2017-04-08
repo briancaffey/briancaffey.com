@@ -70,8 +70,8 @@
 				
 
 
-					<p>{{ reply.content }}</p>
-					<small>via {{ reply.user }} | {{ reply.timestamp | timesince }} ago | {% if user == comment.user %}<a href="{% url 'comments:delete' pk=reply.id %}">Delete</a>{% endif %}</small>
+					<p>{{ reply.content | safe }}</p>
+					<small>via {{ reply.user }} | {{ reply.timestamp | timesince }} ago | {% if user == reply.user %}<a href="{% url 'comments:delete' pk=reply.id %}">Delete</a>{% endif %}</small>
 
 				</blockquote>
 					
