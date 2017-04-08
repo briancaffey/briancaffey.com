@@ -18,11 +18,11 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
-            <li><a>Welcome, {{ user.first_name }}</a></li>
-            <li><a href="">Logout</a></li>
+            <li><a>Welcome, {{ user.username }}</a></li>
+            <li><a href="{% url 'accounts:logout' %}">Logout</a></li>
             {% else %}
-            <li><a href="#">Register</a></li>
-            <li><a href="#">Login</a></li>
+            <li><a href="{% url 'accounts:register' %}">Register</a></li>
+            <li><a href="{% url 'accounts:login' %}">Login</a></li>
             {% endif %}
           </ul>
         </div><!--/.nav-collapse -->
