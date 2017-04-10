@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="col-md-8">
+<h2>My Reading List</h2>
+<p>Here is a list of things that I've been reading recently. If you have some good suggestions, send it my way through the form below. Thanks.</p>
+
+
+
+
+
+<h3>{{ item.name }}</h3>
+
+<p>{{ item.description }}</p>
+<p><a href="{{ item.link }}">{{ item.link }}</a></p>
+
+
+
+</div>
+
+<div class="col-md-8 col-md-offset-2">
+  <h2>Confirm delete</h2>
+  <form method="POST" action=".">
+    {% csrf_token %}
+    {{ form | crispy }}
+  <input class="btn btn-success" type="submit" value="Delete">
+  <a class="btn btn-danger" href="{% 'reading-list:list' %}">Cancel</a>
+</form>
+
+{% endblock %}

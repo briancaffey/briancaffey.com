@@ -3,6 +3,7 @@ from .models import ReadingMaterial
 from .forms import ReadingMaterialForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 
@@ -13,7 +14,9 @@ def reading_list(request):
 
     if form.is_valid():
         if request.user.is_authenticated():
-            form.save()
+            instance = form.save(commit=False)
+            instance.user = request.user
+            instance.save()
             return redirect('reading-list:list')
 
         else:
@@ -26,3 +29,14 @@ def reading_list(request):
     }
 
     return render(request, 'readinglist/reading_list.html', context)
+
+def delete_reading(request):
+
+    obj = get_object_or_404
+
+    context = {
+        "item":obj,
+        "reading_list":rea
+    }
+
+    return render(request, 'readinglist/confirm_delete.html', context)
