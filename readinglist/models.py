@@ -14,6 +14,7 @@ class ReadingMaterial(models.Model):
     link = models.URLField(max_length=400, unique=True)
     tags = models.CharField(max_length=100)
 
+
     def __str__(self):
         return str(self.name)
 

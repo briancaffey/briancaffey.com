@@ -11,7 +11,7 @@ from tags.models import Tag
 def reading_list(request):
 
     tags = Tag.objects.all()
-    tags = list(set([tag.tag for tag in tags]))
+    #tags = list(set([tag.tag for tag in tags]))
     form = ReadingMaterialForm(request.POST or None)
     reading_list = ReadingMaterial.objects.all()
 
@@ -35,13 +35,22 @@ def reading_list(request):
 
     return render(request, 'readinglist/reading_list.html', context)
 
-def delete_reading(request):
+def delete_reading(request, slug):
 
-    obj = get_object_or_404
+    obj = get_object_or_404(ReadingMaterial, slug=slug)
+
+    if request.method == "POST":
+        obj.delete()
+        return redirect('reading-list:list')
 
     context = {
         "item":obj,
-        "reading_list":rea
     }
 
+
     return render(request, 'readinglist/confirm_delete.html', context)
+
+def tag_view(request, id):
+    tag = get_object_or_404(Tag, id=id)
+    context = { "tag":tag }
+    return render(request, 'readinglist/tag_view.html', context)

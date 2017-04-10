@@ -23,6 +23,7 @@ from posts import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^blog/', include('posts.urls', namespace="posts")),
+    url(r'^api/blog/', include('posts.api.urls', namespace="posts")),
     url(r'^', include('home.urls', namespace="home" )),
     url(r'^projects/', include('projects.urls', namespace='projects')),
     url(r'^comments/', include('comments.urls', namespace='comments')),

@@ -28,12 +28,16 @@
 </div>
 
 <div class="col-md-4">
-  <h2>Suggest reading</h2>
+  <h2>Suggest things for me to read</h2>
+  {% if user.is_authenticated %}
   <form method="POST" action=".">
     {% csrf_token %}
     {{ form | crispy }}
   <input class="btn btn-success" type="submit" value="Suggest">
 </form>
+{% else %}
+<p>Please <a href="{% url 'accounts:login' %}">login</a> or <a href="{% url 'accounts:register' %}">register</a> to add items to my reading list. Thanks.</p>
+{% endif %}
 <hr>
 <h2>Tags</h2>
 {% for tag in tags %}
