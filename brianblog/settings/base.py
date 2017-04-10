@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'comments',
     'home',
     'projects',
-    'accounts', 
+    'accounts',
+    'readinglist',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
@@ -136,7 +137,7 @@ MEDIA_URL = '/media/'
 
 STATICFILES_DIRS = [
 
-    os.path.join(BASE_DIR, "static"), 
+    os.path.join(BASE_DIR, "static"),
 
 ]
 
@@ -156,3 +157,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, "live-static", "static-root")
 MEDIA_URL = "/media/"
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "live-static", "media-root")
+
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_PASSWORD = 'saintmary'
+EMAIL_HOST_USER = 'briancaffey2010@gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

@@ -2,7 +2,7 @@ from .base import *
 
 from .production import *
 
-try: 
+try:
 	from .local import *
 except:
 	pass
