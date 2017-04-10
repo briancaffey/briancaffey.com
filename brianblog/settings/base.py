@@ -143,7 +143,7 @@ STATICFILES_DIRS = [
 # STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn")
 # MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "media_cdn")
 
-
+LOGIN_URL = '/accounts/login/'
 
 STATIC_URL = '/static/'
 

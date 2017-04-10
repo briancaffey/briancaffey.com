@@ -17,7 +17,7 @@
 </span>
 </div>
 </div>
-{% if user.is_superuser %}<a class="btn btn-success" href="{% url 'posts:create' %}">make new post</a>{% endif %}
+{% if user.is_authenticated %}<a class="btn btn-success" href="{% url 'posts:create' %}">make new post</a>{% endif %}
 </form>
 
 
@@ -35,8 +35,8 @@
         <h3><a href="{{ object.get_absolute_url }}">{{ object.title }}</a> <small>{{ object.timestamp | timesince }} ago</small></h3>
         <p>{{ object.user.get_full_name }}</p>
         {{ object.get_markdown }}
-        <p><a href="{{ object.get_absolute_url }}" class="btn btn-primary" role="button">View</a> {{ object.comments.count }} comments</p>
-        {% if user.is_superuser %}<p><a class="btn btn-warning" href="{% url 'posts:update' slug=object.slug %}">Update</a></p>{% endif %}
+        <p><a href="{{ object.get_absolute_url }}" class="btn btn-primary" role="button">View</a> {% if request.user == object.user %}<a class="btn btn-warning" href="{% url 'posts:update' slug=object.slug %}">Update</a> {% endif %} {{ object.comments.count }} comments
+        
       </div>
     </div>
 

@@ -21,7 +21,7 @@ def upload_location(instance, filename):
 	return "%s/%s" %(instance.id, filename)
 
 class Post(models.Model):
-	user = models.ForeignKey(settings.AUTH_USER_MODEL, default=1)
+	user = models.ForeignKey(settings.AUTH_USER_MODEL)
 	title = models.CharField(max_length=100)
 	slug = models.SlugField(unique=True)
 	height_field = models.IntegerField(default=0)

@@ -14,7 +14,7 @@
 		<form method="POST" action=".">
 		{% csrf_token %}
 		{{ form | crispy }}
-		<input class="btn btn-success" type="submit" value="Login" />
+		<input class="btn btn-success" type="submit" value="Login" />   or <a href="{% url 'accounts:register' %}">create an account</a>
 
 		</form>
 

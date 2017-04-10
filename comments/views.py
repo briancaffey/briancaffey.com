@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 from .models import Comment
 from .forms import CommentForm
 from django.contrib.contenttypes.models import ContentType
@@ -7,18 +8,20 @@ from django.contrib import messages
 
 # Create your views here.
 
+
+@login_required
 def comment_delete(request, pk):
 	obj = get_object_or_404(Comment, pk=pk)
 	if request.method == "POST":
 		if request.user == obj.user:
 			parent_object_url = obj.content_object.get_absolute_url()
 			obj.delete()
-			messages.success(request, "Comment delete")
+			messages.success(request, "Your comment was deleted.")
 			return HttpResponseRedirect(parent_object_url)
 		else:
 			parent_object_url = obj.content_object.get_absolute_url()
 			messages.success(request, "You don't have permission to delete this comment.")
-			return HttpResponseRedirect(parent_object_url)		
+			return HttpResponseRedirect(parent_object_url)
 			
 	context = {
 		'object':obj, 

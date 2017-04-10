@@ -15,19 +15,21 @@ from .forms import UserLoginForm, UserRegistrationForm
 
 # Create your views here.
 def login_view(request):
-	form = UserLoginForm(request.POST or None)
-	print('hmm')
-	print(form.errors)
 
-	print(request.user.is_authenticated())
+	next = request.GET.get('next')
+	form = UserLoginForm(request.POST or None)
+	print(request.GET)
+	print(next)
 	if form.is_valid():
-		print("text")
 		username = form.cleaned_data.get('username')
 		password = form.cleaned_data.get('password')
 		user = authenticate(username=username, password=password)
 		login(request, user)
-		print(request.user.is_authenticated())
 		messages.success(request, 'Welcome back, ' + str(request.user) + '!')
+		print(next)
+		if next:
+			print(next)
+			return redirect(next)
 		return redirect('posts:list')
 
 	return render(request, 'accounts/form.html', {'form':form})
@@ -53,4 +55,5 @@ def register_view(request):
 
 def logout_view(request):
 	logout(request)
-	return render(request, 'accounts/logout_success.html', {})
+	messages.success(request, "You have successfully logged out.")
+	return render(request, 'home/home.html', {})
