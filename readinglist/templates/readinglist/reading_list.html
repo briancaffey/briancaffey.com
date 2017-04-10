@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="col-md-8">
+<h2>My Reading List</h2>
+<p>Here is a list of things that I've been reading recently. If you have some good suggestions, send it my way through the form below. Thanks.</p>
+
+
+{% for item in reading_list %}
+
+
+<h3>{{ item.name }}</h3>
+
+<p>{{ item.description }}</p>
+<p><a href="{{ item.link }}">{{ item.link }}</a></p>
+
+
+{% endfor %}
+</div>
+
+<div class="col-md-4">
+  <h2>Suggest reading</h2>
+  <form method="POST" action=".">
+    {% csrf_token %}
+    {{ form | crispy }}
+  <input class="btn btn-success" type="submit" value="Suggest">
+</form>
+<hr>
+<h2>Tags</h2>
+<a href="#" class="label label-primary">Django</a>
+<a href="#" class="label label-primary">JavaScript</a>
+</div>
+
+{% endblock %}

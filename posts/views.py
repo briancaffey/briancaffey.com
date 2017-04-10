@@ -82,16 +82,10 @@ def posts_list(request):
 
 def posts_update(request, slug=None):
 	instance = get_object_or_404(Post, slug=slug)
-	if not request.user.is_staff or not request.user.is_superuser:
-		messages.success(request, "You don't have permission to do that.")
-		return HttpResponseRedirect(instance.get_absolute_url())
-	print("OK")
 	if instance.user != request.user:
-		print("hmm")
 		messages.success(request, "You don't have permission to edit someone else's post.")
 		return HttpResponseRedirect(instance.get_absolute_url())
 
-	instance = get_object_or_404(Post, slug=slug)
 	form = PostForm(request.POST or None, request.FILES or None, instance=instance)
 	if form.is_valid():
 		instance.user = request.user
@@ -99,7 +93,7 @@ def posts_update(request, slug=None):
 		instance = form.save(commit=False)
 
 		instance.save()
-		messages.success(request, 'saved!')
+		messages.success(request, 'Your post has been updated!')
 		return HttpResponseRedirect(instance.get_absolute_url())
 	context = {
 		'title':instance.title,

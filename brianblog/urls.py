@@ -27,6 +27,8 @@ urlpatterns = [
     url(r'^projects/', include('projects.urls', namespace='projects')),
     url(r'^comments/', include('comments.urls', namespace='comments')),
     url(r'^accounts/', include('accounts.urls', namespace='accounts')),
+    url(r'^reading-list/', include('readinglist.urls', namespace='reading-list')),
+
 ]
 
 if settings.DEBUG:
