@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import NewsletterEmailsForm
-import brianblog.settings.local as settings
+from django.conf import settings
 from django.contrib import messages
 from django.core.mail import send_mail
 
