@@ -19,8 +19,8 @@
 		{% if instance.draft %}<span style="color:red;">DRAFT</span>{% endif %}
 		<p>by {{ instance.user.first_name }} <small>on {{ instance.publish }}</small></p>
 		<div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
-		<div class="post-detail-item">{{ instance.get_markdown }}</div>	
-		{% if request.user == instance.user %}<a class="btn btn-primary" href="{% url 'posts:update' slug=instance.slug %}">Update</a>{% endif %}
+		<div class="post-detail-item">{{ instance.get_markdown }}</div>
+		{% if request.user == instance.user %}<a class="btn btn-primary" href="{% url 'posts:update' slug=instance.slug %}">Update</a> <a class="btn btn-danger" href="{% url 'posts:delete' slug=instance.slug %}">Delete</a>{% endif %}
 
 
 		<hr>
@@ -58,7 +58,7 @@
 
 				{{ comment_form | crispy }}
 				<input type="hidden" name="parent_id" value="{{ comment.id }}"></input>
-				<input type="submit" value="reply" class="btn btn-default"></input>	
+				<input type="submit" value="reply" class="btn btn-default"></input>
 				</form>
 				</div>
 
@@ -67,27 +67,27 @@
 
 				<blockquote>
 
-				
+
 
 
 					<p>{{ reply.content | safe }}</p>
 					<small>via {{ reply.user }} | {{ reply.timestamp | timesince }} ago | {% if user == reply.user %}<a href="{% url 'comments:delete' pk=reply.id %}">Delete</a>{% endif %}</small>
 
 				</blockquote>
-					
+
 				{% endfor %}
-				
+
 
 
 
 				</blockquote>
 
-			
+
 
 			{% endif %}
 
 			{% endfor %}
-			
+
 
 		</div>
 

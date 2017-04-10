@@ -1,5 +1,5 @@
 from urllib.parse import quote_plus
-from django.utils import timezone 
+from django.utils import timezone
 from django.contrib import messages
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
@@ -11,6 +11,7 @@ from comments.models import Comment
 from comments.forms import CommentForm
 from django.contrib.contenttypes.models import ContentType
 from django.utils.text import slugify
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -55,10 +56,10 @@ def posts_list(request):
 	query = request.GET.get('q')
 	if query:
 		queryset_list = queryset_list.filter(
-			Q(title__icontains=query) | 
+			Q(title__icontains=query) |
 			Q(content__icontains=query) |
-			Q(user__first_name__icontains=query) | 
-			Q(user__last_name__icontains=query) 
+			Q(user__first_name__icontains=query) |
+			Q(user__last_name__icontains=query)
 			).distinct()
 
 	paginator = Paginator(queryset_list, 5) # Show 25 contacts per page
@@ -92,7 +93,7 @@ def posts_update(request, slug=None):
 
 	instance = get_object_or_404(Post, slug=slug)
 	form = PostForm(request.POST or None, request.FILES or None, instance=instance)
-	if form.is_valid(): 
+	if form.is_valid():
 		instance.user = request.user
 		instance.slug = slugify(instance.title)
 		instance = form.save(commit=False)
@@ -106,17 +107,38 @@ def posts_update(request, slug=None):
 		'form':form}
 	return render(request, 'post_form.html', context)
 
+# def post_delete(request, slug=None):
+# 	instance = get_object_or_404(Post, slug=slug)
+#
+# 	if instance.user != request.user:
+# 		print("hmm")
+# 		messages.success(request, "You don't have permission to delete someone else's post.")
+# 		return HttpResponseRedirect(instance.get_absolute_url())
+#
+# 	instance.delete()
+# 	messages.success(request, "Successfully Deleted")
+# 	return redirect('posts:list')
+
+@login_required
 def post_delete(request, slug=None):
-	instance = get_object_or_404(Post, slug=slug)
-
-	if instance.user != request.user:
-		print("hmm")
-		messages.success(request, "You don't have permission to delete someone else's post.")
-		return HttpResponseRedirect(instance.get_absolute_url())
-
-	instance.delete()
-	messages.success(request, "Successfully Deleted")
-	return redirect('posts:list')
+	obj = get_object_or_404(Post, slug=slug)
+	if request.method == 'POST':
+		if request.user == obj.user:
+			obj.delete()
+			messages.success(request, "Your post has been deleted.")
+			return redirect('posts:list')
+			#something
+		else:
+			messages.success(request, "You don't have permission to delete this post.")
+			return redirect('posts:list')
+	context = {
+		'object':obj,
+	}
+	if request.user == obj.user:
+		return render(request, 'posts/confirm_delete.html', context)
+	else:
+		messages.success(request, "You don't have permission to delete this post.")
+		return redirect('posts:list')
 
 def posts_search(request):
 
@@ -134,14 +156,14 @@ def posts_search(request):
 		if request.user.is_staff or request.user.is_superuser:
 			queryset_list = Post.objects.all()
 		queryset_list = queryset_list.filter(
-			Q(title__icontains=query) | 
+			Q(title__icontains=query) |
 			Q(content__icontains=query) |
-			Q(user__first_name__icontains=query) | 
-			Q(user__last_name__icontains=query) 
+			Q(user__first_name__icontains=query) |
+			Q(user__last_name__icontains=query)
 			).distinct()
 
 
-	# else: 
+	# else:
 	# 	queryset_list = Post.objects.none()
 
 
@@ -177,7 +199,7 @@ def posts_detail(request, slug):
 
 
 	initial_data = {
-		'content_type':instance.get_content_type, 
+		'content_type':instance.get_content_type,
 		'object_id':instance.id
 	}
 
@@ -188,27 +210,27 @@ def posts_detail(request, slug):
 		obj_id = form.cleaned_data.get('object_id')
 		content_data = form.cleaned_data.get('content')
 		parent_obj = None
-		try: 
+		try:
 			parent_id = int(request.POST.get("parent_id"))
 		except:
 			parent_id = None
 
-		if parent_id: 
+		if parent_id:
 			parent_qs = Comment.objects.filter(id=parent_id)
 			if parent_qs.exists():
 				parent_obj = parent_qs.first()
 
 		new_comment, created = Comment.objects.get_or_create(
-									user=request.user, 
-									content_type=content_type, 
+									user=request.user,
+									content_type=content_type,
 									object_id=obj_id,
 									content=content_data,
 									parent=parent_obj
-									
+
 							)
 		messages.success(request, 'Your comment was added!')
 		return HttpResponseRedirect(new_comment.content_object.get_absolute_url())
-		
+
 	comments = instance.comments
 
 	context = {
@@ -220,4 +242,3 @@ def posts_detail(request, slug):
 	}
 
 	return render(request, "post_detail.html", context)
-
