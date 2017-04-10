@@ -13,12 +13,15 @@
 
 <p>{{ item.description }}</p>
 <p><a href="{{ item.link }}">{{ item.link }}</a></p>
+{% if item.get_tags.count > 0 %}
 <p>Tags:
 {% for tag in item.get_tags %}
 
 <a class="label label-primary">{{ tag }}</a>
 
 {% endfor %}
+
+{% endif %}
 
 {% endfor %}
 </p>
@@ -36,6 +39,7 @@
 {% for tag in tags %}
 <a class="label label-primary">{{ tag }}</a>
 {% endfor %}
+
 </div>
 
 {% endblock %}

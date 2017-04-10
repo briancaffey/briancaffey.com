@@ -11,6 +11,7 @@ from tags.models import Tag
 def reading_list(request):
 
     tags = Tag.objects.all()
+    tags = list(set([tag.tag for tag in tags]))
     form = ReadingMaterialForm(request.POST or None)
     reading_list = ReadingMaterial.objects.all()
 
