@@ -13,9 +13,15 @@
 
 <p>{{ item.description }}</p>
 <p><a href="{{ item.link }}">{{ item.link }}</a></p>
+<p>Tags:
+{% for tag in item.get_tags %}
 
+<a class="label label-primary">{{ tag }}</a>
 
 {% endfor %}
+
+{% endfor %}
+</p>
 </div>
 
 <div class="col-md-4">
@@ -27,8 +33,9 @@
 </form>
 <hr>
 <h2>Tags</h2>
-<a href="#" class="label label-primary">Django</a>
-<a href="#" class="label label-primary">JavaScript</a>
+{% for tag in tags %}
+<a class="label label-primary">{{ tag }}</a>
+{% endfor %}
 </div>
 
 {% endblock %}

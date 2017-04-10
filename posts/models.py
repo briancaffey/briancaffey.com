@@ -30,7 +30,7 @@ class Post(models.Model):
 		upload_to=upload_location,
 		width_field = "width_field",
 		height_field = "height_field",
-		null=True, 
+		null=True,
 		blank=True)
 	content = models.TextField()
 	draft = models.BooleanField(default=False)
@@ -78,7 +78,7 @@ def create_slug(instance, new_slug=None):
 		new_slug = "%s-%s" % (slug, qs.first().id)
 		return create_slug(instance, new_slug=new_slug)
 	return slug
-	
+
 def pre_save_post_receiver(sender, instance, *args, **kwargs):
 	if not instance.slug:
 		instance.slug = create_slug(instance)
@@ -88,4 +88,4 @@ def pre_save_post_receiver(sender, instance, *args, **kwargs):
 		read_time = get_read_time(html_sring)
 		instance.read_time = read_time
 
-pre_save.connect(pre_save_post_receiver, sender=Post) 
+pre_save.connect(pre_save_post_receiver, sender=Post)
