@@ -7,13 +7,12 @@ from django.db.models.signals import pre_save, post_save
 
 from taggit.managers import TaggableManager
 
-
-
+from django.contrib.auth.models import User
 
 
 
 class ReadingMaterial(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    user = models.ForeignKey(User)
     name = models.CharField(max_length=200)
     description = models.CharField(max_length=1000)
     link = models.URLField(max_length=400, unique=True)
