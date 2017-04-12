@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'accounts',
     'readinglist',
     'rest_framework',
-    'taggit', 
+    'taggit',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'

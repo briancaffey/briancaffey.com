@@ -16,5 +16,5 @@ class ReadingMaterialForm(forms.ModelForm):
                 'name',
                 'description',
                 'link',
-				'tags',
+				'tags', 
 			]

@@ -18,7 +18,7 @@
 <p>Tags:
 {% for tag in item.tags.all %}
 
-<a href="{% url 'reading-list:tag-view' slug=tag.slug %}" class="label label-primary">{{ tag }}</a>
+<a href="{% if tag.slug %}{% url 'reading-list:tag-view' slug=tag.slug %}{% endif %}" class="label label-primary">{{ tag }}</a>
 
 {% endfor %}
 </p>
@@ -42,7 +42,7 @@
 <h2>Tags</h2>
 {% for tag in tags %}
 
-<a href="{% url 'reading-list:tag-view' slug=tag.slug %}" class="label label-primary">{{ tag }}</a>
+<a href="{% if tag.slug %}{% url 'reading-list:tag-view' slug=tag.slug %}{% endif %}" class="label label-primary">{{ tag }}</a>
 
 {% endfor %}
 

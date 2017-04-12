@@ -5,6 +5,7 @@ from comments.models import Comment #users can comment on reading list
 
 from taggit.managers import TaggableManager
 
+
 from django.contrib.auth.models import User
 
 

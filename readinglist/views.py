@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
 from taggit.models import Tag
+import unidecode
 
 
 # Create your views here.
@@ -41,6 +42,7 @@ def reading_list(request):
             instance.user = request.user
 
             instance.save()
+            # instance.tags.text = unidecode.unidecode(instance.tags)
             form.save_m2m()
             return redirect('reading-list:list')
 
