@@ -61,7 +61,6 @@ class Post(models.Model):
 		content_type = ContentType.objects.get_for_model(instance.__class__)
 		return content_type
 
-
 	def __str__(self):
 		return self.title
 

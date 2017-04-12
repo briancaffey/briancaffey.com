@@ -13,16 +13,16 @@
 
 <p>{{ item.description }}</p>
 <p><a href="{{ item.link }}">{{ item.link }}</a></p>
-{% if item.get_tags.count > 0 %}
+<p>Suggested by: {{ item.user.username }}</p>
+{% if item.tags.count > 0 %}
 <p>Tags:
-{% for tag in item.get_tags %}
+{% for tag in item.tags.all %}
 
-<a class="label label-primary">{{ tag }}</a>
+<a href="{% url 'reading-list:tag-view' slug=tag.slug %}" class="label label-primary">{{ tag }}</a>
 
 {% endfor %}
-
+</p>
 {% endif %}
-
 {% endfor %}
 </p>
 </div>
@@ -41,7 +41,9 @@
 <hr>
 <h2>Tags</h2>
 {% for tag in tags %}
-<a class="label label-primary">{{ tag }}</a>
+
+<a href="{% url 'reading-list:tag-view' slug=tag.slug %}" class="label label-primary">{{ tag }}</a>
+
 {% endfor %}
 
 </div>

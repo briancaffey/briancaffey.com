@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<h2>All tags for suggested reading materials</h2>
+{% for tag in tags %}
+<h2><a class="label label-primary" href="{% url 'reading-list:tag-view' slug=tag.slug %}">{{ tag }}</a></h2>
+{% endfor %}
+{% endblock %}

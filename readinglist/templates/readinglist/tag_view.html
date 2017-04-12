@@ -2,6 +2,14 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-{{ tag.get_items }}
+<h2>All reading material tagged with "{{ tag }}"</h2>
+<br /><br />
+{% for thing in stuff %}
+<p>{{ thing.name }}</p>
+<p>{{ thing.description }}</p>
+<a href="{{ thing.link }}"<p>{{ thing.link }}</a></p>
 
+
+<hr>
+{% endfor %}
 {% endblock %}

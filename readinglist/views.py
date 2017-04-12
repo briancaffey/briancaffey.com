@@ -4,16 +4,36 @@ from .forms import ReadingMaterialForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
-from tags.models import Tag
+from taggit.models import Tag
+
 
 # Create your views here.
 
+def all_tags(request):
+    tags = Tag.objects.all()
+    context = {
+        'tags':tags,
+    }
+    return render(request, 'readinglist/all_tags.html', context)
+
+def tag_view(request, slug):
+    tag = Tag.objects.get(slug=slug)
+    stuff = ReadingMaterial.objects.filter(tags__name__in=[tag])
+    context = {
+        'tag':tag,
+        'stuff': stuff,
+    }
+
+
+    return render(request, 'readinglist/tag_view.html', context)
+
 def reading_list(request):
 
-    tags = Tag.objects.all()
+
     #tags = list(set([tag.tag for tag in tags]))
     form = ReadingMaterialForm(request.POST or None)
     reading_list = ReadingMaterial.objects.all()
+    tags = Tag.objects.all().distinct()
 
     if form.is_valid():
         if request.user.is_authenticated():
@@ -21,6 +41,7 @@ def reading_list(request):
             instance.user = request.user
 
             instance.save()
+            form.save_m2m()
             return redirect('reading-list:list')
 
         else:
@@ -31,6 +52,7 @@ def reading_list(request):
         'form':form,
         'reading_list':reading_list,
         'tags': tags
+
     }
 
     return render(request, 'readinglist/reading_list.html', context)
@@ -49,8 +71,3 @@ def delete_reading(request, slug):
 
 
     return render(request, 'readinglist/confirm_delete.html', context)
-
-def tag_view(request, id):
-    tag = get_object_or_404(Tag, id=id)
-    context = { "tag":tag }
-    return render(request, 'readinglist/tag_view.html', context)
