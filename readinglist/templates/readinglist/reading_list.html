@@ -6,6 +6,11 @@
 <p>Here is a list of things that I've been reading recently. If you have some good suggestions, send it my way through the form below. Thanks.</p>
 
 
+
+
+
+
+
 {% for item in reading_list %}
 
 
@@ -13,7 +18,8 @@
 
 <p>{{ item.description }}</p>
 <p><a href="{{ item.link }}">{{ item.link }}</a></p>
-<p>Suggested by: {{ item.user }}</p>
+<p>Suggested by: {{ item.user }}{% if item.user == user %} | <a type="button" href="#delete" data-toggle="modal" data-target="#myModal">Delete</a>{% endif %}</p>
+<p>ID: {{ item.id }}</p>
 {% if item.tags.count > 0 %}
 <p>Tags:
 {% for tag in item.tags.all %}
@@ -22,6 +28,35 @@
 
 {% endfor %}
 </p>
+
+<!-- <p><a class="btn btn-danger" href="{% url 'reading-list:delete' pk=item.pk %}">Delete</a></p> -->
+
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Are you sure you want to delete "{{ item.name }}"?</h4>
+        </div>
+        <div class="modal-body">
+          <p>This will delete your reading suggestion.</p>
+        </div>
+        <div class="modal-footer">
+          <a class="btn btn-danger" href="{% url 'reading-list:delete' pk=item.pk %}">Delete</a>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
 {% endif %}
 {% endfor %}
 </p>

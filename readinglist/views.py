@@ -6,9 +6,20 @@ from django.contrib import messages
 from django.shortcuts import get_object_or_404
 from taggit.models import Tag
 import unidecode
+from django.contrib import messages
 
 
 # Create your views here.
+
+def delete(request, pk):
+    obj = ReadingMaterial.objects.get(pk=pk)
+    if request.user == obj.user:
+        obj.delete()
+        return redirect('reading-list:list')
+    else:
+        messages.success(request, "You don't have permission to delete this.")
+        return redirect('reading-list:list')
+
 
 def all_tags(request):
     tags = Tag.objects.all()
@@ -59,17 +70,21 @@ def reading_list(request):
 
     return render(request, 'readinglist/reading_list.html', context)
 
-def delete_reading(request, slug):
-
-    obj = get_object_or_404(ReadingMaterial, slug=slug)
-
-    if request.method == "POST":
-        obj.delete()
-        return redirect('reading-list:list')
-
-    context = {
-        "item":obj,
-    }
-
-
-    return render(request, 'readinglist/confirm_delete.html', context)
+# def delete_reading(request, slug):
+#
+#     obj = get_object_or_404(ReadingMaterial, slug=slug)
+#
+#     if request.method == "POST":
+#         if request.user == obj.user:
+#             obj.delete()
+#             return redirect('reading-list:list')
+#         else:
+#             messages.success(request, "You don't have permission to delete this.")
+#             return redirect('reading-list:list')
+#
+#     context = {
+#         "item":obj,
+#     }
+#
+#
+#     return render(request, 'readinglist/confirm_delete.html', context)
