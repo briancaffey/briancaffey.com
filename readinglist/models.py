@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 
 
 class ReadingMaterial(models.Model):
-    user = models.ForeignKey(User, default=1)
+    user = models.ForeignKey(User)
     name = models.CharField(max_length=200)
     description = models.CharField(max_length=1000)
     link = models.URLField(max_length=400, unique=True)

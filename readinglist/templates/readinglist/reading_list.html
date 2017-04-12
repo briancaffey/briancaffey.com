@@ -13,7 +13,7 @@
 
 <p>{{ item.description }}</p>
 <p><a href="{{ item.link }}">{{ item.link }}</a></p>
-<p>Suggested by: {{ item.user.username }}</p>
+<p>Suggested by: {{ item.user }}</p>
 {% if item.tags.count > 0 %}
 <p>Tags:
 {% for tag in item.tags.all %}
