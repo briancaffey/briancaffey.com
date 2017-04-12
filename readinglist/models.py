@@ -2,8 +2,6 @@ from django.db import models
 from django.conf import settings
 # Create your models here.
 from comments.models import Comment #users can comment on reading list
-from django.contrib.contenttypes.models import ContentType
-from django.db.models.signals import pre_save, post_save
 
 from taggit.managers import TaggableManager
 
@@ -12,7 +10,7 @@ from django.contrib.auth.models import User
 
 
 class ReadingMaterial(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, default=1)
     name = models.CharField(max_length=200)
     description = models.CharField(max_length=1000)
     link = models.URLField(max_length=400, unique=True)
