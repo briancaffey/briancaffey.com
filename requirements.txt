@@ -1,11 +1,13 @@
 appdirs==1.4.3
 dj-database-url==0.4.2
 Django==1.10.5
+django-classy-tags==0.8.0
 django-crispy-forms==1.6.1
 django-filter==1.0.2
 django-markdown-deux==1.0.5
 django-pagedown==0.1.1
 django-taggit==0.22.0
+django-taggit-templatetags2==1.6.1
 djangorestframework==3.6.2
 gunicorn==19.7.1
 Markdown==2.6.8
@@ -15,6 +17,8 @@ packaging==16.8
 Pillow==4.0.0
 psycopg2==2.7.1
 pyparsing==2.2.0
+python-http-client==2.2.1
+sendgrid==4.0.0
 six==1.10.0
 Unidecode==0.4.20
 whitenoise==3.3.0
