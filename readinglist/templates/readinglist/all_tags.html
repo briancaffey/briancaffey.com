@@ -1,9 +1,13 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+{% load taggit_templatetags2_tags %}
 {% block content %}
 
 <h2>All tags for suggested reading materials</h2>
+{% get_taglist as tags for 'readinglist' %}
+<h2 >
 {% for tag in tags %}
-<h2><a class="label label-primary" href="{% if tag.slug %}{% url 'reading-list:tag-view' slug=tag.slug %}{% endif %}">{{ tag }}</a></h2>
+<a style="line-height: 200%;" class="label label-primary" href="{% if tag.slug %}{% url 'reading-list:tag-view' slug=tag.slug %}{% endif %}">{{ tag }} ({{ tag.num_times }})</a>
 {% endfor %}
+</h2>
 {% endblock %}

@@ -17,6 +17,9 @@ class ReadingMaterial(models.Model):
     link = models.URLField(max_length=400, unique=True)
     tags = TaggableManager()
 
+    def get_absolute_url(self):
+        return "/readinglist/%i/" % self.id
+
     def __str__(self):
         return str(self.name)
 

@@ -1,8 +1,8 @@
 from django.conf.urls import url
 from accounts.views import (
-	login_view, 
-	register_view, 
-	logout_view, 
+	login_view,
+	register_view,
+	logout_view,
 )
 
 

@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-<h2>All reading material tagged with <div class="label label-primary">{{ tag }}</div></h2>
+<h2>{{ count }} reading material{{ count | pluralize }} tagged with <div class="label label-primary">{{ tag }}</div></h2>
 <br /><br />
 {% for thing in stuff %}
 <p>{{ thing.name }}</p>

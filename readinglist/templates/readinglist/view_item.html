@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+<h2>{{ obj.name }}</h2>
+<p>Tags:
+
+  {%for tag in obj.tags.all %}
+
+  <a href="{% url 'reading-list:tag-view' slug=tag.slug %}"><span class="label label-primary">{{ tag }}</span></a>
+
+  {% endfor %}
+</p>
+<p>Link: <a href="{{ obj.link }}">{{ obj.link }}</a></p>
+<p>submitted by: {{ obj.user }}</p>
+
+<p>{{ obj.description }}</p>
+
+{% endblock %}

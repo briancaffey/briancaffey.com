@@ -7,9 +7,21 @@ from django.shortcuts import get_object_or_404
 from taggit.models import Tag
 import unidecode
 from django.contrib import messages
+from django.conf import settings
+
+#email
+from django.core.mail import send_mail
+EMAIL_HOST_USER = settings.EMAIL_HOST_USER
 
 
 # Create your views here.
+
+def view_item(request, pk):
+    obj = ReadingMaterial.objects.get(pk=pk)
+    context = {
+        'obj':obj,
+    }
+    return render(request, 'readinglist/view_item.html', context)
 
 def delete(request, pk):
     obj = ReadingMaterial.objects.get(pk=pk)
@@ -24,16 +36,18 @@ def delete(request, pk):
 def all_tags(request):
     tags = Tag.objects.all()
     context = {
-        'tags':tags,
+        # 'tags_':tags,
     }
     return render(request, 'readinglist/all_tags.html', context)
 
 def tag_view(request, slug):
     tag = Tag.objects.get(slug=slug)
     stuff = ReadingMaterial.objects.filter(tags__name__in=[tag])
+    count = len(stuff)
     context = {
         'tag':tag,
         'stuff': stuff,
+        'count':count
     }
 
 
@@ -57,6 +71,13 @@ def reading_list(request):
             instance.save()
             # instance.tags.text = unidecode.unidecode(instance.tags)
             form.save_m2m()
+            link = instance.link
+            #send mail to admin
+            messages.success(request, "Thanks for submitting a reading item to the list!")
+            send_mail('[BRIANCAFFEY.COM] New reading suggestion from ' + str(request.user),
+                'hmm', EMAIL_HOST_USER, [EMAIL_HOST_USER],
+                html_message=str(request.user) + ' submitted a new item for reading. <br/>View it here: <a href="' + link + '">Link</a>')
+
             return redirect('reading-list:list')
 
         else:

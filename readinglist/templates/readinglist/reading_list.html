@@ -18,13 +18,12 @@
 {% for item in reading_list %}
 
 
-<h3>{{ item.name }}</h3>
+<h3><a href="{{ item.get_absolute_url }}">{{ item.name }}</a></h3>
 
 <p>{{ item.description }}</p>
 <p><a href="{{ item.link }}">{{ item.link }}</a></p>
 <p>Suggested by: {{ item.user }}{% if item.user == user %} | <a type="button" href="#delete" data-toggle="modal" data-target="#myModal">Delete</a>
 | <a href="{% url 'reading-list:edit' pk=item.pk %}">Edit</a>{% endif %}
-<p>ID: {{ item.id }}</p>
 {% if item.tags.count > 0 %}
 <p>Tags:
 {% for tag in item.tags.all %}
@@ -69,6 +68,9 @@
 
 <div class="col-md-4">
   <h2>Suggest things for me to read</h2>
+
+
+
   {% if user.is_authenticated %}
   <form method="POST" action=".">
     {% csrf_token %}
@@ -76,10 +78,13 @@
   <input class="btn btn-success" type="submit" value="Suggest">
 </form>
 {% else %}
+
+
+
 <p>Please <a href="{% url 'accounts:login' %}">login</a> or <a href="{% url 'accounts:register' %}">register</a> to add items to my reading list. Thanks.</p>
 {% endif %}
 <hr>
-<h2>Tags</h2>
+<h2>Tags (<a href="{% url 'reading-list:all-tags' %}">view all</a>)</h2>
 {% get_taglist as tags for 'readinglist' %}
 {% for tag in tags %}
 
