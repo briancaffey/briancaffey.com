@@ -7,11 +7,11 @@
 {% for thing in stuff %}
 <p>{{ thing.name }}</p>
 <p>{{ thing.description }}</p>
-<a href="{{ thing.link }}"<p>{{ thing.link }}</a></p>
+<p><a href="{{ thing.link }}">{{ thing.link }}</a></p>
 <p>Other tags:
 {% for tag_ in thing.tags.all %}
 {% if tag != tag_ %}
-<a class="label label-primary" href="{% if tag_.slug %}{% url 'reading-list:tag-view' slug=tag_.slug %}{% endif %}">{{ tag_ }}<a/>
+<a class="label label-primary" href="{% if tag_.slug %}{% url 'reading-list:tag-view' slug=tag_.slug %}{% endif %}">{{ tag_ }}</a>
 {% endif %}
 {% endfor %}
 <hr>

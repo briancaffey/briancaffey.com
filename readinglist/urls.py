@@ -4,6 +4,7 @@ from .views import (
     tag_view,
     all_tags,
     delete,
+    edit,
 
 )
 
@@ -14,6 +15,7 @@ urlpatterns = [
     url(r'^tags/$', all_tags, name='all-tags'),
     url(r'^tags/(?P<slug>.+)/$', tag_view, name='tag-view'),
     url(r'^(?P<pk>[0-9]+)/delete/$', delete, name='delete'),
+    url(r'^(?P<pk>[0-9]+)/edit/$', edit, name='edit')
 
 
 

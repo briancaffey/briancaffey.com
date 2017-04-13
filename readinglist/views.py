@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import ReadingMaterial
-from .forms import ReadingMaterialForm
+from .forms import ReadingMaterialForm, ReadingMaterialUpdateForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
@@ -47,6 +47,8 @@ def reading_list(request):
     reading_list = ReadingMaterial.objects.all()
     tags = Tag.objects.all().distinct()
 
+
+
     if form.is_valid():
         if request.user.is_authenticated():
             instance = form.save(commit=False)
@@ -64,11 +66,38 @@ def reading_list(request):
     context = {
         'form':form,
         'reading_list':reading_list,
-        'tags': tags
+        'tags_': tags
 
     }
 
     return render(request, 'readinglist/reading_list.html', context)
+
+
+def edit(request, pk):
+
+    obj = get_object_or_404(ReadingMaterial, pk=pk)
+    form = ReadingMaterialUpdateForm(request.POST or None, instance=obj)
+
+    context = {
+        'form':form,
+        'obj':obj,
+    }
+    if form.is_valid():
+        if request.user.is_authenticated():
+            obj = form.save(commit=False)
+            obj.user = request.user
+
+            obj.save()
+            # instance.tags.text = unidecode.unidecode(instance.tags)
+            form.save_m2m()
+            return redirect('reading-list:list')
+
+        else:
+            messages.success(request, "Please login to submit reading materials.")
+            return redirect('reading-list:list')
+
+
+    return render(request, 'readinglist/readinglist_edit.html', context)
 
 # def delete_reading(request, slug):
 #

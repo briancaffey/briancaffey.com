@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+{% load taggit_templatetags2_tags %}
+
+
 {% block content %}
+
 <div class="col-md-8">
 <h2>My Reading List</h2>
 <p>Here is a list of things that I've been reading recently. If you have some good suggestions, send it my way through the form below. Thanks.</p>
@@ -18,7 +22,8 @@
 
 <p>{{ item.description }}</p>
 <p><a href="{{ item.link }}">{{ item.link }}</a></p>
-<p>Suggested by: {{ item.user }}{% if item.user == user %} | <a type="button" href="#delete" data-toggle="modal" data-target="#myModal">Delete</a>{% endif %}</p>
+<p>Suggested by: {{ item.user }}{% if item.user == user %} | <a type="button" href="#delete" data-toggle="modal" data-target="#myModal">Delete</a>
+| <a href="{% url 'reading-list:edit' pk=item.pk %}">Edit</a>{% endif %}
 <p>ID: {{ item.id }}</p>
 {% if item.tags.count > 0 %}
 <p>Tags:
@@ -75,12 +80,13 @@
 {% endif %}
 <hr>
 <h2>Tags</h2>
+{% get_taglist as tags for 'readinglist' %}
 {% for tag in tags %}
 
-<a href="{% if tag.slug %}{% url 'reading-list:tag-view' slug=tag.slug %}{% endif %}" class="label label-primary">{{ tag }}</a>
+<span class="label label-primary label-lg"><a style="color:white;" href="{% if tag.slug %}{% url 'reading-list:tag-view' slug=tag.slug %}{% endif %}">{{ tag }}</a>&nbsp;<strong>{{ tag.num_times }}</strong></span>
 
 {% endfor %}
-
+<hr>
 </div>
 
 {% endblock %}
