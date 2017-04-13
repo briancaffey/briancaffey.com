@@ -12,7 +12,7 @@
 <form method="POST" action=".">{%csrf_token %}
 	<p>Are you sure you want to delete: "{{ object.title }}"?</p>
 	<input type="submit" value="Delete" class="btn btn-default">
-	<a href="{{ object.get_absolute_url }}" class="btn btn-danger">Cancel</a>
+	<a href="{{ object.content_object.get_absolute_url }}" class="btn btn-danger">Cancel</a>
 	</form>
 
 </div>

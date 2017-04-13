@@ -7,12 +7,12 @@
 {% block content %}
 
 
-<div class="">  
+<div class="">
 	<h1>Confirm Delete</h1>
 <form method="POST" action=".">{%csrf_token %}
 	<p>Are you sure you want to delete: "{{ object.content }}"?</p>
 	<input type="submit" value="Delete" class="btn btn-default">
-	<a href="{{ object.get_absolute_url }}" class="btn btn-danger">Cancel</a>
+	<a href="{% if object.parent %}{{ object.parent.get_absolute_url }}{% else %}{{ object.get_absolute_url }}{% endif %}" class="btn btn-danger">Cancel</a>
 	</form>
 
 </div>

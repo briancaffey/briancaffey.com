@@ -45,8 +45,6 @@ def comment_thread(request, pk):
 		'object_id':obj.object_id,
 	}
 	form = CommentForm(request.POST or None, initial=initial_data)
-	print(form.errors)
-	print(dir(form))
 	if form.is_valid():
 		c_type = form.cleaned_data.get("content_type")
 		content_type = ContentType.objects.get(model=c_type)

@@ -8,6 +8,7 @@ from django.contrib.auth import (
 	login,
 	logout,
 	)
+from django.contrib.auth.decorators import login_required
 
 from .forms import UserLoginForm, UserRegistrationForm
 
@@ -52,8 +53,8 @@ def register_view(request):
 	}
 	return render(request, 'accounts/registration_form.html', context)
 
-
+@login_required
 def logout_view(request):
 	logout(request)
 	messages.success(request, "You have successfully logged out.")
-	return render(request, 'home/home.html', {})
+	return redirect('home:home')

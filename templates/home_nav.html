@@ -1,5 +1,5 @@
 {% load crispy_forms_tags %}
-
+<!-- 📝🔏🔐📍📰📖⚗🔬🔓 -->
     <!-- Static navbar -->
     <nav class="navbar navbar-default navbar-static-top">
       <div class="container">
@@ -26,17 +26,16 @@
             <li><a type="button" href="#delete" data-toggle="modal" data-target="#myModal-logout">Logout 🔓</a></li>
             {% else %}
 
-            <li><a href="{% url 'accounts:register' %}">Register 🔏</a></li>
-            <!-- <li><a type="button" href="#delete" data-toggle="modal" data-target="#myModal-register">Register Modal</a></li> -->
-            <li><a href="{% url 'accounts:login' %}">Login 🔐</a></li>
-            <!-- <li><a type="button" href="#delete" data-toggle="modal" data-target="#myModal-login">Login Modal</a></li> -->
+            <!-- <li><a href="{% url 'accounts:register' %}">Register</a></li> -->
+            <li><a type="button" href="#delete" data-toggle="modal" data-target="#myModal-register">Register 🔏</a></li>
+            <!-- <li><a href="{% url 'accounts:login' %}">Login</a></li> -->
+            <li><a type="button" href="#delete" data-toggle="modal" data-target="#myModal-login">Login 🔐</a></li>
             {% endif %}
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
 
-<!-- 📝🔏🔐📍📰📖⚗🔬🔓 -->
 
 
     <!-- Logout Modal -->
@@ -60,8 +59,6 @@
 
       </div>
     </div>
-
-
 
 
 
@@ -104,14 +101,14 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Login</h4>
+            <h4 class="modal-title">Register</h4>
           </div>
           <div class="modal-body">
             <p>
               <form method="POST" action=".">
           		{% csrf_token %}
           		{{ registration_form | crispy }}
-          		<div class="login-center"><input class="btn btn-success login-center" type="submit" value="Register" /></div><br/> ot <a href="{% url 'accounts:login' %}">login</a>
+          		<div class="login-center"><input class="btn btn-success login-center" type="submit" value="Register" /></div><br/> or <a href="{% url 'accounts:login' %}">login to an existing account</a>
 
           		</form>
             </p>
