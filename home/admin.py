@@ -3,6 +3,15 @@ from django.contrib import admin
 # Register your models here.
 from .models import NewsletterEmails, GuestBook
 
-admin.site.register(NewsletterEmails)
+class NewsletterEmailsModelAdmin(admin.ModelAdmin):
 
-admin.site.register(GuestBook)
+    list_display = ['__str__', 'confirmed', 'uid']
+    list_filter = ['confirmed']
+    class Meta:
+        model = NewsletterEmails
+
+
+
+
+
+admin.site.register(NewsletterEmails, NewsletterEmailsModelAdmin)

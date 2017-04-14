@@ -82,9 +82,12 @@ def home(request):
 			cancel_link = str(link) + 'newsletter/cancel/' + str(token)
 			print(confirm_link)
 
-			send_mail('Thanks for signing up for my Newsletter!', 'Hi, thanks.', EMAIL_HOST_USER, [email], html_message="You or someone else has requested to join my newsletter using this email (" + instance.email + "). \n\nPlease click this link if you wish to join my newsletter:\n\n <a href='" +  confirm_link + "'>Confirm newsletter subcription</a> \n\n\
-						If you don't want to join my newsletter please ignore this email. \n\n\
-						Once you have confirmed your subscription you can cancel at any time by clicking here: \n\n\
+			send_mail('Thanks for signing up for my Newsletter!', 'Hi, thanks.', EMAIL_HOST_USER, [email],
+						html_message="You or someone else has requested to join my newsletter using this email \
+						(" + instance.email + "). <br /><br />Please click this link if you wish to join my newsletter:<br /><br />\
+						<a href='" +  confirm_link + "'>Confirm newsletter subcription</a> <br /><br />\
+						If you don't want to join my newsletter please ignore this email. <br /><br />\
+						Once you have confirmed your subscription you can cancel at any time by clicking here: <br /><br />\
 						<a href='" +  cancel_link + "'>Cancel</a>")
 			messages.success(request, "Thanks for joining the newsletter. Please check your email to confirm.")
 			return redirect('home:home')
@@ -117,10 +120,12 @@ def confirm_nl(request, uid):
 
 def cancel_nl(request, uid):
 	sub = NewsletterEmails.objects.get(uid=uid)
-	if not sub.exists():
+	if not sub:
+		sub.delete()
 		messages.success(request, "Something went wrong.")
 		return redirect('home:home')
 	if sub.confirmed == False:
+		sub.delete()
 		messages.success(request, "You are not included in my email list.")
 	else:
 		sub.delete()
