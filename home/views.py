@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.core.mail import send_mail
 from accounts.forms import UserLoginForm, UserRegistrationForm
 from .forms import GuestBookForm
-from .models import GuestBook
+from .models import GuestBook, NewsletterEmails
 from .utils import get_client_ip
 from django.contrib.auth import (
 	authenticate,
@@ -25,6 +25,7 @@ def home(request):
 	query = base + ip
 	r = requests.get(query)
 	location = r.text.split(';')[-5]
+	state = r.text.split(';')[-6]
 
 	form_ = NewsletterEmailsForm(request.POST or None)
 	login_form = UserLoginForm(request.POST or None)
@@ -44,6 +45,7 @@ def home(request):
 		'guest_book':guest_book,
 		'ip':ip,
 		'city':location,
+		'state': state,
 	}
 
 	if request.method == "POST":
@@ -74,7 +76,16 @@ def home(request):
 			email = form_.cleaned_data.get('email')
 
 			instance.save()
-			send_mail('Thanks for signing up for my Newsletter!', 'Hi, thanks.', EMAIL_HOST_USER, [email])
+			token = instance.uid
+			link = request.build_absolute_uri()
+			confirm_link = str(link) + 'newsletter/confirm/' + str(token)
+			cancel_link = str(link) + 'newsletter/cancel/' + str(token)
+			print(confirm_link)
+
+			send_mail('Thanks for signing up for my Newsletter!', 'Hi, thanks.', EMAIL_HOST_USER, [email], html_message="You or someone else has requested to join my newsletter using this email (" + instance.email + "). \n\nPlease click this link if you wish to join my newsletter:\n\n <a href='" +  confirm_link + "'>Confirm newsletter subcription</a> \n\n\
+						If you don't want to join my newsletter please ignore this email. \n\n\
+						Once you have confirmed your subscription you can cancel at any time by clicking here: \n\n\
+						<a href='" +  cancel_link + "'>Cancel</a>")
 			messages.success(request, "Thanks for joining the newsletter. Please check your email to confirm.")
 			return redirect('home:home')
 
@@ -82,6 +93,7 @@ def home(request):
 			instance = guest_form.save(commit=False)
 			if location:
 				instance.city = location
+				instance.state = state
 			if request.user.is_authenticated():
 				instance.user = request.user
 			instance.save()
@@ -89,3 +101,28 @@ def home(request):
 			return redirect('home:home')
 
 	return render(request, 'home/home.html', context)
+
+
+def confirm_nl(request, uid):
+	sub = NewsletterEmails.objects.get(uid=uid)
+	if sub.confirmed == False:
+		sub.confirmed = True
+		sub.save()
+		messages.success(request, "You are now subscribed to my newsletter. Thank you!")
+		return redirect('home:home')
+	else:
+		messages.success(request, "You have already confirmed your subscription to my newsletter.")
+		return redirect('home:home')
+
+
+def cancel_nl(request, uid):
+	sub = NewsletterEmails.objects.get(uid=uid)
+	if not sub.exists():
+		messages.success(request, "Something went wrong.")
+		return redirect('home:home')
+	if sub.confirmed == False:
+		messages.success(request, "You are not included in my email list.")
+	else:
+		sub.delete()
+		messages.success(request, "You are no longer subscribed to my newsletter. Thank you!")
+	return redirect('home:home')

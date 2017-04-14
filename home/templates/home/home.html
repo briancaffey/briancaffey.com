@@ -8,8 +8,8 @@
     <div class="col-md-8">    <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron">
         <h1>Welcome! 🎉</h1>
-        <p>This is Brian Caffey's perosonal website. Thanks for visiting!</p>
-        <p>Your IP is {{ ip }}{% if location %}, and you are in {{ location }}{% endif %}.</p>
+        <p>This is Brian Caffey's personal website. Thanks for visiting!</p>
+        <p>Your IP is {{ ip }}{% if city %}, and you are in {{ city }}, {{ state }}{% endif %}.</p>
         <a href="#" class="btn btn-warning">Start</a>
       </div>
 
@@ -26,7 +26,7 @@
       </form>
       {% for note in guest_book %}
       <div class="panel panel-success">
-<div class="panel-heading">{%if note.user %}From {{ note.user }}{% if location %} in the {{ location }} area{% endif %}{% else %} Submitted anonomously{% if location %}from the {{ location }} area{% endif %}{% endif %} | {{ note.date_created | timesince }}</div>
+<div class="panel-heading">{% if note.user %}From {{ note.user }}{% if note.city %} in the {{ note.city }}, {{ note.state }} area{% endif %}{% else %} Submitted anonomously{% if note.city %} from the {{ note.city }}, {{ note.state }} area{% endif %}{% endif %} | {{ note.date_created | timesince }}</div>
 <div class="panel-body">{{ note.message }}</div>
       </div>
       {% endfor %}

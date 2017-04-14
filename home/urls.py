@@ -6,5 +6,8 @@ from home import views
 
 urlpatterns = [
 
-    url(r'^$', views.home, name='home')
+    url(r'^$', views.home, name='home'),
+    url(r'^newsletter/confirm/(?P<uid>.+)/$', views.confirm_nl, name='confirm'),
+    url(r'^newsletter/cancel/(?P<uid>.+)/$', views.cancel_nl, name='cancel'),
+
 ]
