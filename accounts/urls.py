@@ -12,4 +12,4 @@ urlpatterns = [
 	url(r'^logout/$', logout_view, name="logout"),
 	url(r'^register/$', register_view, name="register"),
 
-]
+]	

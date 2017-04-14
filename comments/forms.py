@@ -6,3 +6,11 @@ class CommentForm(forms.Form):
 	#parent_id = forms.IntegerField(widget=forms.HiddenInput, required=False)
 	content = forms.CharField(label='', widget=forms.Textarea(
 		attrs={'rows':3}))
+
+
+class GuestBookForm(forms.Form):
+	message = forms.CharField()
+	object_id = forms.IntegerField(widget=forms.HiddenInput)
+	#parent_id = forms.IntegerField(widget=forms.HiddenInput, required=False)
+	content = forms.CharField(label='', widget=forms.Textarea(
+		attrs={'rows':3}))

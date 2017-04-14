@@ -23,13 +23,13 @@
             {% if user.is_authenticated %}
             <li><a>Welcome, {{ user.username }}</a></li>
             <!-- <li><a href="{% url 'accounts:logout' %}">Logout</a></li> -->
-            <li><a type="button" href="#delete" data-toggle="modal" data-target="#myModal-logout">Logout 🔓</a></li>
+            <li><a type="button" href="#logout" data-toggle="modal" data-target="#myModal-logout">Logout 🔓</a></li>
             {% else %}
 
             <!-- <li><a href="{% url 'accounts:register' %}">Register</a></li> -->
-            <li><a type="button" href="#delete" data-toggle="modal" data-target="#myModal-register">Register 🔏</a></li>
+            <li><a type="button" href="#register" data-toggle="modal" data-target="#myModal-register">Register 🔏</a></li>
             <!-- <li><a href="{% url 'accounts:login' %}">Login</a></li> -->
-            <li><a type="button" href="#delete" data-toggle="modal" data-target="#myModal-login">Login 🔐</a></li>
+            <li><a type="button" href="#login" data-toggle="modal" data-target="#myModal-login">Login 🔐</a></li>
             {% endif %}
           </ul>
         </div><!--/.nav-collapse -->

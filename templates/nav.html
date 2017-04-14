@@ -23,7 +23,7 @@
             {% if user.is_authenticated %}
             <li><a>Welcome, {{ user.username }}</a></li>
             <!-- <li><a href="{% url 'accounts:logout' %}">Logout</a></li> -->
-            <li><a type="button" href="#delete" data-toggle="modal" data-target="#myModal-logout">Logout 🔓</a></li>
+            <li><a type="button" href="#logout" data-toggle="modal" data-target="#myModal-logout">Logout 🔓</a></li>
             {% else %}
 
             <li><a href="{% url 'accounts:register' %}">Register 🔏</a></li>

@@ -33,6 +33,8 @@ def login_view(request):
 			return redirect(next)
 		return redirect('posts:list')
 
+	
+
 	return render(request, 'accounts/form.html', {'form':form})
 
 

@@ -2,7 +2,7 @@ from django import forms
 
 
 
-from .models import NewsletterEmails
+from .models import NewsletterEmails, GuestBook
 
 class NewsletterEmailsForm(forms.ModelForm):
 
@@ -19,3 +19,13 @@ class NewsletterEmailsForm(forms.ModelForm):
 			raise forms.ValidationError("You have already joined the newsletter")
 
 		return email
+
+
+class GuestBookForm(forms.ModelForm):
+	message = forms.CharField()
+
+	class Meta:
+		model = GuestBook
+		fields = [
+			'message',
+		]
