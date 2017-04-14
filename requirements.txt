@@ -17,7 +17,6 @@ olefile==0.44
 packaging==16.8
 Pillow==4.0.0
 psycopg2==2.7.1
-pyipinfodb==0.1
 pyparsing==2.2.0
 python-http-client==2.2.1
 requests==2.13.0
