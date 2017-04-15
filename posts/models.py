@@ -32,6 +32,7 @@ class Post(models.Model):
 		height_field = "height_field",
 		null=True,
 		blank=True)
+	likes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='post_likes')
 	content = models.TextField()
 	draft = models.BooleanField(default=False)
 	publish = models.DateField(auto_now=False, auto_now_add=False)
@@ -66,6 +67,12 @@ class Post(models.Model):
 
 	def get_absolute_url(self):
 		return reverse("posts:detail", kwargs={"slug":self.slug})
+
+	def get_like_url(self):
+		return reverse("posts:like-toggle", kwargs={"slug":self.slug})
+
+	def get_api_like_url(self):
+		return reverse("posts:like-api-toggle", kwargs={"slug":self.slug})
 
 def create_slug(instance, new_slug=None):
 	slug = slugify(instance.title)

@@ -3,10 +3,54 @@
 {% load urlify %}
 
 {% block head %}{{ instance.title }} | {{ block.super }}{% endblock %}
+{% block nav %}{% include 'nav.html' %}{% endblock %}
+
+<script>
+{% block jquery %}
+$(document).ready(function(){
+function updateText(btn, newCount, verb){
+	btn.text(newCount + " " + verb)
+	btn.attr('data-like', newCount)
+}
+
+$(".like-btn").click(function(e){
+	e.preventDefault()
+	var this_ = $(this)
+	var likeUrl = this_.attr("data-href")
+	var likeCount = parseInt(this_.attr("data-like")) | 0
+	var addLike = likeCount + 1
+	var removeLike = likeCount - 1
+	if (likeUrl){
+		$.ajax({
+			url: likeUrl,
+			method: "GET",
+			data: {},
+			success: function(data){
+				console.log(data)
+				var newLikes;
+				if (data.liked){
+					//add one like
+					updateText(this_, addLike, "👍")
+				} else {
+					//remove one like
+					updateText(this_, removeLike, "👎")
+				}
+				console.log("data part 2")
+			}, error: function(error){
+				console.log(error)
+				console.log("error")
+			}
+		})
+	}
+})
+
+})
+
+{% endblock %}
+</script>
+
 
 {% block content %}
-
-
 
 <div class="">  <!-- col-sm-6 col-sm-offset-3 -->
 	<p><a class="btn btn-default" href="{% url 'posts:list'%}">back to posts</a></p>
@@ -15,10 +59,53 @@
 	<img src="{{ instance.image.url }}" class="img-responsive" />
 	{% endif %}
 		<h1>{{ instance.title }} </h1>
+
+		{% if user.is_authenticated %}
+
+		<p>Likes: <a class="like-btn" data-href="{{ instance.get_api_like_url }}" data-like="{{ instance.likes.count }}" href="{{ instance.get_like_url }}">{{ instance.likes.count }} 👍</a></p>
+
+		{% else %}
+
+		<p>Likes: <a href="#login" data-toggle="modal" data-target="#myModal-login">{{ instance.likes.count }} 👍</a></p>
+
+		{% endif %}
+
+
+		    <!-- Login Modal -->
+		    <div class="modal fade" id="myModal-login" role="dialog">
+		      <div class="modal-dialog">
+
+		        <!-- Modal content-->
+		        <div class="modal-content">
+		          <div class="modal-header">
+		            <button type="button" class="close" data-dismiss="modal">&times;</button>
+		            <h4 class="modal-title">Login to Leave a like</h4>
+		          </div>
+		          <div class="modal-body">
+		            <p>
+		              <form method="POST" action=".">
+		          		<div class="login-center"><a class="btn btn-success login-center" href="{% url 'accounts:login' %}" type="submit" value="Login" >Login</a></div><br/> or <a href="{% url 'accounts:register' %}">create an account</a>
+
+		          		</form>
+		            </p>
+		          </div>
+
+		        </div>
+
+		      </div>
+		    </div>
+
+
+
+
+
+
+
+
+
 		<small>Read time: {{ instance.read_time | time:"i" }} minutes</small><br />
 		{% if instance.draft %}<span style="color:red;">DRAFT</span>{% endif %}
 		<p>by {{ instance.user.first_name }} <small>on {{ instance.publish }}</small></p>
-		<div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
 		<div class="post-detail-item">{{ instance.get_markdown }}</div>
 		{% if request.user == instance.user %}<a class="btn btn-primary" href="{% url 'posts:update' slug=instance.slug %}">Update</a> <a class="btn btn-danger" href="{% url 'posts:delete' slug=instance.slug %}">Delete</a>{% endif %}
 
@@ -41,7 +128,7 @@
 
 		<hr>
 		<div>
-			<p class="lead">{{ comments.all.count }} Comments</p>
+			<p class="lead">{{ comments.all.count }} Comment{{ comments.all.count | pluralize }}</p>
 			<form method="POST" action=".">{% csrf_token %}
 				{{ comment_form | crispy }}
 				<input type="submit" value="comment" class="btn btn-default"></input>
@@ -96,4 +183,7 @@
 
 
 </div>
+
+
+
 {% endblock content %}
