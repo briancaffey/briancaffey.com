@@ -25,7 +25,7 @@ $(document).ready(function(){
     console.log($('#post-text').val())
     console.log("this works too")
     var gb_endpoint = this_.attr("data-href")
-    console.log("this worked url")
+    console.log(gb_endpoint)
     $.ajax({
 
       url: gb_endpoint,
@@ -39,13 +39,15 @@ $(document).ready(function(){
 
       },
       success: function(json){
+        console.log(json)
+        console.log("something here should go wrong")
         $('#post-text').val('');
         $('#post-form').blur();
 
 
-        if (json.user){
+        if (1 == 1){
           var user = json.user
-          $('#guest-book-items').prepend('<div class="panel panel-success"><div class="panel-heading">From ' + json.user + ' in the ' + json.city + ', ' + json.state + ' area | just now</div><div class="panel-body">' + json.message + '</div></div>'
+          $('#guest-book-items').prepend('<div class="panel panel-success"><div class="panel-heading">From {% if user.is_authenticated %}{{ user }}{% else %}someone{% endif %} in the ' + json.city + ', ' + json.state + ' area | just now</div><div class="panel-body">' + json.message + '</div></div>'
 
           )
         }
@@ -83,7 +85,7 @@ $(document).ready(function(){
       <hr>
       <h2 style="text-align:center;">Sign my (AJAX-powered) guest book&nbsp;📓🖊</h2>
 
-      <form style="text-align:center;" id="post-form" data-href="gb-submit/" method="POST" action=".">{% csrf_token %}
+      <form style="text-align:center;" id="post-form" data-href="api/gb-submit/" method="POST" action=".">{% csrf_token %}
         {{ guest_form | crispy }}
         <input type="submit" id="post-form post-button" class="btn btn-success" value="Add note"><br/> -or- <br/><a class="btn btn-info" href="{% url 'home:gb-submit' %}">Sign guestbook through the Django REST framework</a>
       </form>
@@ -92,7 +94,7 @@ $(document).ready(function(){
       {% for note in guest_book %}
 
       <div class="panel panel-success">
-        <div class="panel-heading">{% if note.user %}From {{ note.user }}{% if note.city %} in the {{ note.city }}, {{ note.state }} area{% endif %}{% else %} Submitted anonomously{% if note.city %} from the {{ note.city }}, {{ note.state }} area{% endif %}{% endif %} | {{ note.date_created | timesince }}</div>
+        <div class="panel-heading">{% if note.user %}From {{ note.user }}{% if note.city %} in the {{ note.city }}, {{ note.state }} area{% endif %}{% else %}From someone{% if note.city %} in the {{ note.city }}, {{ note.state }} area{% endif %}{% endif %} | {{ note.date_created | timesince }}</div>
         <div class="panel-body">{{ note.message }}</div>
       </div>
       {% endfor %}
