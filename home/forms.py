@@ -33,3 +33,9 @@ class GuestBookForm(forms.ModelForm):
 				attrs={'id':'post-text', 'required':True, 'placeholder':'Leave me a message here.'}
 			)
 		}
+
+	def clean_message(self):
+		message = self.cleaned_data.get('message')
+		if message.strip(' ') == "":
+			raise forms.ValidationError("Please add a note before submitting. Thanks!")
+		return message

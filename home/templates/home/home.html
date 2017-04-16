@@ -86,6 +86,7 @@ $(document).ready(function(){
       <hr>
       <h2 style="text-align:center;">Sign my (AJAX-powered) <a href="{% url 'home:gb-list' %}">guest book</a>&nbsp;📓🖊</h2>
 
+
       <form style="text-align:center;" id="post-form" data-href="/api/gb-submit/" method="POST" action=".">{% csrf_token %}
         {{ guest_form | crispy }}
         <input type="submit" id="post-form post-button" class="btn btn-success" value="Add note"><br/> -or- <br/><a class="btn btn-info" href="{% url 'home:gb-submit' %}">Sign guestbook through the Django REST framework</a>
