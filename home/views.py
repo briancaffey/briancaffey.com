@@ -144,7 +144,7 @@ def cancel_nl(request, uid):
 
 class CreateGuestBookAPIView(CreateAPIView):
 	authentication_classes = (authentication.SessionAuthentication,)
-	permission_classes = (permissions.IsAuthenticated,)
+	permission_classes = () #(permissions.IsAuthenticated,)
 	serializer_class = GuestBookSerializer
 
 	def post(self, request, *args, **kwargs):
@@ -157,15 +157,21 @@ class CreateGuestBookAPIView(CreateAPIView):
 		r = requests.get(query)
 		city = r.text.split(';')[-5]
 		state = r.text.split(';')[-6]
-		user = request.user
+		if self.request.user.is_authenticated():
+			user = request.user
+		else:
+			user = None
 		item = GuestBook.objects.create(message=message, user=user, city=city, state=state)
 		item.save()
 		# data = self.request.POST.get['message']
-
+		if item.user:
+			user = user.username
+		else:
+			user = "someone"
 
 		data = { 	'message': message,
 					'city': item.city,
 					'state': item.state,
-					'user': item.user.username,
+					'user': user,
 		}
 		return Response(data)
