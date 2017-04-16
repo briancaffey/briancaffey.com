@@ -1,0 +1,41 @@
+
+$(document).ready(function(){
+function updateText(btn, newCount, verb){
+	btn.text(newCount + " " + verb)
+	btn.attr('data-like', newCount)
+}
+
+$(".like-btn").click(function(e){
+	e.preventDefault()
+	var this_ = $(this)
+	var likeUrl = this_.attr("data-href")
+	var likeCount = parseInt(this_.attr("data-like")) | 0
+	var addLike = likeCount + 1
+	var removeLike = likeCount - 1
+	if (likeUrl){
+		$.ajax({
+			url: likeUrl,
+			method: "GET",
+			data: {},
+			success: function(data){
+				console.log(data)
+				var newLikes;
+				if (data.liked){
+					//add one like
+					updateText(this_, addLike, "👍")
+
+				} else {
+					//remove one like
+					updateText(this_, removeLike, "👎")
+
+				}
+				console.log("data part 2")
+			}, error: function(error){
+				console.log(error)
+				console.log("error")
+			}
+		})
+	}
+})
+
+})

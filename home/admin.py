@@ -11,7 +11,14 @@ class NewsletterEmailsModelAdmin(admin.ModelAdmin):
         model = NewsletterEmails
 
 
+class GuestBookModelAdmin(admin.ModelAdmin):
+
+    list_display = ['__str__',]
+    list_filter = ['message']
+    class Meta:
+        model = GuestBook
 
 
+admin.site.register(GuestBook, GuestBookModelAdmin)
 
 admin.site.register(NewsletterEmails, NewsletterEmailsModelAdmin)

@@ -3,6 +3,9 @@ from django import forms
 from pagedown.widgets import PagedownWidget
 
 from .models import Post
+import datetime
+
+YEAR_CHOICES = tuple([2000+i for i in range(22)])
 
 class PostForm(forms.ModelForm):
 
@@ -10,12 +13,19 @@ class PostForm(forms.ModelForm):
 
 	publish = forms.DateField(widget=forms.SelectDateWidget)
 
+	publish = forms.DateField(
+		initial = datetime.date.today,
+		widget=forms.SelectDateWidget(
+
+		years=YEAR_CHOICES)
+	)
+
 	class Meta:
 		model = Post
 		fields = [
-			'title', 
+			'title',
 			'content',
 			'image',
-			'draft', 
+			'draft',
 			'publish',
 			]

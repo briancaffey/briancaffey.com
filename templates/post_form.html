@@ -2,11 +2,14 @@
 {% load crispy_forms_tags %}
 {% block head_extra %}
 {{ form.media }}
-
-
-
-
 {% endblock %}
+
+
+{% block jquery %}
+{% include 'post-create-jquery.html' %}
+{% endblock %}
+
+
 {% block content %}
 
 <div class="col-sm-6">

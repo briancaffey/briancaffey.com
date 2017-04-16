@@ -6,8 +6,10 @@
 <div class="row">
 
     <div class="col-sm-10 col-sm-offset-1">
-<h1>Recent Posts</h1>
+<h1>Recent Posts {% if user.is_authenticated %}<a class="btn btn-success" href="{% url 'posts:create' %}">Add a new post</a>{% endif %}</h1>
+<div>
 
+</div>
 <form method="GET" action="" class="row">
   <div class="col-sm-6">
   <div class="input-group">
@@ -16,8 +18,10 @@
   <input class="btn btn-default" type="submit" value="Search" />
 </span>
 </div>
+
+
 </div>
-{% if user.is_authenticated %}<a class="btn btn-success" href="{% url 'posts:create' %}">make new post</a>{% endif %}
+
 </form>
 
 

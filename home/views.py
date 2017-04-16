@@ -16,6 +16,13 @@ from django.contrib.auth import (
 
 import requests
 
+from rest_framework.generics import CreateAPIView
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import authentication, permissions
+
+from .serializers import GuestBookSerializer
+
 
 EMAIL_HOST_USER = settings.EMAIL_HOST_USER
 # Create your views here.
@@ -131,3 +138,34 @@ def cancel_nl(request, uid):
 		sub.delete()
 		messages.success(request, "You are no longer subscribed to my newsletter. Thank you!")
 	return redirect('home:home')
+
+
+
+
+class CreateGuestBookAPIView(CreateAPIView):
+	authentication_classes = (authentication.SessionAuthentication,)
+	permission_classes = (permissions.IsAuthenticated,)
+	serializer_class = GuestBookSerializer
+
+	def post(self, request, *args, **kwargs):
+
+		message = request.POST['message']
+
+		ip = get_client_ip(request)
+		base = "http://api.ipinfodb.com/v3/ip-city/?key=3a3bdb7e563895cd7d7b27ff9c5efd60d8686be6d75ab117fe40497d3054d8e9&ip="
+		query = base + ip
+		r = requests.get(query)
+		city = r.text.split(';')[-5]
+		state = r.text.split(';')[-6]
+		user = request.user
+		item = GuestBook.objects.create(message=message, user=user, city=city, state=state)
+		item.save()
+		# data = self.request.POST.get['message']
+
+
+		data = { 	'message': message,
+					'city': item.city,
+					'state': item.state,
+					'user': item.user.username,
+		}
+		return Response(data)

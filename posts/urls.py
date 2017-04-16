@@ -24,5 +24,6 @@ urlpatterns = [
 
     url(r'^(?P<slug>.+)/delete/$', post_delete, name='delete'),
     url(r'^search/$', posts_search, name="search"),
+	
 
 ]

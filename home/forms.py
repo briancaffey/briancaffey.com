@@ -22,10 +22,14 @@ class NewsletterEmailsForm(forms.ModelForm):
 
 
 class GuestBookForm(forms.ModelForm):
-	message = forms.CharField()
 
 	class Meta:
 		model = GuestBook
 		fields = [
 			'message',
 		]
+		widgets = {
+			'message': forms.TextInput(
+				attrs={'id':'post-text', 'required':True, 'placeholder':'Leave me a message here.'}
+			)
+		}
