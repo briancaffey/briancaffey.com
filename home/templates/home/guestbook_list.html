@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block nav%}{% include 'home_nav.html' %}{% endblock %}
+
+
+<script>
+{% block jquery %}
+
+$(document).ready(function(){
+
+// function addItem(){
+//     var target_ =
+//     target_.prepend( )
+// }
+
+
+
+  $("#post-form").on('submit', function(event){
+  	event.preventDefault();
+    var this_ = $(this)
+  	console.log("Prevented")
+    console.log("this works too")
+    console.log($('#post-text').val())
+    console.log("this works too")
+    var gb_endpoint = this_.attr("data-href")
+    console.log(gb_endpoint)
+    $.ajax({
+
+      url: gb_endpoint,
+      type: "POST",
+      data: { message : $("#post-text").val(),
+              csrfmiddlewaretoken: '{{ csrf_token }}',
+              city: "some city",
+              state: "some state",
+              // user: '{{ requst.user.username }}',
+
+
+      },
+      success: function(json){
+        console.log(json)
+        console.log("something here should go wrong")
+        $('#post-text').val('');
+        $('#post-form').blur();
+
+
+        if (1 == 1){
+          var user = json.user
+          $('#guest-book-items').prepend('<div class="panel panel-success"><div class="panel-heading">From {% if user.is_authenticated %}{{ user }}{% else %}someone{% endif %} in the ' + json.city + ', ' + json.state + ' area | just now</div><div class="panel-body">' + json.message + '</div></div>'
+
+          )
+        }
+
+
+
+
+        console.log(json);
+        console.log("success");
+      },
+
+    })
+  })
+})
+
+
+{% endblock %}
+</script>
+
+
+
+{% block content %}
+
+<h2>Brian's Guest Book</h2>
+
+
+
+<form style="text-align:center;" id="post-form" data-href="/api/gb-submit/" method="POST" action=".">{% csrf_token %}
+  {{ guest_form | crispy }}
+  <input type="submit" id="post-form post-button" class="btn btn-success" value="Add note"><br/> -or- <br/><a class="btn btn-info" href="{% url 'home:gb-submit' %}">Sign guestbook through the Django REST framework</a>
+</form>
+
+
+<span id="guest-book-items">
+{% for object in object_list %}
+
+<div class="panel panel-success">
+  <div class="panel-heading">{% if object.user %}From {{ object.user }}{% if object.city %} in the {{ object.city }}, {{ object.state }} area{% endif %}{% else %}From someone{% if object.city %} in the {{ object.city }}, {{ object.state }} area{% endif %}{% endif %} | {{ object.date_created | timesince }}</div>
+  <div class="panel-body">{{ object.message }}</div>
+</div>
+
+{% endfor %}
+</span>
+
+{% endblock %}

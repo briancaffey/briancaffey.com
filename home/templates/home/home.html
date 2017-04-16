@@ -8,6 +8,7 @@
 
 
 {% block jquery %}
+
 $(document).ready(function(){
 
 // function addItem(){
@@ -83,9 +84,9 @@ $(document).ready(function(){
       <h2 style="text-align:center;">Hello, world. 🌎🌍🌏</h2>
       <h2 style="text-align:center;">{% include 'home/flags.html' %}</h2>
       <hr>
-      <h2 style="text-align:center;">Sign my (AJAX-powered) guest book&nbsp;📓🖊</h2>
+      <h2 style="text-align:center;">Sign my (AJAX-powered) <a href="{% url 'home:gb-list' %}">guest book</a>&nbsp;📓🖊</h2>
 
-      <form style="text-align:center;" id="post-form" data-href="api/gb-submit/" method="POST" action=".">{% csrf_token %}
+      <form style="text-align:center;" id="post-form" data-href="/api/gb-submit/" method="POST" action=".">{% csrf_token %}
         {{ guest_form | crispy }}
         <input type="submit" id="post-form post-button" class="btn btn-success" value="Add note"><br/> -or- <br/><a class="btn btn-info" href="{% url 'home:gb-submit' %}">Sign guestbook through the Django REST framework</a>
       </form>
@@ -100,7 +101,7 @@ $(document).ready(function(){
       {% endfor %}
       </span>
 
-      <h3>View <a href="#">all {{ guest_book.all.count }} notes</a> in the guestbook</h3>
+      <h3>View <a href="{% url 'home:gb-list' %}">all {{ guest_book_count }} notes</a> in my guestbook</h3>
     </div>
       <div class="col-md-4">
         <h3 style="text-align:center;">Join my monthly newsletter! 🗞</h3>

@@ -16,6 +16,9 @@ from django.contrib.auth import (
 
 import requests
 
+from django.views.generic.list import ListView
+from django.views.generic.edit import FormMixin
+
 from rest_framework.generics import CreateAPIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -39,6 +42,8 @@ def home(request):
 	registration_form = UserRegistrationForm(request.POST or None)
 	guest_form = GuestBookForm(request.POST or None)
 	guest_book = GuestBook.objects.all()
+	guest_book_count = len(guest_book)
+	guest_book = guest_book[:5]
 
 	# ip_lookup = pyipinfodb.IPInfo('3a3bdb7e563895cd7d7b27ff9c5efd60d8686be6d75ab117fe40497d3054d8e9')
 	# ip_lookup.get_city(get_client_ip(request))
@@ -53,6 +58,7 @@ def home(request):
 		'ip':ip,
 		'city':location,
 		'state': state,
+		'guest_book_count':guest_book_count,
 	}
 
 	if request.method == "POST":
@@ -112,6 +118,9 @@ def home(request):
 
 	return render(request, 'home/home.html', context)
 
+class GBListView(ListView):
+	model = GuestBook
+
 
 def confirm_nl(request, uid):
 	sub = NewsletterEmails.objects.get(uid=uid)
@@ -159,7 +168,7 @@ class CreateGuestBookAPIView(CreateAPIView):
 
 		message = self.request.POST['message']
 		if message.strip(' ') == "":
-			raise serializers.ValidationError("This didn't work")
+			raise serializers.ValidationError("Unable to accept empty guest book notes")
 		if self.request.user.is_authenticated():
 
 			_ = serializer.save(user=self.request.user, message=message, city=city, state=state)
@@ -169,6 +178,14 @@ class CreateGuestBookAPIView(CreateAPIView):
 		# print(_.city)
 		# return Response(_)
 
+
+class GBListView(CreateGuestBookAPIView):
+
+
+	def get(self, *args, **kwargs):
+		object_list = GuestBook.objects.all()
+		guest_form = GuestBookForm(self.request.POST or None)
+		return render(self.request, 'home/guestbook_list.html', {'guest_form':guest_form, 'object_list':object_list})
 
 
 
