@@ -16,7 +16,7 @@ class NewsletterEmails(models.Model):
 
 class GuestBook(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True)
-    message = models.CharField(max_length=400)
+    message = models.CharField(max_length=400, blank=False)
     date_created = models.DateTimeField(auto_now_add=True)
     city = models.CharField(max_length=500, null=True, blank=True)
     state = models.CharField(max_length=500, null=True, blank=True)
@@ -24,5 +24,5 @@ class GuestBook(models.Model):
     def __str__(self):
         return str(self.message)
 
-    class Meta: 
+    class Meta:
         ordering = ["-date_created"]

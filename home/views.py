@@ -144,34 +144,54 @@ def cancel_nl(request, uid):
 
 class CreateGuestBookAPIView(CreateAPIView):
 	authentication_classes = (authentication.SessionAuthentication,)
-	permission_classes = () #(permissions.IsAuthenticated,)
+	permission_classes = (permissions.IsAuthenticated,)
 	serializer_class = GuestBookSerializer
 
-	def post(self, request, *args, **kwargs):
+	def perform_create(self, serializer):
 
-		message = request.POST['message']
-
-		ip = get_client_ip(request)
+		ip = get_client_ip(self.request)
 		base = "http://api.ipinfodb.com/v3/ip-city/?key=3a3bdb7e563895cd7d7b27ff9c5efd60d8686be6d75ab117fe40497d3054d8e9&ip="
 		query = base + ip
 		r = requests.get(query)
 		city = r.text.split(';')[-5]
 		state = r.text.split(';')[-6]
-		if self.request.user.is_authenticated():
-			user = request.user
-		else:
-			user = None
-		item = GuestBook.objects.create(message=message, user=user, city=city, state=state)
-		item.save()
-		# data = self.request.POST.get['message']
-		if item.user:
-			user = user.username
-		else:
-			user = "someone"
 
-		data = { 	'message': message,
-					'city': item.city,
-					'state': item.state,
-					'user': user,
-		}
-		return Response(data)
+		message = self.request.POST['message']
+		_ = serializer.save(user=self.request.user, message=message, city=city, state=state)
+		return Response(_)
+
+
+
+
+	# def post(self, request, *args, **kwargs):
+	#
+	# 	message = request.POST['message']
+	#
+	# 	ip = get_client_ip(request)
+	# 	base = "http://api.ipinfodb.com/v3/ip-city/?key=3a3bdb7e563895cd7d7b27ff9c5efd60d8686be6d75ab117fe40497d3054d8e9&ip="
+	# 	query = base + ip
+	# 	r = requests.get(query)
+	# 	city = r.text.split(';')[-5]
+	# 	state = r.text.split(';')[-6]
+	# 	if self.request.user.is_authenticated():
+	# 		user = request.user
+	# 	else:
+	# 		user = None
+	# 	item = GuestBook.objects.create(message=message, user=user, city=city, state=state)
+	# 	item.save()
+	# 	# data = self.request.POST.get['message']
+	# 	if item.user:
+	# 		user = user.username
+	# 	else:
+	# 		user = "someone"
+	#
+	#
+	#
+	# 	data = { 	'message': message,
+	# 				'city': item.city,
+	# 				'state': item.state,
+	# 				'user': user,
+	# 	}
+	#
+	#
+	# 	return Response(data)
