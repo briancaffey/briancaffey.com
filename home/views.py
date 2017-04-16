@@ -19,7 +19,7 @@ import requests
 from rest_framework.generics import CreateAPIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import authentication, permissions
+from rest_framework import authentication, permissions, serializers
 
 from .serializers import GuestBookSerializer
 
@@ -143,6 +143,7 @@ def cancel_nl(request, uid):
 
 
 class CreateGuestBookAPIView(CreateAPIView):
+	queryset = GuestBook.objects.all()
 	authentication_classes = (authentication.SessionAuthentication,)
 	permission_classes = ()#(permissions.IsAuthenticated,)
 	serializer_class = GuestBookSerializer
@@ -157,6 +158,8 @@ class CreateGuestBookAPIView(CreateAPIView):
 		state = r.text.split(';')[-6]
 
 		message = self.request.POST['message']
+		if message.strip(' ') == "":
+			raise serializers.ValidationError("This didn't work")
 		if self.request.user.is_authenticated():
 
 			_ = serializer.save(user=self.request.user, message=message, city=city, state=state)
