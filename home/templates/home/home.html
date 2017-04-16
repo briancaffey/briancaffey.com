@@ -48,9 +48,9 @@ $(document).ready(function(){
 
         if (1 == 1){
           var user = json.user
-          $('#guest-book-items').prepend('<div class="panel panel-success"><div class="panel-heading">From {% if user.is_authenticated %}{{ user }}{% else %}someone{% endif %} in the ' + json.city + ', ' + json.state + ' area | just now</div><div class="panel-body">' + json.message + '</div></div>'
+          $('#guest-book-items').prepend('<div class="panel panel-success"><div class="panel-heading">From {% if user.is_authenticated %}{{ user }}{% else %}someone{% endif %} in the ' + json.city + ', ' + json.state + ' area | just now</div><div class="panel-body">' + json.message + '</div></div>')
 
-          )
+
         }
 
 
