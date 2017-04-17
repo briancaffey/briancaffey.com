@@ -6,6 +6,7 @@ from django.core.mail import send_mail
 from accounts.forms import UserLoginForm, UserRegistrationForm
 from .forms import GuestBookForm
 from .models import GuestBook, NewsletterEmails
+from posts.models import Post
 from .utils import get_client_ip
 from django.contrib.auth import (
 	authenticate,
@@ -44,6 +45,7 @@ def home(request):
 	guest_book = GuestBook.objects.all()
 	guest_book_count = len(guest_book)
 	guest_book = guest_book[:5]
+	recent_posts = Post.objects.all()[:2]
 
 	# ip_lookup = pyipinfodb.IPInfo('3a3bdb7e563895cd7d7b27ff9c5efd60d8686be6d75ab117fe40497d3054d8e9')
 	# ip_lookup.get_city(get_client_ip(request))
@@ -59,6 +61,7 @@ def home(request):
 		'city':location,
 		'state': state,
 		'guest_book_count':guest_book_count,
+		'recent_posts': recent_posts,
 	}
 
 	if request.method == "POST":

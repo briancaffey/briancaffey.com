@@ -88,7 +88,7 @@ def posts_create(request):
 	context = {
 		'form': form
 	}
-	return render(request, "post_form.html", context)
+	return render(request, "posts/post_form.html", context)
 
 
 def posts_list(request):
@@ -160,7 +160,7 @@ def posts_update(request, slug=None):
 # 	messages.success(request, "Successfully Deleted")
 # 	return redirect('posts:list')
 
-@login_required
+
 def post_delete(request, slug=None):
 	obj = get_object_or_404(Post, slug=slug)
 	if request.method == 'POST':
@@ -168,6 +168,7 @@ def post_delete(request, slug=None):
 			obj.delete()
 			messages.success(request, "Your post has been deleted.")
 			return redirect('posts:list')
+			
 			#something
 		else:
 			messages.success(request, "You don't have permission to delete this post.")
@@ -175,8 +176,9 @@ def post_delete(request, slug=None):
 	context = {
 		'object':obj,
 	}
-	if request.user == obj.user:
-		return render(request, 'posts/confirm_delete.html', context)
+	if request.user.is_authenticated():
+		if request.user == obj.user:
+			return redirect(request, 'posts/confirm_delete.html', context)
 	else:
 		messages.success(request, "You don't have permission to delete this post.")
 		return redirect('posts:list')

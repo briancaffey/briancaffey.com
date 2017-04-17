@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'taggit',
     'taggit_templatetags2',
+    'friends',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'

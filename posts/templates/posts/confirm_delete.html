@@ -7,7 +7,7 @@
 {% block content %}
 
 
-<div class="">
+<div class="container">
 	<h1>Confirm Delete</h1>
 <form method="POST" action=".">{%csrf_token %}
 	<p>Are you sure you want to delete: "{{ object.title }}"?</p>

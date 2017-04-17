@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load urlify %}
+
+{% block head %}{{ instance.title }} | {{ block.super }}{% endblock %}
+
+{% block content %}
+
+<h1>Your Friends</h1>
+{% for friend in friends %}
+
+<h2>{{ friend }}</h2>
+<h3>{{ friend.emoji }}</h3>
+<p>{{ friend.description }}lnlkjnujoiujoiuhoioiuhoiuhoiuh</p>
+
+{% endfor %}
+
+
+
+<h1>All users</h1>
+{% for person in all_users %}
+
+
+<h2>{{ person }}</h2>
+<h3>{{ person.emoji }}</h3>
+<p>{{ person.description }}</p>
+{% if person in friends %}<h3>
+<a class='btn btn-danger' href="{% url 'friends:add_or_remove_friends' username=person.user.username verb='remove' %}">Remove friend</a>
+{% else %}
+<a class='btn btn-success' href="{% url 'friends:add_or_remove_friends' username=person.user.username verb='add' %}">Add friend</a>
+</h3>{% endif %}
+{% endfor %}
+
+{% endblock content %}

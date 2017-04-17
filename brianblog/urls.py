@@ -21,6 +21,7 @@ from posts import views
 
 
 urlpatterns = [
+    url(r'^users/', include('friends.urls', namespace="friends")),
     url(r'^admin/', admin.site.urls),
     url(r'^blog/', include('posts.urls', namespace="posts")),
     url(r'^api/blog/', include('posts.api.urls', namespace="posts")),
@@ -29,7 +30,7 @@ urlpatterns = [
     url(r'^comments/', include('comments.urls', namespace='comments')),
     url(r'^accounts/', include('accounts.urls', namespace='accounts')),
     url(r'^readinglist/', include('readinglist.urls', namespace='reading-list')),
-    
+
 ]
 
 if settings.DEBUG:

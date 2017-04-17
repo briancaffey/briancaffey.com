@@ -8,7 +8,18 @@
 
 
 <script>
-{% block jquery %}{% include 'like-btn.html' %}
+{% block jquery %}
+{% include 'like-btn.html' %}
+{% include 'post-create-jquery.html' %}
+
+$(document).ready(function(){
+
+	console.log("Testing!")
+
+})
+
+
+
 {% endblock %}
 </script>
 
@@ -91,7 +102,7 @@
 
 		<hr>
 		<div>
-			<p class="lead">{{ comments.all.count }} Comment{{ comments.all.count | pluralize }}</p>
+			<p class="lead">{{ comments.all.count }} Comment{{ comments.all.count | pluralize }} 💬</p>
 			<form method="POST" action=".">{% csrf_token %}
 				{{ comment_form | crispy }}
 				<input type="submit" value="comment" class="btn btn-default"></input>
