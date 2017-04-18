@@ -18,3 +18,22 @@
 h3 {
 	overflow-wrap:break-word;
 }
+
+
+html,body {
+  height:100%;
+}
+
+.page-wrapper {
+  min-height: 100%;
+  margin-bottom: -319px;
+}
+
+.page-wrapper:after {
+  content: "";
+  display: block;
+}
+
+.footer-distributed, .page-wrapper:after {
+  height:229px;
+}

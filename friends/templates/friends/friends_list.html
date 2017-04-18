@@ -23,7 +23,6 @@
                         <div class="caption">
 
                             <h4>{{ friend.description }}</h4>
-                            <h4>{{ friend.description }}</h4>
                             {% if friend not in friends %}<h3>
                             <a class='btn btn-success' href="{% url 'friends:add_or_remove_friends' username=friend.user.username verb='add' %}">Add friend</a>
                             {% else %}
