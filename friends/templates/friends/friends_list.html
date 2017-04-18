@@ -6,29 +6,68 @@
 
 {% block content %}
 
-<h1>Your Friends</h1>
-{% for friend in friends %}
 
-<h2>{{ friend }}</h2>
-<h3>{{ friend.emoji }}</h3>
-<p>{{ friend.description }}lnlkjnujoiujoiuhoioiuhoiuhoiuh</p>
+<div class="albums-container container-fluid">
 
-{% endfor %}
+    <!-- Albums -->
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>Your Friends</h3>
+        </div>
+
+            {% for friend in friends %}
+                <div class="col-sm-4 col-lg-2">
+                    <div class="thumbnail">
+                      <div class="container"><h2>{{ friend.user.username }}</h2>
+                      <h4>{{ friend.emoji }}</h4></div>
+                        <div class="caption">
+
+                            <h4>{{ friend.description }}</h4>
+                            <h4>{{ friend.description }}</h4>
+                            {% if friend not in friends %}<h3>
+                            <a class='btn btn-success' href="{% url 'friends:add_or_remove_friends' username=friend.user.username verb='add' %}">Add friend</a>
+                            {% else %}
+                            <a class='btn btn-danger' href="{% url 'friends:add_or_remove_friends' username=friend.user.username verb='remove' %}">Remove friend</a>
+                            </h3>{% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
+            {% endfor %}
+
+    </div>
+</div>
 
 
+<div class="albums-container container-fluid">
 
-<h1>All users</h1>
-{% for person in all_users %}
+    <!-- Albums -->
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>All Users</h3>
+        </div>
 
+            {% for person in all_users %}
+                <div class="col-sm-4 col-lg-2">
+                    <div class="thumbnail">
+                        <div class="container"><h2>{{ person.user.username }}</h2>
+                      <h4>{{ person.emoji }}</h4></div>
+                        <div class="caption">
 
-<h2>{{ person }}</h2>
-<h3>{{ person.emoji }}</h3>
-<p>{{ person.description }}</p>
-{% if person in friends %}<h3>
-<a class='btn btn-danger' href="{% url 'friends:add_or_remove_friends' username=person.user.username verb='remove' %}">Remove friend</a>
-{% else %}
-<a class='btn btn-success' href="{% url 'friends:add_or_remove_friends' username=person.user.username verb='add' %}">Add friend</a>
-</h3>{% endif %}
-{% endfor %}
+                            <h4>{{ person.description }}</h4>
+                            {% if person in friends %}<h3>
+                            <a class='btn btn-danger' href="{% url 'friends:add_or_remove_friends' username=person.user.username verb='remove' %}">Remove friend</a>
+                            {% else %}
+                            <a class='btn btn-success' href="{% url 'friends:add_or_remove_friends' username=person.user.username verb='add' %}">Add friend</a>
+                            </h3>{% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
+            {% endfor %}
+
+    </div>
+</div>
+
 
 {% endblock content %}
