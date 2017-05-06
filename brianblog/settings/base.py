@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '&o%hx$!y%v-+wpf6hl#3_j&pw!)w&)d%l&b$a7!^*rjslyf0=('
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -164,7 +164,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "live-static", "media-root")
 
 
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_PASSWORD = 'saintmary'
+EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
 EMAIL_HOST_USER = 'briancaffey2010@gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
