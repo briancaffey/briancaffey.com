@@ -24,8 +24,10 @@ class ReadingMaterialUpdateForm(forms.ModelForm):
 
 	name = forms.CharField()
 
-	description = forms.CharField(widget=forms.Textarea(
-		attrs={'rows':4}))
+	description = forms.CharField(
+		widget=forms.Textarea(
+			attrs={'rows':4}
+			))
 
 
 	class Meta:

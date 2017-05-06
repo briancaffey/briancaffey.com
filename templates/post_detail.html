@@ -10,11 +10,53 @@
 <script>
 {% block jquery %}
 {% include 'like-btn.html' %}
-{% include 'post-create-jquery.html' %}
+
 
 $(document).ready(function(){
+		console.log("Prevented")
+	$("#post-form").on('submit', function(event){
+		event.preventDefault();
+		var this_ = $(this)
+		console.log("Prevented")
+		console.log("this works too")
+		console.log($('#post-text').val())
+		var gb_endpoint = this_.attr("data-href")
+		console.log(gb_endpoint)
+		$.ajax({
 
-	console.log("Testing!")
+			url: gb_endpoint,
+			type: "POST",
+			data: { content : $("#post-text").val(),
+							csrfmiddlewaretoken: '{{ csrf_token }}',
+							// user: '{{ requst.user.username }}',
+			},
+			success: function(json){
+				console.log(json)
+				console.log("something here should go wrong")
+				$('#post-text').val('');
+				$('#post-form').blur();
+				var gb_num = $("#gb-num").text();
+				//console.log(gb_num)
+				var new_gb_num = parseInt(gb_num) + 1
+				$("#gb-num").text(new_gb_num);
+
+
+				if (1 == 1){
+					var user = json.user
+					$('#comment-box').prepend('<div class="panel panel-success"><div class="panel-heading">From {% if user.is_authenticated %}{{ user }}{% else %}someone{% endif %} in the ' + json.city + ', ' + json.state + ' area | just now</div><div class="panel-body">' + json.message + '</div></div>')
+
+
+				}
+
+
+
+
+				//console.log(json);
+				console.log("success");
+			},
+
+		})
+	})
 
 })
 
@@ -57,7 +99,7 @@ $(document).ready(function(){
 		          </div>
 		          <div class="modal-body">
 		            <p>
-		              <form method="POST" action=".">
+		              <form method="POST" action="." >
 		          		<div class="login-center"><a class="btn btn-success login-center" href="{% url 'accounts:login' %}" type="submit" value="Login" >Login</a></div><br/> or <a href="{% url 'accounts:register' %}">create an account</a>
 
 		          		</form>
@@ -103,16 +145,21 @@ $(document).ready(function(){
 		<hr>
 		<div>
 			<p class="lead">{{ comments.all.count }} Comment{{ comments.all.count | pluralize }} 💬</p>
-			<form method="POST" action=".">{% csrf_token %}
+			{% if user.is_authenticated %}
+			<form id="post-form" method="POST" action="." data-href="/api/blog/{{ instance.slug }}/comment/">{% csrf_token %}
 				{{ comment_form | crispy }}
 				<input type="submit" value="comment" class="btn btn-default"></input>
 			</form>
+			{% else %}
+			<p>Please <a href="{% url 'accounts:login' %}">login</a> or <a href="{% url 'accounts:register' %}">register</a> to leave a comment.</p>
+			{% endif %}
+			<span id="comment-box">
 			{% for comment in comments %}
 			{% if comment.is_parent %}
 				<blockquote>
 	  			<p>{{ comment.content }}</p>
 				<small>via {{ comment.user }} | {{ comment.timestamp | timesince }} ago | <a class="comment-reply-btn" href="#">Reply</a> | <a href="{% url 'comments:thread' pk=comment.id %}">Thread</a> | {% if user == comment.user %}<a href="{% url 'comments:delete' pk=comment.id %}">Delete</a>{% endif %}</small>
-
+				<br />
 				<br />
 				<div class='comment-reply'>
 				<form method="POST" action=".">{% csrf_token %}
@@ -127,9 +174,6 @@ $(document).ready(function(){
 				{% for reply in comment.children %}
 
 				<blockquote>
-
-
-
 
 					<p>{{ reply.content | safe }}</p>
 					<small>via {{ reply.user }} | {{ reply.timestamp | timesince }} ago | {% if user == reply.user %}<a href="{% url 'comments:delete' pk=reply.id %}">Delete</a>{% endif %}</small>
@@ -148,6 +192,7 @@ $(document).ready(function(){
 			{% endif %}
 
 			{% endfor %}
+		</span>
 
 
 		</div>

@@ -168,7 +168,7 @@ def post_delete(request, slug=None):
 			obj.delete()
 			messages.success(request, "Your post has been deleted.")
 			return redirect('posts:list')
-			
+
 			#something
 		else:
 			messages.success(request, "You don't have permission to delete this post.")

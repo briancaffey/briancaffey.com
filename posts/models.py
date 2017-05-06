@@ -47,7 +47,12 @@ class Post(models.Model):
 
 	def get_markdown(self):
 		content = self.content
-		return mark_safe(markdown(content))
+		if content:
+			print("OK")
+			return mark_safe(markdown(content))
+		else:
+			print("Something went wrong")
+			return "Something went wrong."
 
 	objects = PostManager()
 

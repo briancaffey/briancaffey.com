@@ -15,6 +15,8 @@ from .forms import UserLoginForm, UserRegistrationForm
 
 
 # Create your views here.
+
+
 def login_view(request):
 
 	next = request.GET.get('next')

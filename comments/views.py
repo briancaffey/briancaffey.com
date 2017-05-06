@@ -5,6 +5,13 @@ from .models import Comment
 from .forms import CommentForm
 from django.contrib.contenttypes.models import ContentType
 from django.contrib import messages
+from .serializers import CommentSerializer
+from django.contrib.contenttypes.fields import GenericForeignKey
+
+from rest_framework.generics import CreateAPIView
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import authentication, permissions, serializers
 
 # Create your views here.
 
@@ -67,7 +74,6 @@ def comment_thread(request, pk):
 									object_id=obj_id,
 									content=content_data,
 									parent=parent_obj
-
 							)
 		return HttpResponseRedirect(new_comment.content_object.get_absolute_url())
 
@@ -79,3 +85,31 @@ def comment_thread(request, pk):
 		'form': form,
 	}
 	return render(request, 'comments/comment_thread.html', context)
+
+#
+#
+class CommentCreateAPIView(CreateAPIView):
+	queryset = Comment.objects.all()
+	authentication_classes = (authentication.SessionAuthentication,)
+	permission_classes = ()#(permissions.IsAuthenticated,)
+	serializer_class = CommentSerializer
+# 	serializer_class = GuestBookSerializer
+#
+	def perform_create(self, serializer):
+		content = self.request.POST['content']
+		object_id = self.request.POST['object_id']
+		c_type = self.request.POST["content_type"]
+		print(c_type)
+		content_type = ContentType.objects.get(model=c_type)
+
+		content_object = GenericForeignKey(content_type, object_id)
+		if content.strip(' ') == "":
+			raise serializers.ValidationError("Unable to accept empty guest book notes")
+		if self.request.user.is_authenticated():
+
+			_ = serializer.save(user=self.request.user, content=content, object_id=object_id, content_type=content_type, content_object=content_object)
+# 		else:
+# 			_ = serializer.save(message=message, city=city, state=state)
+
+		return Response(_)
+#

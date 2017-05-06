@@ -18,6 +18,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from posts import views
+from comments.views import CommentCreateAPIView
 
 
 urlpatterns = [
@@ -25,6 +26,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^blog/', include('posts.urls', namespace="posts")),
     url(r'^api/blog/', include('posts.api.urls', namespace="posts")),
+    url(r'^api/blog/(?P<slug>.+)/comment/$', CommentCreateAPIView.as_view(), name="api-add-comment"),
     url(r'^', include('home.urls', namespace="home" )),
     url(r'^projects/', include('projects.urls', namespace='projects')),
     url(r'^comments/', include('comments.urls', namespace='comments')),

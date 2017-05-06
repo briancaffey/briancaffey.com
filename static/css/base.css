@@ -37,3 +37,7 @@ html,body {
 .footer-distributed, .page-wrapper:after {
   height:229px;
 }
+
+.comment-reply {
+	display: none;
+}
