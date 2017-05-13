@@ -80,7 +80,7 @@ $(document).ready(function(){
         <h1>Welcome! 🎉</h1>
         <p>This is Brian Caffey's personal website. Thanks for visiting!</p>
         <p>Your IP is {{ ip }}{% if city %}, and you are in {{ city }}, {{ state }}{% endif %}.</p>
-        <a href="#" class="btn btn-warning">Start</a>
+        <!-- <a href="#" class="btn btn-warning">Start</a> -->
       </div>
 
       <h4>Interested in writing a guest post? Anyone can contribute to my blog. {% if user.is_authenticated %}<a href="{% url 'posts:create' %}">Get started now!</a>{% else %}<a href="{% url 'accounts:login' %}">Login</a> or <a href="{% url 'accounts:register' %}">register</a> now and start writing your first post.{% endif %}</h4>
@@ -108,7 +108,8 @@ $(document).ready(function(){
 
       <h3>View <a href="{% url 'home:gb-list' %}">all <span id="gb-num">{{ guest_book_count }}</span> notes</a> in my guestbook</h3>
     </div>
-      <div class="col-md-4">
+
+    <div class="col-md-4">
         <h3 style="text-align:center;">Join my monthly newsletter! 🗞</h3>
         <form method="POST" action=".">{% csrf_token %}
           {{ form_ | crispy }}
@@ -135,7 +136,7 @@ $(document).ready(function(){
       <hr>
       <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">&quot;When you reach the end of your rope, tie a knot in it and hang on.&quot; -- Thomas Jefferson</p>&mdash; Brian Caffey (@briancaffey) <a href="https://twitter.com/briancaffey/status/715632338059796480">March 31, 2016</a></blockquote>
       <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-      <hr>
-  </div>
+
+    </div>
 
 {% endblock %}

@@ -8,11 +8,13 @@ from friends.models import Friend
 
 
 def friend_list(request):
+    context = {}
+    if request.user.is_authenticated():
 
-    all_users = UserProfile.objects.all().exclude(user=request.user)
-    context = {
-            "all_users":all_users,
-        }
+        all_users = UserProfile.objects.all().exclude(user=request.user)
+        context = {
+                "all_users":all_users,
+            }
     if request.user.is_authenticated():
         friend_object, created = Friend.objects.get_or_create(current_user=request.user.userprofile)
         if friend_object.users:
