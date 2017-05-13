@@ -63,9 +63,6 @@ class PostLikeAPIToggle(APIView):
 
 		return Response(data)
 
-
-
-
 def posts_create(request):
 	# if not request.user.is_staff or not request.user.is_superuser:
 	if not request.user.is_authenticated:

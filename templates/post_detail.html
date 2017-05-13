@@ -12,55 +12,60 @@
 {% include 'like-btn.html' %}
 
 
-$(document).ready(function(){
-		console.log("Prevented")
-	$("#post-form").on('submit', function(event){
-		event.preventDefault();
-		var this_ = $(this)
-		console.log("Prevented")
-		console.log("this works too")
-		console.log($('#post-text').val())
-		var gb_endpoint = this_.attr("data-href")
-		console.log(gb_endpoint)
-		$.ajax({
-
-			url: gb_endpoint,
-			type: "POST",
-			data: { content : $("#post-text").val(),
-							csrfmiddlewaretoken: '{{ csrf_token }}',
-							// user: '{{ requst.user.username }}',
-			},
-			success: function(json){
-				console.log(json)
-				console.log("something here should go wrong")
-				$('#post-text').val('');
-				$('#post-form').blur();
-				var gb_num = $("#gb-num").text();
-				//console.log(gb_num)
-				var new_gb_num = parseInt(gb_num) + 1
-				$("#gb-num").text(new_gb_num);
-
-
-				if (1 == 1){
-					var user = json.user
-					$('#comment-box').prepend('<div class="panel panel-success"><div class="panel-heading">From {% if user.is_authenticated %}{{ user }}{% else %}someone{% endif %} in the ' + json.city + ', ' + json.state + ' area | just now</div><div class="panel-body">' + json.message + '</div></div>')
-
-
-				}
-
-
-
-
-				//console.log(json);
-				console.log("success");
-			},
-
-		})
-	})
-
+		$(document).ready(function(){
+			$(".comment-reply-btn").click(function(event){
+  event.preventDefault();
+  $(this).parent().next().next(".comment-reply").fadeToggle();
 })
-
-
+		})
+// $(document).ready(function(){
+// 	console.log("Prevented")
+// 	$("#post-form").on('submit', function(event){
+// 		event.preventDefault();
+// 		var this_ = $(this)
+// 		console.log("Prevented")
+// 		console.log("this works too")
+// 		console.log($('#post-text').val())
+// 		var gb_endpoint = this_.attr("data-href")
+// 		console.log(gb_endpoint)
+// 		$.ajax({
+// 			url: gb_endpoint,
+// 			type: "POST",
+// 			data: { content : $("#post-text").val(),
+// 							csrfmiddlewaretoken: '{{ csrf_token }}',
+// 							// user: '{{ requst.user.username }}',
+// 			},
+// 			success: function(json){
+// 				console.log(json)
+// 				console.log("something here should go wrong")
+// 				$('#post-text').val('');
+// 				$('#post-form').blur();
+// 				var gb_num = $("#gb-num").text();
+// 				//console.log(gb_num)
+// 				var new_gb_num = parseInt(gb_num) + 1
+// 				$("#gb-num").text(new_gb_num);
+//
+//
+// 				if (1 == 1){
+// 					var user = json.user
+// 					$('#comment-box').prepend('<div class="panel panel-success"><div class="panel-heading">From {% if user.is_authenticated %}{{ user }}{% else %}someone{% endif %} in the ' + json.city + ', ' + json.state + ' area | just now</div><div class="panel-body">' + json.message + '</div></div>')
+//
+//
+// 				}
+//
+//
+//
+//
+// 				//console.log(json);
+// 				console.log("success");
+// 			},
+//
+// 		})
+// 	})
+//
+// })
+//
+//
 
 {% endblock %}
 </script>
@@ -159,7 +164,6 @@ $(document).ready(function(){
 				<blockquote>
 	  			<p>{{ comment.content }}</p>
 				<small>via {{ comment.user }} | {{ comment.timestamp | timesince }} ago | <a class="comment-reply-btn" href="#">Reply</a> | <a href="{% url 'comments:thread' pk=comment.id %}">Thread</a> | {% if user == comment.user %}<a href="{% url 'comments:delete' pk=comment.id %}">Delete</a>{% endif %}</small>
-				<br />
 				<br />
 				<div class='comment-reply'>
 				<form method="POST" action=".">{% csrf_token %}
