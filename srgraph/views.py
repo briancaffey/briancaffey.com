@@ -11,26 +11,19 @@ def graph_view(request):
 
     sr1 = request.GET.get('sr1')
     if sr1:
-        #sr1 = quote(sr1)
         sr1 = quote(sr1)
-        print(sr1)
 
     sr2 = request.GET.get('sr2')
     if sr2:
-        print(sr2)
         sr2 = quote(sr2)
 
-    print(sr2)
     if sr1 and sr2:
-        print(sr1)
-        print(sr2)
         sr_one = Subreddit.objects.filter(name=sr1 + '\n').first()
-        print(sr_one)
         sr_two = Subreddit.objects.filter(name=sr2 + '\n').first()
-        print(sr_two)
+
         if sr_one and sr_two:
-            print("happy")
-            context['search_result'] = path(sr_one.name.strip('\n'), sr_two.name.strip('\n'))
+            search_result = path(sr_one.name.strip('\n'), sr_two.name.strip('\n'))
+            context['search_result'] = search_result
 
     results = graph_()
     context['results'] = results

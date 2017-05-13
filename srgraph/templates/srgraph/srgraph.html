@@ -81,7 +81,18 @@ $(function() {
 {% if search_result%}
 <h2>Results:</h2>
 <blockquote>
-{{ search_result }}
+{{ search_result.one }}
+<br />
+{{ search_result.two }}
+<br />
+{{ search_result.path }}
+
+{% for item in search_result.collection %}
+
+
+<a class='btn btn-default' href="{{ item.reddit_link }}">{{ item }}</a> 
+
+{% endfor %}
 </blockquote>
 {% endif %}
 

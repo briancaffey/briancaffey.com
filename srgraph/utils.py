@@ -1,6 +1,7 @@
 import pandas as pd
 import networkx as nx
 import numpy as np
+from .models import Subreddit
 master_df = pd.read_pickle('master_df.p')
 master_df_ = master_df[master_df.notnull()]
 
@@ -23,9 +24,14 @@ def short_path():
         return "No path exists between " + choices[0] + ' and ' + choices[1]
 
 def path(sr_one, sr_two):
+    data = {'one':sr_one, 'two':sr_two}
     if nx.has_path(G1, sr_one, sr_two):
-        path = nx.shortest_path(G1, sr_one, sr_two)
-        return path
+        path = [x+'\n' for x in nx.shortest_path(G1, sr_one, sr_two)]
+        data['path'] = path
+        collection = list(Subreddit.objects.filter(name__in=path))
+        collection.sort(key=lambda t:path.index(t.name))
+        data['collection']  = collection
+        return data
 
 def graph_():
 

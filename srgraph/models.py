@@ -7,3 +7,6 @@ class Subreddit(models.Model):
 
     def __str__(self):
         return str(self.name)
+
+    def reddit_link(self):
+        return "https://reddit.com" + self.name.strip('\n')
