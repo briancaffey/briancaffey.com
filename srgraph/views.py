@@ -37,11 +37,9 @@ def graph_view(request):
     return render(request, 'srgraph/srgraph.html', context)
 
 def get_subreddits(request):
-    print("starting")
     if request.is_ajax():
         q = request.GET.get('term', '')
         subreddits = Subreddit.objects.filter(name__icontains = q )[:20]
-        print("Hmm")
         results = []
         for subreddit in subreddits:
             subreddit_json = {}
@@ -54,3 +52,23 @@ def get_subreddits(request):
         data = 'fail'
     mimetype = 'application/json'
     return HttpResponse(data, mimetype)
+
+def get_random(request):
+    if request.is_ajax():
+        results = []
+        random = Subreddit.objects.order_by('?')
+        first_ = random.first().name.strip('\n')
+        data = json.dumps(first_)
+    else:
+        data = 'fail'
+    mimetype = 'application/json'
+    return HttpResponse(data, mimetype)
+
+
+
+
+
+
+
+
+#

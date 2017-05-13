@@ -7,6 +7,24 @@
 <script>
 {% block jquery %}
 		$(document).ready(function(){
+
+
+$("#sr1-random").click(function(){
+  this_ = $(this).parent().parent().children().first()
+  $.get('/api/get_random/', function(data, status) {
+    this_.val(data)
+  })
+})
+
+$("#sr2-random").click(function(){
+  this_ = $(this).parent().parent().children().first()
+  $.get('/api/get_random/', function(data, status) {
+    this_.val(data)
+  })
+})
+
+
+
 $(function() {
   $("#subreddit1").autocomplete({
     source: "/api/get_subreddits/",
@@ -24,7 +42,7 @@ $(function() {
 
 {% block content %}
 
-<h2>subreddit graph analysis</h2>
+<h2>six degrees of separation on reddit.com: related subreddit graph analysis</h2>
 <p>This is a project I did earlier this year that explores the graph of related communities on reddit.com. subreddits, as they are called, often link to other related subreddits in their descriptions. starting with the 50 subreddits that are shown by default for guests, I wrote a bot that recursively collected data on selected subreddits and gathered the data into a graph with a python package called NetworkX.
 <p>the example below selects two subreddits at random and calculates the shortest path between the pair.</p>
 <br />
@@ -32,19 +50,31 @@ $(function() {
 {{ results }}
 </blockquote>
 <br />
+
 <form method="GET" action=".">
   <div class="row">
     <div class="col-md-3 col-md-offset-2">
+      <div class="input-group">
   <input id="subreddit1" class="form-control" type="text" name="sr1" value='{{ request.GET.sr1 }}' placeholder="start typing a subreddit...">
+      <span class="input-group-btn">
+        <button id="sr1-random" class="btn btn-default" type="button">random</button>
+      </span>
+    </div>
 </div>
+
 <div class="col-md-3">
+  <div class="input-group">
     <input id="subreddit2" class="form-control" type="text" name="sr2" value='{{ request.GET.sr2 }}' placeholder="type another subreddit">
+    <span class="input-group-btn">
+
+      <button id="sr2-random" class="btn btn-default" type="button">random</button>
+    </span>
+  </div>
   </div>
   <div class="col-md-2">
     <input type="submit" class="btn btn-success">
-    <a class='btn btn-warning'>Random</a>
   </div>
-</div>
+  </div>
 </form>
 
 
