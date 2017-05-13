@@ -23,6 +23,7 @@ from comments.views import CommentCreateAPIView
 
 urlpatterns = [
     url(r'^users/', include('friends.urls', namespace="friends")),
+    url(r'^srgraph/', include('srgraph.urls', namespace="srgraph")),
     url(r'^ig/', include('igpics.urls', namespace="igpics")),
     url(r'^admin/', admin.site.urls),
     url(r'^blog/', include('posts.urls', namespace="posts")),

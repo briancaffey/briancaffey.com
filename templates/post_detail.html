@@ -80,7 +80,7 @@
 	<img src="{{ instance.image.url }}" class="img-responsive" />
 	{% endif %}
 		<h1>{{ instance.title }} </h1>
-
+		<p>by {{ instance.user.username }}</p>
 		{% if user.is_authenticated %}
 
 		<p>Likes: <a class="like-btn" data-href="{{ instance.get_api_like_url }}" data-like="{{ instance.likes.count }}" href="#like">{{ instance.likes.count }} 👍</a></p>

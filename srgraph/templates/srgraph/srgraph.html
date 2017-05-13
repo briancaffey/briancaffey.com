@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block head_extra %}
+{{ form.media }}
+{% endblock %}
+
+
+{% block jquery %}
+{% include 'post-create-jquery.html' %}
+{% endblock %}
+
+
+{% block content %}
+
+<h2>subreddit graph analysis</h2>
+<p>This is a project I did earlier this year that explores the graph of related communities on reddit.com. subreddits, as they are called, often link to other related subreddits in their descriptions. starting with the 50 subreddits that are shown by default for guests, I wrote a bot that recursively collected data on selected subreddits and gathered the data into a graph with a python package called NetworkX.
+<p>the example below selects two subreddits at random and calculates the shortest path between the pair.</p>
+<br />
+<blockquote>
+{{ results }}
+</blockquote>
+
+{% endblock %}
