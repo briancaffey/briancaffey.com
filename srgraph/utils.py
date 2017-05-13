@@ -4,7 +4,6 @@ import numpy as np
 master_df = pd.read_pickle('master_df.p')
 master_df_ = master_df[master_df.notnull()]
 
-
 master_df_u = master_df_.drop_duplicates('subreddit')
 master_df_u = master_df_u.drop(master_df_u.index[master_df_u.subreddit=='/r/track__subreddits_'])
 graph = {x:y for x, y in zip(master_df_u.subreddit, master_df_u.related)}

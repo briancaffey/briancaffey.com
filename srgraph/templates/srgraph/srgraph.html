@@ -4,11 +4,19 @@
 {{ form.media }}
 {% endblock %}
 
-
+<script>
 {% block jquery %}
-{% include 'post-create-jquery.html' %}
-{% endblock %}
+		$(document).ready(function(){
+$(function() {
+  $("#subreddit1").autocomplete({
+    source: "/api/get_drugs/",
+    minLength: 2,
+  });
+});
 
+})
+{% endblock %}
+</script>
 
 {% block content %}
 
@@ -19,5 +27,19 @@
 <blockquote>
 {{ results }}
 </blockquote>
+<br />
+<form method="GET" action=".">
+  <div class="row">
+    <div class="col-md-3 col-md-offset-2">
+  <input class="form-control" type="text" placeholder="enter a subreddit">
+</div>
+<div class="col-md-3">
+    <input id="subreddit1" class="form-control" type="text" placeholder="enter another a subreddit">
+  </div>
+  <div class="col-md-2">
+    <input id="subreddit2"type="submit" class="btn btn-success">
+  </div>
+</div>
+</form>
 
 {% endblock %}
