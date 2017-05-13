@@ -22,6 +22,10 @@ def short_path():
     else:
         return "No path exists between " + choices[0] + ' and ' + choices[1]
 
+def path(sr_one, sr_two):
+    if nx.has_path(G1, sr_one, sr_two):
+        path = nx.shortest_path(G1, sr_one, sr_two)
+        return path
 
 def graph_():
 

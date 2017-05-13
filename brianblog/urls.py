@@ -19,9 +19,11 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from posts import views
 from comments.views import CommentCreateAPIView
+from srgraph.views import get_subreddits
 
 
 urlpatterns = [
+    url(r'^api/get_subreddits/', get_subreddits, name='get_subreddits'),
     url(r'^users/', include('friends.urls', namespace="friends")),
     url(r'^srgraph/', include('srgraph.urls', namespace="srgraph")),
     url(r'^ig/', include('igpics.urls', namespace="igpics")),

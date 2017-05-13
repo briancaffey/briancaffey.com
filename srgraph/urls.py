@@ -8,9 +8,5 @@ from .views import (
 urlpatterns = [
 
     url(r'^$', graph_view, name="srgraph"),
-    url(r'^api/get_drugs/', get_subreddits, name='get_subreddits'),
-
-
-
 
 ]

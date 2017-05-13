@@ -9,7 +9,11 @@
 		$(document).ready(function(){
 $(function() {
   $("#subreddit1").autocomplete({
-    source: "/api/get_drugs/",
+    source: "/api/get_subreddits/",
+    minLength: 2,
+  });
+  $("#subreddit2").autocomplete({
+    source: "/api/get_subreddits/",
     minLength: 2,
   });
 });
@@ -31,15 +35,43 @@ $(function() {
 <form method="GET" action=".">
   <div class="row">
     <div class="col-md-3 col-md-offset-2">
-  <input class="form-control" type="text" placeholder="enter a subreddit">
+  <input id="subreddit1" class="form-control" type="text" name="sr1" value='{{ request.GET.sr1 }}' placeholder="start typing a subreddit...">
 </div>
 <div class="col-md-3">
-    <input id="subreddit1" class="form-control" type="text" placeholder="enter another a subreddit">
+    <input id="subreddit2" class="form-control" type="text" name="sr2" value='{{ request.GET.sr2 }}' placeholder="type another subreddit">
   </div>
   <div class="col-md-2">
-    <input id="subreddit2"type="submit" class="btn btn-success">
+    <input type="submit" class="btn btn-success">
+    <a class='btn btn-warning'>Random</a>
   </div>
 </div>
 </form>
+
+
+{% if search_result%}
+<h2>Results:</h2>
+<blockquote>
+{{ search_result }}
+</blockquote>
+{% endif %}
+
+<!-- <div class="row">
+  <div class="col-lg-6">
+    <div class="input-group">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button">Go!</button>
+      </span>
+      <input type="text" class="form-control" placeholder="Search for...">
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="input-group">
+      <input type="text" class="form-control" placeholder="Search for...">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button">Go!</button>
+      </span>
+    </div>
+  </div>
+</div> -->
 
 {% endblock %}
