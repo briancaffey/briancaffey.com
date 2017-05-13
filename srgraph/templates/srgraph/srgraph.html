@@ -44,12 +44,7 @@ $(function() {
 
 <h2>six degrees of separation on reddit.com: related subreddit graph analysis</h2>
 <p>This is a project I did earlier this year that explores the graph of related communities on reddit.com. subreddits, as they are called, often link to other related subreddits in their descriptions. starting with the 50 subreddits that are shown by default for guests, I wrote a bot that recursively collected data on selected subreddits and gathered the data into a graph with a python package called NetworkX.
-<p>the example below selects two subreddits at random and calculates the shortest path between the pair.</p>
-<br />
-<blockquote>
-{{ results }}
-</blockquote>
-<br />
+<br /><br />
 
 <form method="GET" action=".">
   <div class="row">
@@ -57,7 +52,7 @@ $(function() {
       <div class="input-group">
   <input id="subreddit1" class="form-control" type="text" name="sr1" value='{{ request.GET.sr1 }}' placeholder="start typing a subreddit...">
       <span class="input-group-btn">
-        <button id="sr1-random" class="btn btn-default" type="button">random</button>
+        <button id="sr1-random" class="btn btn-default" type="button">random 🔄</button>
       </span>
     </div>
 </div>
@@ -67,34 +62,27 @@ $(function() {
     <input id="subreddit2" class="form-control" type="text" name="sr2" value='{{ request.GET.sr2 }}' placeholder="type another subreddit">
     <span class="input-group-btn">
 
-      <button id="sr2-random" class="btn btn-default" type="button">random</button>
+      <button id="sr2-random" class="btn btn-default" type="button">random 🔄</button>
     </span>
   </div>
   </div>
   <div class="col-md-2">
-    <input type="submit" class="btn btn-success">
+    <input type="submit" class="btn btn-success" value="find the shortest path 🔎"></input>
   </div>
   </div>
 </form>
 
 
 {% if search_result%}
-<h2>Results:</h2>
-<blockquote>
-{{ search_result.one }}
+<h2>shortest path:</h2>
 <br />
-{{ search_result.two }}
-<br />
-{{ search_result.path }}
-
+<div class="button-wrapper" style="text-align:center;">
 {% for item in search_result.collection %}
-
-
-<a class='btn btn-default' href="{{ item.reddit_link }}">{{ item }}</a> 
-
+👉 <a class='btn btn-default button-wrapper' href="{{ item.reddit_link }}">{{ item }}</a>
 {% endfor %}
-</blockquote>
+</div>
 {% endif %}
+<br />
 
 <!-- <div class="row">
   <div class="col-lg-6">

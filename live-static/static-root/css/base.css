@@ -41,3 +41,8 @@ html,body {
 .comment-reply {
 	display: none;
 }
+
+
+.button-wrapper .btn {
+    margin-bottom:5px;
+}
