@@ -126,7 +126,7 @@ $(function() {
 
 <div style="text-align:center;" class="button-wrapper">
 {% for sr in search_result.get_list %}
-<span style="font-size:1.25em;">👉</span> <a href="{{ sr.link }}" class="btn btn-default">{{ sr.sr }}</a>
+<span style="font-size:1.25em;">👉</span> <a href="{{ sr.sr.reddit_link }}" class="btn btn-default">{{ sr.sr }}</a>
 {% endfor %}
 </div>
 <span style="font-size:.5em">

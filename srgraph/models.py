@@ -39,11 +39,7 @@ class SearchResult(models.Model):
         unique_collection = []
         for x in path:
             sr = Subreddit.objects.filter(name=x).first()
-            if sr.reddit_link():
-                link = sr.reddit_link()
-            else:
-                link = ""
-            dic = {'sr':sr, 'link':link}
+            dic = {'sr':sr}
             if sr not in unique_collection:
                 unique_collection.append(dic)
 
