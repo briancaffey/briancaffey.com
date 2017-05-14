@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     'taggit',
     'taggit_templatetags2',
     'friends',
-    'srgraph'
+    'srgraph',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'

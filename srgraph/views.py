@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from .models import Subreddit, SearchResult
 import json
 from urllib.parse import quote
+from datetime import datetime, timedelta
 
 from .utils import path
 # Create your views here.
@@ -25,11 +26,17 @@ def graph_view(request):
             search_result = path(sr_one.name.strip('\n'), sr_two.name.strip('\n'))
             check = SearchResult.objects.filter(s_one=sr_one, s_two=sr_two)
             new_search_result = SearchResult(s_one=sr_one, s_two=sr_two, path=search_result['path'])
+
             print("OK1")
             if len(check) == 0:
                 print("OK")
                 sr = SearchResult(s_one=sr_one, s_two=sr_two, path=search_result['path'])
+                sr.last_searched = datetime.now()
                 sr.save()
+            else:
+                record = check.first()
+                record.last_searched = datetime.now()
+                record.save()
 
             context['new_search_result'] = search_result
 
@@ -64,24 +71,24 @@ def get_random(request):
     mimetype = 'application/json'
     return HttpResponse(data, mimetype)
 
-def view_result(request, pk):
+def view_result(request, id):
 
-    result = Subreddit.objects.get(pk=pk)
+    result = SearchResult.objects.filter(pk=id).first()
     context = {'result':result,}
 
     return render(request, 'srgraph/view_result.html', context)
 
 
-def upvote(request, pk):
+def upvote(request, id):
 
-    result = Subreddit.objects.get(pk=pk)
+    result = SearchResult.objects.filter(pk=id).first()
     result.votes += 1
     result.save()
     return redirect('srgraph:srgraph')
 
-def downvote(request, pk):
+def downvote(request, id):
 
-    result = Subreddit.objects.get(pk=pk)
+    result = SearchResult.objects.filter(pk=id).first()
     result.votes -= 1
     result.save()
     return redirect('srgraph:srgraph')

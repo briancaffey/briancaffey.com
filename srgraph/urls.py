@@ -11,8 +11,8 @@ from .views import (
 urlpatterns = [
 
     url(r'^$', graph_view, name="srgraph"),
-    url(r'^(?P<pk>.+)/$', view_result, name="view_result"),
-    url(r'^(?P<pk>.+)/up/$', upvote, name="upvote"),
-    url(r'^(?P<pk>.+)/down/$', downvote, name="downvote"),
+    url(r'^(?P<id>\d+)/$', view_result, name="view_result"),
+    url(r'^(?P<id>\d+)/up/$', upvote, name="upvote"),
+    url(r'^(?P<id>\d+)/down/$', downvote, name="downvote"),
 
 ]

@@ -1,5 +1,8 @@
 import ast
 from django.db import models
+from datetime import datetime, timedelta
+from django.utils.timezone import now
+
 
 # Create your models here.
 
@@ -19,6 +22,7 @@ class SearchResult(models.Model):
     path = models.CharField(max_length=1000)
     votes = models.IntegerField(default=0)
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)
+    last_searched = models.DateTimeField(default=now, blank=True)
 
     class Meta:
         ordering = ['-updated']
