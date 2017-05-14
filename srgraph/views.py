@@ -64,8 +64,27 @@ def get_random(request):
     mimetype = 'application/json'
     return HttpResponse(data, mimetype)
 
+def view_result(request, pk):
+
+    result = Subreddit.objects.get(pk=pk)
+    context = {'result':result,}
+
+    return render(request, 'srgraph/view_result.html', context)
 
 
+def upvote(request, pk):
+
+    result = Subreddit.objects.get(pk=pk)
+    result.votes += 1
+    result.save()
+    return redirect('srgraph:srgraph')
+
+def downvote(request, pk):
+
+    result = Subreddit.objects.get(pk=pk)
+    result.votes -= 1
+    result.save()
+    return redirect('srgraph:srgraph')
 
 
 
