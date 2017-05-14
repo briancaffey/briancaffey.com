@@ -23,6 +23,102 @@ $("#sr2-random").click(function(){
   })
 })
 
+function updateText(btn, newCount){
+	btn.text(newCount)
+	btn.attr('data-like', newCount)
+}
+
+
+$(".up-vote").each(function(index){
+	$(this).click(function(e){
+		e.preventDefault()
+		var this_ = $(this)
+		var likeCountSpan = this_.parent().next()
+		console.log(likeCountSpan)
+		var likeCount = parseInt(this_.parent().next().text())
+		// console.log(this_.parent().next().text())
+		var likeUrl = this_.attr("data-href")
+		//console.log(likeUrl)
+		//var addLike = likeCount + 1
+		if (likeUrl){
+			$.ajax({
+				url: likeUrl,
+				method: "GET",
+				data: {},
+				success: function(data){
+					updateText(likeCountSpan, data)
+
+				}
+			})
+		}
+
+	})
+})
+
+
+$(".down-vote").each(function(index){
+	$(this).click(function(e){
+		e.preventDefault()
+		var this_ = $(this)
+		var likeCountSpan = this_.prev()
+		console.log(likeCountSpan)
+		var likeCount = parseInt(this_.parent().next().text())
+		// console.log(this_.parent().next().text())
+		var likeUrl = this_.attr("data-href")
+		//console.log(likeUrl)
+		//var addLike = likeCount + 1
+		if (likeUrl){
+			$.ajax({
+				url: likeUrl,
+				method: "GET",
+				data: {},
+				success: function(data){
+					updateText(likeCountSpan, data)
+
+				}
+			})
+		}
+
+	})
+})
+// 	e.preventDefault()
+// 	var this_ = $(this)
+// 	console.log(this_.parent().next().text())
+// 	var likeUrl = this_.attr("data-href")
+// 	console.log(likeUrl)
+// 	var likeCount = parseInt(this_.parent().next("#vote-count")) //parseInt(this_.attr("data-like")) | 0
+// 	console.log(likeCount)
+// 	var addLike = likeCount + 1
+// 	if (likeUrl){
+// 		$.ajax({
+// 			url: likeUrl,
+// 			method: "GET",
+// 			data: {},
+// 			success: function(data){
+// 				console.log(data)
+// 				var newLikes;
+// 				if (data.liked){
+// 					//add one like
+// 					updateText(this_, addLike, "👍")
+//
+// 				} else {
+// 					//remove one like
+// 					updateText(this_, removeLike, "👎")
+//
+// 				}
+// 				console.log("data part 2")
+// 			}, error: function(error){
+// 				console.log(error)
+// 				console.log("error")
+// 			}
+// 		})
+// 	}
+// })
+//
+
+
+
+
 
 
 $(function() {
@@ -103,13 +199,13 @@ $(function() {
 <div class="row" style="font-size:1.25em; text-align:center;">
   <div class="col-md-3"></div>
   <div style="text-align:center;" class="col-md-2">
-  <a class="btn btn-success" href="{{ search_result.s_one.reddit_link }}">{{ search_result.s_one }}</a>
+  <a class="btn btn-success" href="{{ search_result.s_one.reddit_link }}" target="_blank">{{ search_result.s_one }}</a>
 </div>
 <div class="col-md-2">
 ➡️&nbsp;
 </div>
 <div style="text-align:center;" class="col-md-2">
-<a class="btn btn-danger" href="{{ search_result.s_two.reddit_link }}">{{ search_result.s_two }}</a>
+<a class="btn btn-danger" href="{{ search_result.s_two.reddit_link }}" target="_blank">{{ search_result.s_two }}</a>
 </div>
 <div class="col-md-3"></div>
 </div>
@@ -119,14 +215,15 @@ $(function() {
   <!-- <div class="col-md-3"><a href="{{ search_result.s_two.reddit_link }}">{{ search_result.s_two }}</a></div> -->
 <span style="text-align:center;">
 <p>
-<p style="font-size:1.5em;"><span style="text-decoration:none;"><a href="{% url 'srgraph:upvote' id=search_result.id %}">👍</a></span>&nbsp;&nbsp;{{ search_result.votes }} <a href="{% url 'srgraph:downvote' id=search_result.id %}">👎</a>&nbsp;&nbsp;</p>
+<p style="font-size:1.5em;"><span style="text-decoration:none;"><a style="text-decoration:none;" class="up-vote" vote-count={{ search_result.votes }} data-href="{{ search_result.api_like_link }}" href="{% url 'srgraph:upvote' id=search_result.id %}">👍</a></span>
+	&nbsp;&nbsp;<span id="vote-count">{{ search_result.votes }}</span> <a style="text-decoration:none;" class="down-vote" vote-count={{ search_result.votes }} data-href="{{ search_result.api_dislike_link }}" href="{% url 'srgraph:downvote' id=search_result.id %}">👎</a>&nbsp;&nbsp;</p>
 </span>
 
 
 
 <div style="text-align:center;" class="button-wrapper">
 {% for sr in search_result.get_list %}
-<span style="font-size:1.25em;">👉</span> <a href="{{ sr.sr.reddit_link }}" class="btn btn-default">{{ sr.sr }}</a>
+<span style="font-size:1.25em;">👉</span> <a href="{{ sr.sr.reddit_link }}" target="_blank" class="btn btn-default">{{ sr.sr }}</a>
 {% endfor %}
 </div>
 <span style="font-size:.5em">

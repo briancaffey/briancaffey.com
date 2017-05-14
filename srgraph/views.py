@@ -94,6 +94,43 @@ def downvote(request, id):
     return redirect('srgraph:srgraph')
 
 
+def api_upvote(request, id):
+    if request.is_ajax():
+        result = SearchResult.objects.filter(pk=id).first()
+        result.votes += 1
+        result.save()
+        total = result.votes
+        data = json.dumps(total)
+    else:
+        data = 'fail'
+    mimetype = 'appliction/json'
+    return HttpResponse(data, mimetype)
+
+def api_downvote(request, id):
+    if request.is_ajax():
+        result = SearchResult.objects.filter(pk=id).first()
+        result.votes -= 1
+        result.save()
+        total = result.votes
+        data = json.dumps(total)
+    else:
+        data = 'fail'
+    mimetype = 'appliction/json'
+    return HttpResponse(data, mimetype)
+
+
+#
+# def get_random(request):
+#     if request.is_ajax():
+#         results = []
+#         random = Subreddit.objects.order_by('?')
+#         first_ = random.first().name.strip('\n')
+#         data = json.dumps(first_)
+#     else:
+#         data = 'fail'
+#     mimetype = 'application/json'
+#     return HttpResponse(data, mimetype)
+
 
 
 

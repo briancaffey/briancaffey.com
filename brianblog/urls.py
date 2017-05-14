@@ -19,12 +19,14 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from posts import views
 from comments.views import CommentCreateAPIView
-from srgraph.views import get_subreddits, get_random
+from srgraph.views import get_subreddits, get_random, api_upvote, api_downvote
 
 
 urlpatterns = [
     url(r'^api/get_random/', get_random, name='get_random'),
     url(r'^api/get_subreddits/', get_subreddits, name='get_subreddits'),
+    url(r'^api/result-up/(?P<id>\d+)/$', api_upvote, name='api_upvote'),
+    url(r'^api/result-down/(?P<id>\d+)/$', api_downvote, name='api_downvote'),
     url(r'^users/', include('friends.urls', namespace="friends")),
     url(r'^srgraph/', include('srgraph.urls', namespace="srgraph")),
     url(r'^ig/', include('igpics.urls', namespace="igpics")),

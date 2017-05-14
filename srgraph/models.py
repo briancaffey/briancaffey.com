@@ -30,6 +30,12 @@ class SearchResult(models.Model):
     def __str__(self):
         return str(self.s_one.name + " - "+ self.s_two.name)
 
+    def api_like_link(self):
+        return '/api/result-up/' + str(self.id)
+
+    def api_dislike_link(self):
+        return '/api/result-down/' + str(self.id)
+
     def get_list(self):
         path = self.path
         path = ast.literal_eval(path)
