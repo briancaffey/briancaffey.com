@@ -20,6 +20,9 @@ class SearchResult(models.Model):
     votes = models.IntegerField(default=0)
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)
 
+    class Meta:
+        ordering = ['-updated']
+
     def __str__(self):
         return str(self.s_one.name + " - "+ self.s_two.name)
 
@@ -29,11 +32,12 @@ class SearchResult(models.Model):
         print(path)
         # path = list(set(path))
         print(path)
-        collection = list(Subreddit.objects.filter(name__in=path))
-        collection.sort(key=lambda t:path.index(t.name))
+        # collection = list(Subreddit.objects.filter(name__in=path))
+        # collection.sort(key=lambda t:path.index(t.name))
         unique_collection = []
-        for x in collection:
-            if x not in unique_collection:
+        for x in path:
+            sr = Subreddit.objects.filter(name=x).first()
+            if sr not in unique_collection:
                 unique_collection.append(x)
 
         return unique_collection

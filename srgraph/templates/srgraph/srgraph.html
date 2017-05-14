@@ -67,14 +67,14 @@ $(function() {
   </div>
   </div>
   <div class="col-md-2">
-    <input type="submit" class="btn btn-success" value="find the shortest path 🔎"></input>
+    <input type="submit" class="btn btn-info" value="find the shortest path 🔎"></input>
   </div>
   </div>
 </form>
 
 
-{% if search_result%}
-<h2>shortest path:</h2>
+<!-- {% if search_result %}
+<h2>shortest path</h2>
 <br />
 <div class="button-wrapper" style="text-align:center;">
 {% for item in search_result.collection %}
@@ -83,20 +83,56 @@ $(function() {
 </div>
 {% endif %}
 
-<hr>
 
-
-{% for search_result in previous_searches %}
-<div style="text-align:center;" class="button-wrapper">
-{% for sr in search_result.get_list %}
-
-
-
-
-👉 <a class="btn btn-default" href="{{ sr.reddit_link }}">{{ sr }}</a>
-
+{% if search_result %}
+<h2>shortest path</h2>
+<br />
+<div class="button-wrapper" style="text-align:center;">
+{% for item in search_result.get_list %}
+👉 <a class='btn btn-default button-wrapper' href="{{ item.reddit_link }}">{{ item }}</a>
 {% endfor %}
 </div>
+{% endif %} -->
+
+<hr>
+
+<h2 style="text-align:center;">recent searches</h2>
+<br />
+{% for search_result in previous_searches %}
+
+<div class="row" style="font-size:1.25em; text-align:center;">
+  <div class="col-md-3"></div>
+  <div style="text-align:center;" class="col-md-2">
+  <a class="btn btn-success" href="{{ search_result.s_one.reddit_link }}">{{ search_result.s_one }}</a>
+</div>
+<div class="col-md-2">
+➡️&nbsp;
+</div>
+<div style="text-align:center;" class="col-md-2">
+<a class="btn btn-danger" href="{{ search_result.s_two.reddit_link }}">{{ search_result.s_two }}</a>
+</div>
+<div class="col-md-3"></div>
+</div>
+<!-- <div class="col-md-3">
+  <a href="{{ search_result.s_one.reddit_link }}">{{ search_result.s_one }}</a></div> -->
+  <!-- <div class="col-md-0.5 col-md-offset-5.5" style="text-align:center;">➡️</div> -->
+  <!-- <div class="col-md-3"><a href="{{ search_result.s_two.reddit_link }}">{{ search_result.s_two }}</a></div> -->
+<span style="text-align:center;">
+<p>
+<p style="font-size:1.5em;">👍&nbsp;&nbsp;{{ search_result.votes }} 👎&nbsp;&nbsp;</p>
+</span>
+
+
+</div>
+<div style="text-align:center;" class="button-wrapper">
+{% for sr in search_result.get_list %}
+<span style="font-size:1.25em;">👉</span> <a class="btn btn-default" href="{{ sr.reddit_link }}">{{ sr }}</a>
+{% endfor %}
+</div>
+<div style="text-align:center;">
+<small>searched {{ search_result.updated | timesince }} ago</small>
+</div>
+
 <hr>
 {% endfor %}
 

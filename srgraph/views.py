@@ -24,13 +24,15 @@ def graph_view(request):
         if sr_one and sr_two:
             search_result = path(sr_one.name.strip('\n'), sr_two.name.strip('\n'))
             check = SearchResult.objects.filter(s_one=sr_one, s_two=sr_two)
+            new_search_result = SearchResult(s_one=sr_one, s_two=sr_two, path=search_result['path'])
             print("OK1")
             if len(check) == 0:
                 print("OK")
                 sr = SearchResult(s_one=sr_one, s_two=sr_two, path=search_result['path'])
                 sr.save()
 
-            context['search_result'] = search_result
+            context['new_search_result'] = search_result
+
     context['previous_searches'] = SearchResult.objects.all()
     return render(request, 'srgraph/srgraph.html', context)
 
