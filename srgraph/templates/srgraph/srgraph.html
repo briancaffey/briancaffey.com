@@ -216,7 +216,7 @@ $(function() {
 <span style="text-align:center;">
 <p>
 <p style="font-size:1.5em;"><span style="text-decoration:none;"><a style="text-decoration:none;" class="up-vote" vote-count={{ search_result.votes }} data-href="{{ search_result.api_like_link }}" href="{% url 'srgraph:upvote' id=search_result.id %}">👍</a></span>
-	&nbsp;&nbsp;<span id="vote-count">{{ search_result.votes }}</span> <a style="text-decoration:none;" class="down-vote" vote-count={{ search_result.votes }} data-href="{{ search_result.api_dislike_link }}" href="{% url 'srgraph:downvote' id=search_result.id %}">👎</a>&nbsp;&nbsp;</p>
+&nbsp;<span id="vote-count">{{ search_result.votes }}</span> <a style="text-decoration:none;" class="down-vote" vote-count={{ search_result.votes }} data-href="{{ search_result.api_dislike_link }}" href="{% url 'srgraph:downvote' id=search_result.id %}">👎</a>&nbsp;&nbsp;</p>
 </span>
 
 
