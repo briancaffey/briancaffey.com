@@ -1,10 +1,10 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from .models import Subreddit
+from .models import Subreddit, SearchResult
 import json
 from urllib.parse import quote
 
-from .utils import graph_, path
+from .utils import path
 # Create your views here.
 def graph_view(request):
     context = {}
@@ -23,10 +23,15 @@ def graph_view(request):
 
         if sr_one and sr_two:
             search_result = path(sr_one.name.strip('\n'), sr_two.name.strip('\n'))
-            context['search_result'] = search_result
+            check = SearchResult.objects.filter(s_one=sr_one, s_two=sr_two)
+            print("OK1")
+            if len(check) == 0:
+                print("OK")
+                sr = SearchResult(s_one=sr_one, s_two=sr_two, path=search_result['path'])
+                sr.save()
 
-    results = graph_()
-    context['results'] = results
+            context['search_result'] = search_result
+    context['previous_searches'] = SearchResult.objects.all()
     return render(request, 'srgraph/srgraph.html', context)
 
 def get_subreddits(request):

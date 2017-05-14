@@ -47,7 +47,7 @@ $(function() {
 <br /><br />
 
 <form method="GET" action=".">
-  <div class="row">
+  <div class="row button-wrapper">
     <div class="col-md-3 col-md-offset-2">
       <div class="input-group">
   <input id="subreddit1" class="form-control" type="text" name="sr1" value='{{ request.GET.sr1 }}' placeholder="start typing a subreddit...">
@@ -82,25 +82,61 @@ $(function() {
 {% endfor %}
 </div>
 {% endif %}
-<br />
 
-<!-- <div class="row">
-  <div class="col-lg-6">
-    <div class="input-group">
-      <span class="input-group-btn">
-        <button class="btn btn-default" type="button">Go!</button>
-      </span>
-      <input type="text" class="form-control" placeholder="Search for...">
-    </div>
-  </div>
-  <div class="col-lg-6">
-    <div class="input-group">
-      <input type="text" class="form-control" placeholder="Search for...">
-      <span class="input-group-btn">
-        <button class="btn btn-default" type="button">Go!</button>
-      </span>
-    </div>
-  </div>
-</div> -->
+<hr>
 
+
+{% for search_result in previous_searches %}
+<div style="text-align:center;" class="button-wrapper">
+{% for sr in search_result.get_list %}
+
+
+
+
+👉 <a class="btn btn-default" href="{{ sr.reddit_link }}">{{ sr }}</a>
+
+{% endfor %}
+</div>
+<hr>
+{% endfor %}
+
+<h2>background</h2>
+<p>I did this project about 4 months ago, before I learned anything about Django (the python web framework that powers this website). I have become pretty familiar with Django's object-relational mapping (ORM), but this project mostly relies on a NetworkX to calculate the shortest path between two given subreddits out of a pool of about 18,000. This puts the total number of possible unique pairs (where order matters) at 325,000,000. Without any idea of whether or not it would work with a Django app on Heroku, here is the approach I took:
+
+<ol>
+  <li>install most of the condas <a href="https://github.com/briancaffey/briancaffey.com/blob/master/requirements.txt">dependencies</a> and <code>pip freeze</code> them into <code>requirements.txt</code>.
+  <li>push a 22.9MB <a href="https://github.com/briancaffey/reddit-graph-analysis/blob/master/pickle/master_df.p">pickled data file</a>  containing a large ddictionary (where keys are nodes and values are lists of connections) to my heroku repo.</li>
+  <li>set up a <a href="https://github.com/briancaffey/briancaffey.com/blob/master/srgraph/utils.py">utility script</a> that reads in the pickled file and then create an undirected graph from the dictionary.</li>
+  <li>call the utility function in my views, and display links to the subreddits that make up the shortest path.</li>
+  </ol>
+<p>here the <code>utils.py</code> file that powers the graph search:</p>
+<pre>
+  import pandas as pd
+  import networkx as nx
+  import numpy as np
+  from .models import Subreddit
+
+  master_df = pd.read_pickle('master_df.p')
+  master_df_ = master_df[master_df.notnull()]
+
+  master_df_u = master_df_.drop_duplicates('subreddit')
+  master_df_u = master_df_u.drop(master_df_u.index[master_df_u.subreddit=='/r/track__subreddits_'])
+  graph = {x:y for x, y in zip(master_df_u.subreddit, master_df_u.related)}
+
+  G=nx.Graph()
+  G=nx.from_dict_of_lists(graph)
+  #making the graph undirected takes all of the vertices between nodes and makes them bi-directional
+  G1 = G.to_undirected()
+
+  def path(sr_one, sr_two):
+      data = {'one':sr_one, 'two':sr_two}
+      if nx.has_path(G1, sr_one, sr_two):
+          path = [x+'\n' for x in nx.shortest_path(G1, sr_one, sr_two)]
+          data['path'] = path
+          collection = list(Subreddit.objects.filter(name__in=path))
+          collection.sort(key=lambda t:path.index(t.name))
+          data['collection']  = collection
+          return data
+</pre>
+<p>I think the efficiency could be significanlty improved, and things got a little but clumsy when working with both a database of subreddit names and the dictionary/graph. Overall I'm please things are working the way they are. I couldn't find a good answer about whether or not I could store a large pickle file in the Heroku file system, since it is <a href="https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem">ephemeral</a>.
 {% endblock %}
