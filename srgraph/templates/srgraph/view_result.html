@@ -119,10 +119,8 @@ content here
   <!-- <div class="col-md-3"><a href="{{ search_result.s_two.reddit_link }}">{{ search_result.s_two }}</a></div> -->
 <span style="text-align:center;">
 <p>
-<p style="font-size:1.5em;"><span style="text-decoration:none;"><a href="{% url 'srgraph:upvote' pk=result.pk %}">👍</span></a>&nbsp;&nbsp;{{ search_result.votes }}i <span style="text-decoration:none;"><a href="{% url 'srgraph:downvote' pk=result.pk %}">👎</a></span>&nbsp;&nbsp;</p>
+<p style="font-size:1.5em;"><span style="text-decoration:none;"><a href="{% url 'srgraph:upvote' pk=result.pk %}">👍</a></span>&nbsp;&nbsp;{{ search_result.votes }}i <span style="text-decoration:none;"><a href="{% url 'srgraph:downvote' pk=result.pk %}">👎</a></span>&nbsp;&nbsp;</p>
 </span>
-
-
 
 <div style="text-align:center;" class="button-wrapper">
 {% for sr in result.get_list %}
@@ -130,7 +128,7 @@ content here
 {% endfor %}
 </div>
 <div style="text-align:center;">
-<small>searched i{{ search_result.last_searched | timesince }} ago</small>
+<small>searched {{ search_result.last_searched | timesince }} ago</small>
 </div>
 
 <hr>

@@ -25,7 +25,7 @@ class SearchResult(models.Model):
     last_searched = models.DateTimeField(default=now, blank=True)
 
     class Meta:
-        ordering = ['-updated']
+        ordering = ['-last_searched']
 
     def __str__(self):
         return str(self.s_one.name + " - "+ self.s_two.name)
@@ -36,13 +36,13 @@ class SearchResult(models.Model):
         print(path)
         # path = list(set(path))
         print(path)
-        # collection = list(Subreddit.objects.filter(name__in=path))
-        # collection.sort(key=lambda t:path.index(t.name))
         unique_collection = []
         for x in path:
             sr = Subreddit.objects.filter(name=x).first()
+            link = sr.reddit_link
+            dic = {'sr':sr, 'link':link}
             if sr not in unique_collection:
-                unique_collection.append(x)
+                unique_collection.append(dic)
 
         return unique_collection
 

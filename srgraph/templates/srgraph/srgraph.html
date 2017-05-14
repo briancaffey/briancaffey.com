@@ -119,18 +119,21 @@ $(function() {
   <!-- <div class="col-md-3"><a href="{{ search_result.s_two.reddit_link }}">{{ search_result.s_two }}</a></div> -->
 <span style="text-align:center;">
 <p>
-<p style="font-size:1.5em;"><a href="{% url 'srgraph:upvote' id=search_result.id %}">👍</a>&nbsp;&nbsp;{{ search_result.votes }} <a href="{% url 'srgraph:downvote' id=search_result.id %}">👎</a>&nbsp;&nbsp;</p>
+<p style="font-size:1.5em;"><span style="text-decoration:none;"><a href="{% url 'srgraph:upvote' id=search_result.id %}">👍</a></span>&nbsp;&nbsp;{{ search_result.votes }} <a href="{% url 'srgraph:downvote' id=search_result.id %}">👎</a>&nbsp;&nbsp;</p>
 </span>
 
 
 
 <div style="text-align:center;" class="button-wrapper">
 {% for sr in search_result.get_list %}
-<span style="font-size:1.25em;">👉</span> <a class="btn btn-default" href="{{ sr.reddit_link }}">{{ sr }}</a>
+<span style="font-size:1.25em;">👉</span> <a href="{{ sr.link }}" class="btn btn-default">{{ sr.sr }}</a>
 {% endfor %}
 </div>
+<span style="font-size:.5em">
+<br />
+</span>
 <div style="text-align:center;">
-<small>searched {{ search_result.updated | timesince }} ago</small>
+<small>last searched {{ search_result.last_searched | timesince }} ago</small>
 </div>
 
 <hr>
