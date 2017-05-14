@@ -27,6 +27,22 @@ class SearchResult(models.Model):
         path = self.path
         path = ast.literal_eval(path)
         print(path)
+        # path = list(set(path))
+        print(path)
         collection = list(Subreddit.objects.filter(name__in=path))
         collection.sort(key=lambda t:path.index(t.name))
-        return collection
+        unique_collection = []
+        for x in collection:
+            if x not in unique_collection:
+                unique_collection.append(x)
+
+        return unique_collection
+
+
+
+
+
+
+
+
+#
