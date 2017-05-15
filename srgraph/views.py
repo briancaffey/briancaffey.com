@@ -4,11 +4,12 @@ from .models import Subreddit, SearchResult
 import json
 from urllib.parse import quote
 from datetime import datetime, timedelta
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from .utils import path
 # Create your views here.
 def graph_view(request):
-    context = {}
+
 
     sr1 = request.GET.get('sr1')
     if sr1:
@@ -38,10 +39,24 @@ def graph_view(request):
                 record.last_searched = datetime.now()
                 record.save()
 
-            context['new_search_result'] = search_result
+            # context['new_search_result'] = search_result
 
-    context['previous_searches'] = SearchResult.objects.all()
-    return render(request, 'srgraph/srgraph.html', context)
+    previous_searches = SearchResult.objects.all()
+    # context['previous_searches'] = previous_searches
+    # numbers_list = range(1, 1000)
+    page = request.GET.get('page', 1)
+    paginator = Paginator(previous_searches, 20)
+    try:
+        results = paginator.page(page)
+    except PageNotAnInteger:
+        results = paginator.page(1)
+    except EmptyPage:
+        results = paginator.page(paginator.num_pages)
+
+    # context['numbers'] = numbers
+
+    # context['previous_searches'] = SearchResult.objects.all()
+    return render(request, 'srgraph/srgraph_infinite_scroll.html', {'results':results})
 
 def get_subreddits(request):
     if request.is_ajax():

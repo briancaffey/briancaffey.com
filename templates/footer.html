@@ -17,16 +17,8 @@
           <div class="col-md-4">
         <div class="footer-center ">
           <br >
-            <!-- <div>
-                <i style="text-align:center;" class="fa fa-map-marker fa-lg "></i>
-                <p>Thanks for visitng my site.</p>
-            </div> -->
-            <!-- <div>
-                <i class="fa fa-phone "></i>
-                <p>+355 67 600 67 67</p>
-            </div> -->
             <div>
-                <!-- <i class="fa fa-envelope fa-lg "></i> -->
+
 
             </div>
         </div>
@@ -41,4 +33,7 @@
     </div>
     </div>
     <br ><br ><br ><br ><br ><br ><br ><br >
+    {% if results.has_next %}
+      <a class="infinite-more-link" href="?page={{ results.next_page_number }}"></a>
+    {% endif %}
 </footer>
