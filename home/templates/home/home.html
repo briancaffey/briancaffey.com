@@ -72,9 +72,8 @@ $(document).ready(function(){
 {% endblock %}
 </script>
 
-
 {% block content %}
-
+<div class="row">
     <div class="col-md-8">    <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron">
         <h1>Welcome! 🎉</h1>
@@ -93,7 +92,7 @@ $(document).ready(function(){
 
       <form style="text-align:center;" id="post-form" data-href="/api/gb-submit/" method="POST" action=".">{% csrf_token %}
         {{ guest_form | crispy }}
-        <input type="submit" id="post-form post-button" class="btn btn-success" value="Add note"><br/> -or- <br/><a class="btn btn-info" href="{% url 'home:gb-submit' %}">Sign guestbook through the Django REST framework</a>
+        <input type="submit" id="post-form post-button" class="btn btn-success" value="Add note"><br/> -or- <br/><a class="btn btn-info" href="{% url 'home:gb-submit' %}">Sign using the DRF</a>
       </form>
 
       <span id="guest-book-items">
@@ -125,6 +124,7 @@ $(document).ready(function(){
 
       <h3>Send me bitcoin</h3>
       {% include 'bitcoin.html' %}
+      <div style="text-align:center;" class="well">1HpDgr5j9aagDGPwLjGWfhvFLhR9gcZUrD</div>
 
       <h3>Recent blog posts</h3>
       {% for post in recent_posts %}
@@ -141,5 +141,5 @@ $(document).ready(function(){
       <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
     </div>
-
+</div>
 {% endblock %}
