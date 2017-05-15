@@ -229,9 +229,73 @@ var infinite = new Waypoint.Infinite({
   element: $('.infinite-container')[0],
       onBeforePageLoad: function () {
         $('.loading').show();
+
       },
+
+
+
       onAfterPageLoad: function ($items) {
+
+
+				function updateText(btn, newCount){
+					btn.text(newCount)
+					btn.attr('data-like', newCount)
+				}
+
+				$(".up-vote").each(function(index){
+					$(this).click(function(e){
+						e.preventDefault()
+						var this_ = $(this)
+						var likeCountSpan = this_.parent().next()
+						console.log(likeCountSpan)
+						var likeCount = parseInt(this_.parent().next().text())
+						// console.log(this_.parent().next().text())
+						var likeUrl = this_.attr("data-href")
+						//console.log(likeUrl)
+						//var addLike = likeCount + 1
+						if (likeUrl){
+							$.ajax({
+								url: likeUrl,
+								method: "GET",
+								data: {},
+								success: function(data){
+									updateText(likeCountSpan, data)
+
+								}
+							})
+						}
+
+					})
+				})
+
+
+				$(".down-vote").each(function(index){
+					$(this).click(function(e){
+						e.preventDefault()
+						var this_ = $(this)
+						var likeCountSpan = this_.prev()
+						console.log(likeCountSpan)
+						var likeCount = parseInt(this_.parent().next().text())
+						// console.log(this_.parent().next().text())
+						var likeUrl = this_.attr("data-href")
+						//console.log(likeUrl)
+						//var addLike = likeCount + 1
+						if (likeUrl){
+							$.ajax({
+								url: likeUrl,
+								method: "GET",
+								data: {},
+								success: function(data){
+									updateText(likeCountSpan, data)
+
+								}
+							})
+						}
+
+					})
+				})
         $('.loading').hide();
+
       }
 })
 </script>
