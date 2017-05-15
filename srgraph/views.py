@@ -162,6 +162,8 @@ def popular(request):
                 record.last_searched = datetime.now()
                 record.save()
 
+            return redirect('srgraph:srgraph')
+
             # context['new_search_result'] = search_result
 
     previous_searches = SearchResult.objects.all().order_by('-votes')

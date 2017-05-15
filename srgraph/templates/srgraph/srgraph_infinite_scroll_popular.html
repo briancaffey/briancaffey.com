@@ -104,8 +104,7 @@ $(function() {
 {% block content %}
 
 <h2>six degrees of separation on reddit.com</h2>
-<p>This is a project I did earlier this year that explores the graph of related communities on reddit.com. subreddits, as they are called, often link to other related subreddits in their descriptions. starting with the 50 subreddits that are shown by default for guests, I wrote a bot that recursively collected data on selected subreddits and gathered the data into a graph with a python package called NetworkX.
-<br /><br />
+<p>enter two subreddits below and find the shortest path of related subreddits that join them</p>
 
 <form method="GET" action=".">
   <div class="row button-wrapper">
@@ -138,8 +137,8 @@ $(function() {
 <!-- <h2 style="text-align:center;">recent searches</h2> -->
 
 
-<div class="row">
-<ul class="nav nav-tabs navbar-right" role="tablist">
+<div style="margin: auto;" class="row">
+<ul style="margin: auto;" class="nav nav-tabs navbar-right" role="tablist">
 	<li role="presentation"><a href="{% url 'srgraph:srgraph' %}"><span class="badge"></span>new 🕰</a></li>
 	<li role="presentation" class="active"><a  href="#popular" aria-controls="recent" role="tab" data-toggle="tab"><span class="badge"></span>hot 🔥</a></li>
 	<li role="presentation"><a href="#about" aria-controls="about" role="tab" data-toggle="tab"><span class="badge"></span>about 💬</a></li>

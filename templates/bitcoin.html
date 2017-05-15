@@ -905,4 +905,11 @@
     <script>
       var width = $(".qr-container").width()
       $(".qr-code").height(width)
+
+
+
+      $(window).resize(function(){
+        var width = $(".qr-container").width()
+        $(".qr-code").height(width)
+      })
     </script>
