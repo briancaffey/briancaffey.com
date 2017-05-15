@@ -48,13 +48,8 @@ html,body {
 }
 
 table.qr-code {
-backgroun-color: red;
 border-width: 0;
 border-style: none;
 border-color: #00f;
 border-collapse: collapse;
-}
-
-.black {
-	color: black;
 }

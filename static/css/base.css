@@ -46,3 +46,17 @@ html,body {
 .button-wrapper .btn {
     margin-bottom:5px;
 }
+
+table.qr-code {
+backgroun-color: red;
+border-width: 0;
+border-style: none;
+border-color: #00f;
+border-collapse: collapse;
+}
+
+
+table.qr-code td.black {
+    border-top-color: #000;
+    background: #000;
+}
