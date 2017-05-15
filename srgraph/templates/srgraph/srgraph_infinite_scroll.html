@@ -53,6 +53,7 @@ $(".up-vote").each(function(index){
 		}
 
 	})
+	$(this).attr("applied", 'true')
 })
 
 
@@ -80,45 +81,8 @@ $(".down-vote").each(function(index){
 		}
 
 	})
+	$(this).attr("applied", 'true')
 })
-// 	e.preventDefault()
-// 	var this_ = $(this)
-// 	console.log(this_.parent().next().text())
-// 	var likeUrl = this_.attr("data-href")
-// 	console.log(likeUrl)
-// 	var likeCount = parseInt(this_.parent().next("#vote-count")) //parseInt(this_.attr("data-like")) | 0
-// 	console.log(likeCount)
-// 	var addLike = likeCount + 1
-// 	if (likeUrl){
-// 		$.ajax({
-// 			url: likeUrl,
-// 			method: "GET",
-// 			data: {},
-// 			success: function(data){
-// 				console.log(data)
-// 				var newLikes;
-// 				if (data.liked){
-// 					//add one like
-// 					updateText(this_, addLike, "👍")
-//
-// 				} else {
-// 					//remove one like
-// 					updateText(this_, removeLike, "👎")
-//
-// 				}
-// 				console.log("data part 2")
-// 			}, error: function(error){
-// 				console.log(error)
-// 				console.log("error")
-// 			}
-// 		})
-// 	}
-// })
-//
-
-
-
-
 
 
 $(function() {
@@ -126,6 +90,7 @@ $(function() {
     source: "/api/get_subreddits/",
     minLength: 2,
   });
+
   $("#subreddit2").autocomplete({
     source: "/api/get_subreddits/",
     minLength: 2,
@@ -192,8 +157,8 @@ $(function() {
 
 <span style="text-align:center;">
 <p>
-<p style="font-size:1.5em;"><span style="text-decoration:none;"><a style="text-decoration:none;" class="up-vote" vote-count={{ search_result.votes }} data-href="{{ search_result.api_like_link }}" href="{% url 'srgraph:upvote' id=search_result.id %}">👍</a></span>
-&nbsp;<span id="vote-count">{{ search_result.votes }}</span> <a style="text-decoration:none;" class="down-vote" vote-count={{ search_result.votes }} data-href="{{ search_result.api_dislike_link }}" href="{% url 'srgraph:downvote' id=search_result.id %}">👎</a>&nbsp;&nbsp;</p>
+<p style="font-size:1.5em;"><span style="text-decoration:none;"><a applied='false' style="text-decoration:none;" class="up-vote" vote-count={{ search_result.votes }} data-href="{{ search_result.api_like_link }}" href="{% url 'srgraph:upvote' id=search_result.id %}">👍</a></span>
+&nbsp;<span id="vote-count">{{ search_result.votes }}</span> <a applied='false' style="text-decoration:none;" class="down-vote" vote-count={{ search_result.votes }} data-href="{{ search_result.api_dislike_link }}" href="{% url 'srgraph:downvote' id=search_result.id %}">👎</a>&nbsp;&nbsp;</p>
 </span>
 
 <div style="text-align:center;" class="button-wrapper">
@@ -220,9 +185,12 @@ $(function() {
 
 
 <div class="loading" style="display: none; text-align:center;">
-<span style="font-size:3em;">⏳</span>
-</div>
+<span id="loading-animation" style="font-size:3em;">
 
+	⏳
+
+</span>
+</div>
 
 <script>
 var infinite = new Waypoint.Infinite({
@@ -231,8 +199,6 @@ var infinite = new Waypoint.Infinite({
         $('.loading').show();
 
       },
-
-
 
       onAfterPageLoad: function ($items) {
 
@@ -243,6 +209,9 @@ var infinite = new Waypoint.Infinite({
 				}
 
 				$(".up-vote").each(function(index){
+					var value = $(this).attr("applied")
+					if ( value == 'false' ) {
+						console.log('ok it is working')
 					$(this).click(function(e){
 						e.preventDefault()
 						var this_ = $(this)
@@ -266,10 +235,14 @@ var infinite = new Waypoint.Infinite({
 						}
 
 					})
+				}
+				$(this).attr("applied", 'true')
 				})
 
 
 				$(".down-vote").each(function(index){
+					var value = $(this).attr("applied")
+					if ( value == 'false' ) {
 					$(this).click(function(e){
 						e.preventDefault()
 						var this_ = $(this)
@@ -293,6 +266,8 @@ var infinite = new Waypoint.Infinite({
 						}
 
 					})
+				}
+				$(this).attr("applied", 'true')				
 				})
         $('.loading').hide();
 
