@@ -25,6 +25,7 @@ class Post(models.Model):
 	approved = models.BooleanField(default=False, blank=True)
 	title = models.CharField(max_length=100)
 	slug = models.SlugField(unique=True)
+	image_url = models.URLField(default="")
 	height_field = models.IntegerField(default=0)
 	width_field = models.IntegerField(default=0)
 	image = models.ImageField(
