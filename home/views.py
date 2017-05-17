@@ -34,9 +34,9 @@ def home(request):
 	ip = get_client_ip(request)
 	base = "http://api.ipinfodb.com/v3/ip-city/?key=3a3bdb7e563895cd7d7b27ff9c5efd60d8686be6d75ab117fe40497d3054d8e9&ip="
 	query = base + ip
-	#r = requests.get(query)
-	location = "Somewhere"#r.text.split(';')[-5]
-	state = "Somewhere"#r.text.split(';')[-6]
+	r = requests.get(query)
+	location = r.text.split(';')[-5]
+	state = r.text.split(';')[-6]
 
 	form_ = NewsletterEmailsForm(request.POST or None)
 	login_form = UserLoginForm(request.POST or None)

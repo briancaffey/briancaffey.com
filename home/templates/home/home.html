@@ -99,9 +99,10 @@ $(document).ready(function(){
               <h4 id="country-data-head">Country Data</h4>
             </div>
             <div class="modal-body">
-              <p id="country-data">More country data</p>
+              {% include 'home/modal-content.html' %}
             </div>
             <div class="modal-footer">
+              <div class="pull-left">Source: <a href="https://www.cia.gov/index.html">CIA</a> via <a href="https://github.com/opendatajson">opendatajson</a></div>
               <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
             </div>
           </div>
