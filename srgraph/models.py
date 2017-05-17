@@ -15,6 +15,9 @@ class Subreddit(models.Model):
     def reddit_link(self):
         return "https://reddit.com" + self.name.strip('\n')
 
+    def simple_name(self):
+        return self.name.strip('/r/').strip('\n')
+
 
 class SearchResult(models.Model):
     s_one = models.ForeignKey(Subreddit, related_name='s1')
@@ -36,12 +39,14 @@ class SearchResult(models.Model):
     def api_dislike_link(self):
         return '/api/result-down/' + str(self.id)
 
+    def degrees(self):
+        path = self.path
+        path = ast.literal_eval(path)
+        return len(path) - 1
+
     def get_list(self):
         path = self.path
         path = ast.literal_eval(path)
-        print(path)
-        # path = list(set(path))
-        print(path)
         unique_collection = []
         for x in path:
             sr = Subreddit.objects.filter(name=x).first()

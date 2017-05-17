@@ -187,7 +187,7 @@ $(function() {
 <br />
 </span>
 <div style="text-align:center;">
-<small>last searched {{ search_result.last_searched | timesince }} ago</small>
+<small>last searched {{ search_result.last_searched | timesince }} ago<br /></small><a href="{% url 'srgraph:view_result' id=search_result.id sbr1=search_result.s_one.simple_name sbr2=search_result.s_two.simple_name %}"><strong>share / comment</strong></a>
 </div>
 
 <hr>

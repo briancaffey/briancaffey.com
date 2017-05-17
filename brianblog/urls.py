@@ -28,7 +28,7 @@ urlpatterns = [
     url(r'^api/result-up/(?P<id>\d+)/$', api_upvote, name='api_upvote'),
     url(r'^api/result-down/(?P<id>\d+)/$', api_downvote, name='api_downvote'),
     url(r'^users/', include('friends.urls', namespace="friends")),
-    url(r'^srgraph/', include('srgraph.urls', namespace="srgraph")),
+    url(r'^six-degrees-of-subreddits/', include('srgraph.urls', namespace="srgraph")),
     url(r'^ig/', include('igpics.urls', namespace="igpics")),
     url(r'^admin/', admin.site.urls),
     url(r'^blog/', include('posts.urls', namespace="posts")),

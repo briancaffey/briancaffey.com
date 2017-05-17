@@ -86,10 +86,39 @@ def get_random(request):
     mimetype = 'application/json'
     return HttpResponse(data, mimetype)
 
-def view_result(request, id):
+def view_result(request, id, sbr1, sbr2):
+    sr1 = request.GET.get('sr1')
+    if sr1:
+        sr1 = quote(sr1)
+
+    sr2 = request.GET.get('sr2')
+    if sr2:
+        sr2 = quote(sr2)
+
+    if sr1 and sr2:
+        sr_one = Subreddit.objects.filter(name=sr1 + '\n').first()
+        sr_two = Subreddit.objects.filter(name=sr2 + '\n').first()
+
+        if sr_one and sr_two:
+            search_result = path(sr_one.name.strip('\n'), sr_two.name.strip('\n'))
+            check = SearchResult.objects.filter(s_one=sr_one, s_two=sr_two)
+            new_search_result = SearchResult(s_one=sr_one, s_two=sr_two, path=search_result['path'])
+
+            print("OK1")
+            if len(check) == 0:
+                print("OK")
+                sr = SearchResult(s_one=sr_one, s_two=sr_two, path=search_result['path'])
+                sr.last_searched = datetime.now()
+                sr.save()
+            else:
+                record = check.first()
+                record.last_searched = datetime.now()
+                record.save()
+
+            return redirect('srgraph:srgraph')
 
     result = SearchResult.objects.filter(pk=id).first()
-    context = {'result':result,}
+    context = {'search_result':result,}
 
     return render(request, 'srgraph/view_result.html', context)
 

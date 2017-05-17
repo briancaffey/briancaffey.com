@@ -8,7 +8,6 @@
 {% block jquery %}
 		$(document).ready(function(){
 
-
 $("#sr1-random").click(function(){
   this_ = $(this).parent().parent().children().first()
   $.get('/api/get_random/', function(data, status) {
@@ -21,6 +20,61 @@ $("#sr2-random").click(function(){
   $.get('/api/get_random/', function(data, status) {
     this_.val(data)
   })
+})
+
+
+function updateText(btn, newCount){
+	btn.text(newCount)
+	btn.attr('data-like', newCount)
+}
+
+$(".up-vote").each(function(index){
+	$(this).click(function(e){
+		e.preventDefault()
+		var this_ = $(this)
+		var likeCountSpan = this_.parent().next()
+		console.log(likeCountSpan)
+		var likeCount = parseInt(this_.parent().next().text())
+		var likeUrl = this_.attr("data-href")
+		if (likeUrl){
+			$.ajax({
+				url: likeUrl,
+				method: "GET",
+				data: {},
+				success: function(data){
+					updateText(likeCountSpan, data)
+
+				}
+			})
+		}
+
+	})
+	$(this).attr("applied", 'true')
+})
+
+
+$(".down-vote").each(function(index){
+	$(this).click(function(e){
+		e.preventDefault()
+		var this_ = $(this)
+		var likeCountSpan = this_.prev()
+		console.log(likeCountSpan)
+		var likeCount = parseInt(this_.parent().next().text())
+		var likeUrl = this_.attr("data-href")
+		if (likeUrl){
+			$.ajax({
+				url: likeUrl,
+				method: "GET",
+				data: {},
+				success: function(data){
+					updateText(likeCountSpan, data)
+
+				}
+			})
+		}
+
+	})
+	$(this).attr("applied", 'true')
 })
 
 
@@ -42,9 +96,10 @@ $(function() {
 
 {% block content %}
 
-<h2>result for {{ result }}</h2>
+<h2>six degrees of separation on reddit.com</h2>
+<p>enter two subreddits below and find the shortest path of related subreddits that join them</p>
+<br />
 
-content here
 
 <form method="GET" action=".">
   <div class="row button-wrapper">
@@ -71,34 +126,21 @@ content here
   </div>
   </div>
 </form>
-
-
-<!-- {% if search_result %}
-<h2>shortest path</h2>
-<br />
-<div class="button-wrapper" style="text-align:center;">
-{% for item in search_result.collection %}
-👉 <a class='btn btn-default button-wrapper' href="{{ item.reddit_link }}">{{ item }}</a>
-{% endfor %}
-</div>
-{% endif %}
-
-
-{% if search_result %}
-<h2>shortest path</h2>
-<br />
-<div class="button-wrapper" style="text-align:center;">
-{% for item in search_result.get_list %}
-👉 <a class='btn btn-default button-wrapper' href="{{ item.reddit_link }}">{{ item }}</a>
-{% endfor %}
-</div>
-{% endif %} -->
-
 <hr>
 
-<h2 style="text-align:center;">recent searches</h2>
+<div style="margin: auto;" class="row">
+<ul style="margin: auto;" class="nav nav-tabs navbar-right" role="tablist">
+	<li role="presentation"><a href="{% url 'srgraph:srgraph' %}"><span class="badge"></span>new 🕰</a></li>
+	<li role="presentation"><a href="{% url 'srgraph:popular' %}"><span class="badge"></span>hot 🔥</a></li>
+	<li role="presentation"><a href="#about" aria-controls="about" role="tab" data-toggle="tab"><span class="badge"></span>about 💬</a></li>
+	<li role="presentation"><a href="#code" aria-controls="code" role="tab" data-toggle="tab"><span class="badge"></span>code 💻</a></li>
+
+</ul>
+</div>
+
+<h2 style="text-align:center;">{{ search_result.degrees }} degrees of seperation</h2>
 <br />
-{% for search_result in previous_searches %}
+
 
 <div class="row" style="font-size:1.25em; text-align:center;">
   <div class="col-md-3"></div>
@@ -119,19 +161,41 @@ content here
   <!-- <div class="col-md-3"><a href="{{ search_result.s_two.reddit_link }}">{{ search_result.s_two }}</a></div> -->
 <span style="text-align:center;">
 <p>
-<p style="font-size:1.5em;"><span style="text-decoration:none;"><a href="{% url 'srgraph:upvote' pk=result.pk %}">👍</a></span>&nbsp;&nbsp;{{ search_result.votes }}i <span style="text-decoration:none;"><a href="{% url 'srgraph:downvote' pk=result.pk %}">👎</a></span>&nbsp;&nbsp;</p>
+<p style="font-size:1.5em;"><span style="text-decoration:none;"><a class="up-vote" style="text-decoration:none;" vote-count={{ search_result.votes }} href="{% url 'srgraph:upvote' id=search_result.pk %}">👍&nbsp;</a></span>&nbsp;&nbsp;<span id="vote-count">{{ search_result.votes }}</span><span style="text-decoration:none;"><a class="down-vote" vote-count={{ search_result.votes }} style="text-decoration:none;" href="{% url 'srgraph:downvote' id=search_result.pk %}">&nbsp;&nbsp;👎</a></span>&nbsp;&nbsp;</p>
 </span>
 
 <div style="text-align:center;" class="button-wrapper">
-{% for sr in result.get_list %}
-<span style="font-size:1.25em;">👉</span> <a class="btn btn-default" href="{{ sr.reddit_link }}">{{ sr }}</a>
+{% for sr in search_result.get_list %}
+<span style="font-size:1.25em;">👉</span> <a class="btn btn-default" href="{{ sr.sr.reddit_link }}">{{ sr.sr }}</a>
 {% endfor %}
 </div>
 <div style="text-align:center;">
-<small>searched {{ search_result.last_searched | timesince }} ago</small>
+	<span style="font-size:.5em">
+	<br />
+	</span>
+<small>last searched {{ search_result.last_searched | timesince }} ago</small>
 </div>
 
-<hr>
-{% endfor %}
 
+
+<h1 style="text-align:center;">share<br />
+
+<span style="font-size:0.5em;"><br /></span>
+<a style="text-align:center; color:#0084b4; text-decoration:none;" href="https://twitter.com/">
+<i class="fa fa-twitter fa-5" aria-hidden="false"></i>
+</a>
+<a style="text-align:center; color:#FF5700; text-decoration:none;" href="https://reddit.com/">
+<i class="fa fa-reddit fa-5" aria-hidden="false"></i>
+</a>
+
+<a style="text-align:center; color:#3b5998; text-decoration:none;" href="https://facebook.com/">
+<i class="fa fa-facebook fa-5" aria-hidden="false"></i>
+</a>&nbsp;
+
+</h1>
+
+<h1 style="text-align:center;">comment</h1>
+
+
+<br />
 {% endblock %}
