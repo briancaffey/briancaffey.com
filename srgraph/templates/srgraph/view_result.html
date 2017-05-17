@@ -134,11 +134,17 @@ $(function() {
 	<li role="presentation"><a href="{% url 'srgraph:popular' %}"><span class="badge"></span>hot 🔥</a></li>
 	<li role="presentation"><a href="#about" aria-controls="about" role="tab" data-toggle="tab"><span class="badge"></span>about 💬</a></li>
 	<li role="presentation"><a href="#code" aria-controls="code" role="tab" data-toggle="tab"><span class="badge"></span>code 💻</a></li>
+	<li role="presentation" class="active"><a  href="#about" aria-controls="this" role="tab" data-toggle="tab"><span class="badge"></span>{{ search_result }}</a></li>
 
 </ul>
 </div>
 
-<h2 style="text-align:center;">{{ search_result.degrees }} degrees of seperation</h2>
+<div class="tab-content">
+
+  <div role="tabpanel" class="tab-pane active" id="this">
+
+
+<h2 style="text-align:center;">{{ search_result.degrees }} degree{{ search_result.degrees | pluralize }} of seperation</h2>
 <br />
 
 
@@ -196,6 +202,8 @@ $(function() {
 
 <h1 style="text-align:center;">comment</h1>
 
+</div>
+</div>
 
 <br />
 {% endblock %}
