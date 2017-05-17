@@ -88,6 +88,26 @@ $(document).ready(function(){
       <h2 style="text-align:center;">Hello, world. 🌎🌍🌏</h2>
       <h2 style="text-align:center;">{% include 'home/flags.html' %}</h2>
       <hr>
+      <!-- Flag Modal -->
+      <div class="modal fade" id="myModal-flagdata" role="dialog">
+        <div class="modal-dialog">
+
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 id="country-data-head">Country Data</h4>
+            </div>
+            <div class="modal-body">
+              <p id="country-data">More country data</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
       <h2 style="text-align:center;">Sign my <a href="{% url 'home:gb-list' %}">guest book</a>&nbsp;📓🖊</h2>
 
 
