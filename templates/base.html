@@ -25,9 +25,6 @@
 <!-- Optional theme -->
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"> -->
 
-
-
-
 <title>{% block head %}Brian Caffey{% endblock %}</title>
 <link rel="stylesheet" href="{% static 'css/base.css' %}">
 
@@ -46,13 +43,6 @@
 
 {% block nav %}{% include 'nav.html' %}{% endblock %}
 
-
-
-
-
-
-
-
 	<div class="container">
 
 {% include 'messages.html' %}
@@ -61,17 +51,9 @@
 
 		{% endblock content %}
 
-
-
-
 	</div>
 
-
     {% block footer %}{% include 'footer.html' %}{% endblock %}
-
-
-
-
 
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <!-- Latest compiled and minified JavaScript -->
@@ -85,15 +67,11 @@
 <!-- <script href="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.js"></script>
 <script href="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/shortcuts/infinite.js"></script> -->
 
-
 <script type="text/javascript">
-
-
 
 {% block jquery %}{% endblock %}
 
 </script>
-
 
 </body>
 </html>

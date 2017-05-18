@@ -4,7 +4,6 @@
 {% block nav%}{% include 'home_nav.html' %}{% endblock %}
 
 <script>
-
 {% block jquery %}
 
 $(document).ready(function(){
@@ -12,30 +11,19 @@ $(document).ready(function(){
   $("#post-form").on('submit', function(event){
   	event.preventDefault();
     var this_ = $(this)
-  	console.log("Prevented")
-    console.log("this works too")
-    console.log($('#post-text').val())
-    console.log("this works too")
-
     var gb_endpoint = this_.attr("data-href")
-    console.log(gb_endpoint)
     $.ajax({
-
       url: gb_endpoint,
       type: "POST",
       data: { message : $("#post-text").val(),
               csrfmiddlewaretoken: '{{ csrf_token }}',
               city: "some city",
               state: "some state",
-
       },
       success: function(json){
-        console.log(json)
-        console.log("something here should go wrong")
         $('#post-text').val('');
         $('#post-form').blur();
         var gb_num = $("#gb-num").text();
-        console.log(gb_num)
         var new_gb_num = parseInt(gb_num) + 1
         $("#gb-num").text(new_gb_num);
 
@@ -43,40 +31,31 @@ $(document).ready(function(){
         if (1 == 1){
           var user = json.user
           $('#guest-book-items').prepend('<div class="panel panel-success"><div class="panel-heading">From {% if user.is_authenticated %}{{ user }}{% else %}someone{% endif %} in the ' + json.city + ', ' + json.state + ' area | just now</div><div class="panel-body">' + json.message + '</div></div>')
-
         }
-
-        console.log(json);
-        console.log("success");
       },
 
     })
   })
 })
 
-
 {% endblock %}
 </script>
 
 {% block content %}
 <div class="row">
-    <div class="col-md-8">    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="col-md-8">
       <div class="jumbotron">
         <h1>Welcome! 🎉</h1>
         <p>This is my personal website. Thanks for visiting!</p>
         <!-- <p>Your IP is {{ ip }}{% if city %}, and you are in {{ city }}, {{ state }}{% endif %}.</p> -->
         <a href="{% url 'srgraph:srgraph' %}" class="btn btn-warning btn-lg">check out my most recent project!</a>
       </div>
-
-
       <h2 style="text-align:center;">Hello, world. 🌎🌍🌏</h2>
-
       <h2 style="text-align:center;">{% include 'home/flags.html' %}</h2>
       <hr>
       <!-- Flag Modal -->
       <div class="modal fade" id="myModal-flagdata" role="dialog">
         <div class="modal-dialog">
-
           <!-- Modal content-->
           <div class="modal-content">
             <div class="modal-body">
@@ -90,11 +69,9 @@ $(document).ready(function(){
               <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
             </div>
           </div>
-
         </div>
       </div>
       <h2 style="text-align:center;">Sign my <a href="{% url 'home:gb-list' %}">guest book</a>&nbsp;📓🖊</h2>
-
 
       <form style="text-align:center;" id="post-form" data-href="/api/gb-submit/" method="POST" action=".">{% csrf_token %}
         {{ guest_form | crispy }}
