@@ -76,6 +76,7 @@ $(".down-vote").each(function(index){
 				method: "GET",
 				data: {},
 				success: function(data){
+					console.log(data)
 					updateText(likeCountSpan, data)
 
 				}
@@ -162,7 +163,20 @@ $(function() {
   <a class="btn btn-success" href="{{ search_result.s_one.reddit_link }}" target="_blank">{{ search_result.s_one }}</a>
 </div>
 <div class="col-md-2">
-➡️&nbsp;
+	{% if search_result.degrees == 1 %}
+	1️⃣
+	{% elif search_result.degrees == 2 %}2️⃣&nbsp;
+	{% elif search_result.degrees == 3 %}3️⃣&nbsp;
+	{% elif search_result.degrees == 4 %}4️⃣&nbsp;
+	{% elif search_result.degrees == 5 %}5️⃣&nbsp;
+	{% elif search_result.degrees == 6 %}6️⃣&nbsp;
+	{% elif search_result.degrees == 7 %}7️⃣&nbsp;
+	{% elif search_result.degrees == 8 %}8️⃣&nbsp;
+	{% elif search_result.degrees == 9 %}9️⃣&nbsp;
+	{% elif search_result.degrees == 10 %}🔟&nbsp;
+	{% elif search_result.degrees > 10 %}{{ search_result.degress }}
+	{% endif %}
+
 </div>
 <div style="text-align:center;" class="col-md-2">
 <a class="btn btn-danger" href="{{ search_result.s_two.reddit_link }}" target="_blank">{{ search_result.s_two }}</a>

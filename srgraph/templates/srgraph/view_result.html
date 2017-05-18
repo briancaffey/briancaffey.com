@@ -37,12 +37,14 @@ $(".up-vote").each(function(index){
 		console.log(likeCountSpan)
 		var likeCount = parseInt(this_.parent().next().text())
 		var likeUrl = this_.attr("data-href")
+		console.log(likeUrl)
 		if (likeUrl){
 			$.ajax({
 				url: likeUrl,
 				method: "GET",
 				data: {},
 				success: function(data){
+					console.log("up")
 					updateText(likeCountSpan, data)
 
 				}
@@ -58,7 +60,7 @@ $(".down-vote").each(function(index){
 	$(this).click(function(e){
 		e.preventDefault()
 		var this_ = $(this)
-		var likeCountSpan = this_.prev()
+		var likeCountSpan = this_.parent().prev()
 		console.log(likeCountSpan)
 		var likeCount = parseInt(this_.parent().next().text())
 		var likeUrl = this_.attr("data-href")
@@ -68,6 +70,7 @@ $(".down-vote").each(function(index){
 				method: "GET",
 				data: {},
 				success: function(data){
+					console.log(data)
 					updateText(likeCountSpan, data)
 
 				}
@@ -160,7 +163,21 @@ $(function() {
   <a class="btn btn-success" href="{{ search_result.s_one.reddit_link }}">{{ search_result.s_one }}</a>
 </div>
 <div class="col-md-2">
-➡️&nbsp;
+
+	{% if search_result.degrees == 1 %}
+	1️⃣
+	{% elif search_result.degrees == 2 %}2️⃣&nbsp;
+	{% elif search_result.degrees == 3 %}3️⃣&nbsp;
+	{% elif search_result.degrees == 4 %}4️⃣&nbsp;
+	{% elif search_result.degrees == 5 %}5️⃣&nbsp;
+	{% elif search_result.degrees == 6 %}6️⃣&nbsp;
+	{% elif search_result.degrees == 7 %}7️⃣&nbsp;
+	{% elif search_result.degrees == 8 %}8️⃣&nbsp;
+	{% elif search_result.degrees == 9 %}9️⃣&nbsp;
+	{% elif search_result.degrees == 10 %}🔟&nbsp;
+	{% elif search_result.degrees > 10 %}{{ search_result.degress }}
+	{% endif %}
+
 </div>
 <div style="text-align:center;" class="col-md-2">
 <a class="btn btn-danger" href="{{ search_result.s_two.reddit_link }}">{{ search_result.s_two }}</a>
@@ -170,7 +187,7 @@ $(function() {
 
 <span style="text-align:center;">
 <p>
-<p style="font-size:1.5em;"><span style="text-decoration:none;"><a class="up-vote" style="text-decoration:none;" vote-count={{ search_result.votes }} href="{% url 'srgraph:upvote' id=search_result.pk %}">👍&nbsp;</a></span>&nbsp;&nbsp;<span id="vote-count">{{ search_result.votes }}</span><span style="text-decoration:none;"><a class="down-vote" vote-count={{ search_result.votes }} style="text-decoration:none;" href="{% url 'srgraph:downvote' id=search_result.pk %}">&nbsp;&nbsp;👎</a></span>&nbsp;&nbsp;</p>
+<p style="font-size:1.5em;"><span style="text-decoration:none;"><a class="up-vote" style="text-decoration:none;" vote-count={{ search_result.votes }} data-href="{{ search_result.api_like_link }}" href="{% url 'srgraph:upvote' id=search_result.pk %}">👍&nbsp;</a></span>&nbsp;&nbsp;<span id="vote-count">{{ search_result.votes }}</span><span style="text-decoration:none;"><a class="down-vote" data-href="{{ search_result.api_dislike_link }}" vote-count={{ search_result.votes }} style="text-decoration:none;" href="{% url 'srgraph:downvote' id=search_result.pk %}">&nbsp;&nbsp;👎</a></span>&nbsp;&nbsp;</p>
 </span>
 
 <div style="text-align:center;" class="button-wrapper">
