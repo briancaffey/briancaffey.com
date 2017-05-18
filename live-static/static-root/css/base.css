@@ -55,6 +55,11 @@ border-color: #00f;
 border-collapse: collapse;
 }
 
-.black {
-	color: black;
+table.qr-code td.black {
+    border-top-color: #000;
+    background: #000;
+}
+
+.footer-icon {
+    font-size: 26px;
 }

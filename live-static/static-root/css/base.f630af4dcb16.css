@@ -60,6 +60,4 @@ table.qr-code td.black {
     background: #000;
 }
 
-.footer-icon {
-    font-size: 26px;
-}
+a i { font-size: 18px; }
