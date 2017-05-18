@@ -1,0 +1,18 @@
+<h3>about this project</h3>
+
+<p>This project explores data from "the front page of the internet", <a href="https://reddit.com">reddit.com</a>. Reddit consists of subreddits, groups of communities where users can post links, images and text about certain topics. Each subreddit may list "related subreddits" in their description. For example, the subreddit /r/Documentaries lists two other related subreddits: /r/DepthHub and /r/DocProduction, subreddits on in-depth discussions and a community of Documentary filmmakers. </p>
+<p>We can think about these related subreddits as friendships in a social network, and build a graph composed of these chains of related subreddits. There is usually more than one path that can create a connection, and these paths can be of varying lenght. The goal of this project is to find the shortest path between any given pair of subreddits to show how different topics are related.</p>
+<p>I collected data from reddit.com in March 2017. The data used in this project includes 18,543 unique subreddits, which is a relatively small portion of the total number of subreddits, many of which contain mature content which I do not include in this project. There is a total of <strong>343,834,306</strong> (18,543 x 18,542) possible unqiue pairs of in this data set. Also, there are a few ways in which the data is not "perfect":</p>
+<ul>
+  <li>The subreddits listed in any given subreddit may not actually have any significance; the description may have said something like, "this subreddit is not related to /r/xyzsubreddit".</li>
+  <li>some subreddits don't have any related subreddits, or may list their related subreddits on another page. For example, /r/science lists an entire newtork of related subreddits on a wiki-page. </li>
+  <li>In the data I collected, I forced the fact that if /r/abc is related to /r/xyz, then /r/xyz is related to /r/abc. This simplified things and significantly, and also guarantees that a list of related subreddits exists between any to subreddits in the dataset.</li>
+</ul>
+<h3>observations</h3>
+<p>Using this tool has helped me learn a lot more about reddit.com and has exposed me to the shocking amount of breadth covered in the thousands of subreddits I collected. Here are a few observations I have found so far:</p>
+<ul>
+  <li>Themes: many subreddits are joined by "theme subreddits", which are subreddits about a given CSS styling theme that subreddits can use to improve their look and feel.</li>
+  <li>Ireland: a surprising number of relationships pass through Ireland.</li>
+  <li>Porn: many topics are related through some type of porn, none of which are actually pornography. For example, /r/HistoryPorn is a subreddit for amature historians who like to share amazing photos from history.</li>
+  <li>Imaginary: the <a href="http://mathworld.wolfram.com/MaximalClique.htmllargest">maximal clique</a>, or largest collection of interrelated subreddits in the graph of subreddits, is the Imaginary Network. This is a collection of subreddits for imaginary things: imaginary castles, imaginary elves, and about 200 other subreddits containing artwork and discussion some imaginary ideas, or imaginary versions of real things.</li>
+</ul>

@@ -134,16 +134,21 @@ $(function() {
 	<li role="presentation"><a href="{% url 'srgraph:popular' %}"><span class="badge"></span>hot 🔥</a></li>
 	<li role="presentation"><a href="#about" aria-controls="about" role="tab" data-toggle="tab"><span class="badge"></span>about 💬</a></li>
 	<li role="presentation"><a href="#code" aria-controls="code" role="tab" data-toggle="tab"><span class="badge"></span>code 💻</a></li>
-	<li role="presentation" class="active"><a  href="#about" aria-controls="this" role="tab" data-toggle="tab"><span class="badge"></span>{{ search_result }}</a></li>
-
+	<li role="presentation" class="active"><a href="#result" aria-controls="result" role="tab" data-toggle="tab"><span class="badge"></span>{{ search_result }}</a></li>
 </ul>
 </div>
 
 <div class="tab-content">
 
-  <div role="tabpanel" class="tab-pane active" id="this">
+<div role="tabpanel" class="tab-pane" id="about">
+{% include 'srgraph/about_extra.html' %}
+</div>
 
+<div role="tabpanel" class="tab-pane" id="code">
+{% include 'srgraph/code_extra.html' %}
+</div>
 
+<div role="tabpanel" class="tab-pane active" id="result">
 <h2 style="text-align:center;">{{ search_result.degrees }} degree{{ search_result.degrees | pluralize }} of seperation</h2>
 <br />
 
@@ -161,10 +166,7 @@ $(function() {
 </div>
 <div class="col-md-3"></div>
 </div>
-<!-- <div class="col-md-3">
-  <a href="{{ search_result.s_one.reddit_link }}">{{ search_result.s_one }}</a></div> -->
-  <!-- <div class="col-md-0.5 col-md-offset-5.5" style="text-align:center;">➡️</div> -->
-  <!-- <div class="col-md-3"><a href="{{ search_result.s_two.reddit_link }}">{{ search_result.s_two }}</a></div> -->
+
 <span style="text-align:center;">
 <p>
 <p style="font-size:1.5em;"><span style="text-decoration:none;"><a class="up-vote" style="text-decoration:none;" vote-count={{ search_result.votes }} href="{% url 'srgraph:upvote' id=search_result.pk %}">👍&nbsp;</a></span>&nbsp;&nbsp;<span id="vote-count">{{ search_result.votes }}</span><span style="text-decoration:none;"><a class="down-vote" vote-count={{ search_result.votes }} style="text-decoration:none;" href="{% url 'srgraph:downvote' id=search_result.pk %}">&nbsp;&nbsp;👎</a></span>&nbsp;&nbsp;</p>
@@ -201,9 +203,10 @@ $(function() {
 </h1>
 
 <h1 style="text-align:center;">comment</h1>
-
-</div>
-</div>
-
 <br />
+</div>
+</div>
+
+
+
 {% endblock %}
