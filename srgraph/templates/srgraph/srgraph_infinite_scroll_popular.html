@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+{% block head %}six degrees of subreddits{% endblock %}
+
 {% block head_extra %}
 {{ form.media }}
 {% endblock %}
@@ -34,12 +36,8 @@ $(".up-vote").each(function(index){
 		e.preventDefault()
 		var this_ = $(this)
 		var likeCountSpan = this_.parent().next()
-		console.log(likeCountSpan)
 		var likeCount = parseInt(this_.parent().next().text())
-		// console.log(this_.parent().next().text())
 		var likeUrl = this_.attr("data-href")
-		//console.log(likeUrl)
-		//var addLike = likeCount + 1
 		if (likeUrl){
 			$.ajax({
 				url: likeUrl,
@@ -62,12 +60,8 @@ $(".down-vote").each(function(index){
 		e.preventDefault()
 		var this_ = $(this)
 		var likeCountSpan = this_.prev()
-		console.log(likeCountSpan)
 		var likeCount = parseInt(this_.parent().next().text())
-		// console.log(this_.parent().next().text())
 		var likeUrl = this_.attr("data-href")
-		//console.log(likeUrl)
-		//var addLike = likeCount + 1
 		if (likeUrl){
 			$.ajax({
 				url: likeUrl,
@@ -134,9 +128,6 @@ $(function() {
 
 <hr>
 
-<!-- <h2 style="text-align:center;">recent searches</h2> -->
-
-
 <div style="margin: auto;" class="row">
 <ul style="margin: auto;" class="nav nav-tabs navbar-right" role="tablist">
 	<li role="presentation"><a href="{% url 'srgraph:srgraph' %}"><span class="badge"></span>new 🕰</a></li>
@@ -200,26 +191,18 @@ $(function() {
 
 <div class="loading" style="display: none; text-align:center;">
 <span id="loading-animation" style="font-size:3em;">
-
 	⏳
-
 </span>
 </div>
 </div>
 
 
 <div role="tabpanel" class="tab-pane" id="about">
-
-
 {% include 'srgraph/about_extra.html' %}
-
 </div>
 
-
 <div role="tabpanel" class="tab-pane" id="code">
-
 	{% include 'srgraph/code_extra.html' %}
-
 </div>
 </div>
 
@@ -228,11 +211,9 @@ var infinite = new Waypoint.Infinite({
   element: $('.infinite-container')[0],
       onBeforePageLoad: function () {
         $('.loading').show();
-
       },
 
       onAfterPageLoad: function ($items) {
-
 
 				function updateText(btn, newCount){
 					btn.text(newCount)
@@ -242,17 +223,12 @@ var infinite = new Waypoint.Infinite({
 				$(".up-vote").each(function(index){
 					var value = $(this).attr("applied")
 					if ( value == 'false' ) {
-						console.log('ok it is working')
 					$(this).click(function(e){
 						e.preventDefault()
 						var this_ = $(this)
 						var likeCountSpan = this_.parent().next()
-						console.log(likeCountSpan)
 						var likeCount = parseInt(this_.parent().next().text())
-						// console.log(this_.parent().next().text())
 						var likeUrl = this_.attr("data-href")
-						//console.log(likeUrl)
-						//var addLike = likeCount + 1
 						if (likeUrl){
 							$.ajax({
 								url: likeUrl,
@@ -278,12 +254,8 @@ var infinite = new Waypoint.Infinite({
 						e.preventDefault()
 						var this_ = $(this)
 						var likeCountSpan = this_.prev()
-						console.log(likeCountSpan)
 						var likeCount = parseInt(this_.parent().next().text())
-						// console.log(this_.parent().next().text())
 						var likeUrl = this_.attr("data-href")
-						//console.log(likeUrl)
-						//var addLike = likeCount + 1
 						if (likeUrl){
 							$.ajax({
 								url: likeUrl,
@@ -291,17 +263,14 @@ var infinite = new Waypoint.Infinite({
 								data: {},
 								success: function(data){
 									updateText(likeCountSpan, data)
-
 								}
 							})
 						}
-
 					})
 				}
 				$(this).attr("applied", 'true')
 				})
         $('.loading').hide();
-
       }
 })
 </script>

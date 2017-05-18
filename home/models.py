@@ -11,9 +11,6 @@ class NewsletterEmails(models.Model):
     def __str__(self):
         return str(self.email)
 
-
-
-
 class GuestBook(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True)
     message = models.CharField(max_length=400, blank=False)

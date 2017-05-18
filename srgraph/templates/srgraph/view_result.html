@@ -4,6 +4,8 @@
 {{ form.media }}
 {% endblock %}
 
+{% block head %}{{ search_result }} | six degrees of subreddits{% endblock %}
+
 <script>
 {% block jquery %}
 		$(document).ready(function(){
@@ -21,7 +23,6 @@ $("#sr2-random").click(function(){
     this_.val(data)
   })
 })
-
 
 function updateText(btn, newCount){
 	btn.text(newCount)
@@ -206,7 +207,5 @@ $(function() {
 <br />
 </div>
 </div>
-
-
 
 {% endblock %}

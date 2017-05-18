@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+
+{% block head %}six degrees of subreddits{% endblock %}
 {% block head_extra %}
 {{ form.media }}
 {% endblock %}
@@ -131,12 +133,9 @@ $(function() {
     <input type="submit" class="btn btn-info" value="find the shortest path 🔎"></input>
   </div>
   </div>
-
 </form>
 
 <hr>
-
-<!-- <h2 style="text-align:center;">recent searches</h2> -->
 
 
 <div style="margin: auto;" class="row">
@@ -199,12 +198,9 @@ $(function() {
 	<a class="infinite-more-link" href="?page={{ results.next_page_number }}"></a>
 {% endif %}
 
-
 <div class="loading" style="display: none; text-align:center;">
 <span id="loading-animation" style="font-size:3em;">
-
 	⏳
-
 </span>
 </div>
 </div>
@@ -212,7 +208,6 @@ $(function() {
   <div role="tabpanel" class="tab-pane" id="about">
 {% include 'srgraph/about_extra.html' %}
 </div>
-
 
 <div role="tabpanel" class="tab-pane" id="code">
 {% include 'srgraph/code_extra.html' %}
@@ -225,12 +220,9 @@ var infinite = new Waypoint.Infinite({
   element: $('.infinite-container')[0],
       onBeforePageLoad: function () {
         $('.loading').show();
-
       },
 
       onAfterPageLoad: function ($items) {
-
-
 				function updateText(btn, newCount){
 					btn.text(newCount)
 					btn.attr('data-like', newCount)
@@ -257,16 +249,13 @@ var infinite = new Waypoint.Infinite({
 								data: {},
 								success: function(data){
 									updateText(likeCountSpan, data)
-
 								}
 							})
 						}
-
 					})
 				}
 				$(this).attr("applied", 'true')
-				})
-
+			})
 
 				$(".down-vote").each(function(index){
 					var value = $(this).attr("applied")
@@ -277,10 +266,7 @@ var infinite = new Waypoint.Infinite({
 						var likeCountSpan = this_.prev()
 						console.log(likeCountSpan)
 						var likeCount = parseInt(this_.parent().next().text())
-						// console.log(this_.parent().next().text())
 						var likeUrl = this_.attr("data-href")
-						//console.log(likeUrl)
-						//var addLike = likeCount + 1
 						if (likeUrl){
 							$.ajax({
 								url: likeUrl,
@@ -288,7 +274,6 @@ var infinite = new Waypoint.Infinite({
 								data: {},
 								success: function(data){
 									updateText(likeCountSpan, data)
-
 								}
 							})
 						}
@@ -302,44 +287,4 @@ var infinite = new Waypoint.Infinite({
       }
 })
 </script>
-
-<!-- <h2>background</h2>
-<p>I did this project about 4 months ago, before I learned anything about Django (the python web framework that powers this website). I have become pretty familiar with Django's object-relational mapping (ORM), but this project mostly relies on a NetworkX to calculate the shortest path between two given subreddits out of a pool of about 18,000. This puts the total number of possible unique pairs (where order matters) at 325,000,000. Without any idea of whether or not it would work with a Django app on Heroku, here is the approach I took:
-
-<ol>
-  <li>install most of the condas <a href="https://github.com/briancaffey/briancaffey.com/blob/master/requirements.txt">dependencies</a> and <code>pip freeze</code> them into <code>requirements.txt</code>.
-  <li>push a 22.9MB <a href="https://github.com/briancaffey/reddit-graph-analysis/blob/master/pickle/master_df.p">pickled data file</a>  containing a large ddictionary (where keys are nodes and values are lists of connections) to my heroku repo.</li>
-  <li>set up a <a href="https://github.com/briancaffey/briancaffey.com/blob/master/srgraph/utils.py">utility script</a> that reads in the pickled file and then create an undirected graph from the dictionary.</li>
-  <li>call the utility function in my views, and display links to the subreddits that make up the shortest path.</li>
-  </ol>
-<p>here the <code>utils.py</code> file that powers the graph search:</p>
-<pre>
-  import pandas as pd
-  import networkx as nx
-  import numpy as np
-  from .models import Subreddit
-
-  master_df = pd.read_pickle('master_df.p')
-  master_df_ = master_df[master_df.notnull()]
-
-  master_df_u = master_df_.drop_duplicates('subreddit')
-  master_df_u = master_df_u.drop(master_df_u.index[master_df_u.subreddit=='/r/track__subreddits_'])
-  graph = {x:y for x, y in zip(master_df_u.subreddit, master_df_u.related)}
-
-  G=nx.Graph()
-  G=nx.from_dict_of_lists(graph)
-  #making the graph undirected takes all of the vertices between nodes and makes them bi-directional
-  G1 = G.to_undirected()
-
-  def path(sr_one, sr_two):
-      data = {'one':sr_one, 'two':sr_two}
-      if nx.has_path(G1, sr_one, sr_two):
-          path = [x+'\n' for x in nx.shortest_path(G1, sr_one, sr_two)]
-          data['path'] = path
-          collection = list(Subreddit.objects.filter(name__in=path))
-          collection.sort(key=lambda t:path.index(t.name))
-          data['collection']  = collection
-          return data
-</pre>
-<p>I think the efficiency could be significanlty improved, and things got a little but clumsy when working with both a database of subreddit names and the dictionary/graph. Overall I'm please things are working the way they are. I couldn't find a good answer about whether or not I could store a large pickle file in the Heroku file system, since it is <a href="https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem">ephemeral</a>. -->
 {% endblock %}

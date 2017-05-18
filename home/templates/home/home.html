@@ -5,18 +5,9 @@
 
 <script>
 
-
-
 {% block jquery %}
 
 $(document).ready(function(){
-
-// function addItem(){
-//     var target_ =
-//     target_.prepend( )
-// }
-
-
 
   $("#post-form").on('submit', function(event){
   	event.preventDefault();
@@ -36,8 +27,6 @@ $(document).ready(function(){
               csrfmiddlewaretoken: '{{ csrf_token }}',
               city: "some city",
               state: "some state",
-              // user: '{{ requst.user.username }}',
-
 
       },
       success: function(json){
@@ -55,11 +44,7 @@ $(document).ready(function(){
           var user = json.user
           $('#guest-book-items').prepend('<div class="panel panel-success"><div class="panel-heading">From {% if user.is_authenticated %}{{ user }}{% else %}someone{% endif %} in the ' + json.city + ', ' + json.state + ' area | just now</div><div class="panel-body">' + json.message + '</div></div>')
 
-
         }
-
-
-
 
         console.log(json);
         console.log("success");
@@ -78,9 +63,9 @@ $(document).ready(function(){
     <div class="col-md-8">    <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron">
         <h1>Welcome! 🎉</h1>
-        <p>This is Brian Caffey's personal website. Thanks for visiting!</p>
-        <p>Your IP is {{ ip }}{% if city %}, and you are in {{ city }}, {{ state }}{% endif %}.</p>
-        <a href="{% url 'srgraph:srgraph' %}" class="btn btn-warning">check out my most recent project!</a>
+        <p>This is my personal website. Thanks for visiting!</p>
+        <!-- <p>Your IP is {{ ip }}{% if city %}, and you are in {{ city }}, {{ state }}{% endif %}.</p> -->
+        <a href="{% url 'srgraph:srgraph' %}" class="btn btn-warning btn-lg">check out my most recent project!</a>
       </div>
 
 
@@ -94,15 +79,11 @@ $(document).ready(function(){
 
           <!-- Modal content-->
           <div class="modal-content">
-            <!-- <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 style="font-size:4em;" id="country-data-head">Country Data</h4>
-            </div> -->
             <div class="modal-body">
-                            <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
-              <h4 style="text-align:center;"><span style="font-size:3em;" id="country-data-head">Country Data</span><br><span style="font-size:2em;" id="country_name"></span></h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 style="text-align:center;"><span style="font-size:3em;" id="country-data-head">Country Data</span><br><span style="font-size:2em;" id="country_name"></span></h4>
 
-              {% include 'home/modal-content.html' %}
+                {% include 'home/modal-content.html' %}
             </div>
             <div class="modal-footer">
               <div class="pull-left">Source: <a href="https://www.cia.gov/index.html">CIA</a> via <a href="https://github.com/opendatajson">opendatajson</a></div>
@@ -117,7 +98,7 @@ $(document).ready(function(){
 
       <form style="text-align:center;" id="post-form" data-href="/api/gb-submit/" method="POST" action=".">{% csrf_token %}
         {{ guest_form | crispy }}
-        <input type="submit" id="post-form post-button" class="btn btn-success" value="Add note"><br/> -or- <br/><a class="btn btn-info" href="{% url 'home:gb-submit' %}">Sign using the DRF</a>
+        <input type="submit" id="post-form post-button" class="btn btn-success" value="Add message"><br/> -or- <br/><a class="btn btn-info" href="{% url 'home:gb-submit' %}">Sign using the DRF</a>
       </form>
 
       <span id="guest-book-items">
@@ -137,7 +118,7 @@ $(document).ready(function(){
         <h3>Join my monthly newsletter! 🗞</h3>
         <form method="POST" action=".">{% csrf_token %}
           {{ form_ | crispy }}
-        <input class="btn btn-success" type="submit" name="Join"></input>
+        <input class="btn btn-success" type="submit" value="Join"></input>
       </form>
       <hr>
 
