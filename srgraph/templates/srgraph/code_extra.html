@@ -1,22 +1,184 @@
 <h3>background</h3>
-<p>I did this project about 4 months ago, before I learned anything about Django (the python web framework that powers this website). I have become pretty familiar with Django's object-relational mapping (ORM), but this project mostly relies on a NetworkX to calculate the shortest path between two given subreddits out of a pool of about 18,000. This puts the total number of possible unique pairs (where order matters) at 325,000,000. Without any idea of whether or not it would work with a Django app on Heroku, here is the approach I took:</p>
+
+<p>First, all of the code for this project can be found in <a href="https://github.com/briancaffey/briancaffey.com/tree/master/srgraph">this folder</a>, which is a "Django app" or module that contains all of the models, templates, views, urls, etc. for the "six degress of subreddits" portion of my site.</p>
+<p>I did wrote up <a href="http://briancaffey.github.io/2017/03/03/graph_subreddit.html">an offline version of this project</a> about 4 months ago, before I learned anything about Django (the python web framework that powers this website). </p>
+
+<p>I used Selenium and PhantomJS to scrape the first 50 subreddits that are shown when you browse reddit anonymously. Here's the script I wrote:</p>
+<p>
+<pre>
+from selenium import webdriver
+import re
+import time
+import numpy as np
+from bs4 import BeautifulSoup
+
+driver = webdriver.PhantomJS()
+driver.get('https://www.reddit.com/')
+time.sleep(4 + np.random.random())
+html = driver.page_source.encode('utf-8')
+
+s = BeautifulSoup(html)
+defaults = s.find('div', attrs={'class':'drop-choices'})
+subs = re.compile(r"\/r\/[\w.]+\/?")
+default_subreddits = list(set(subs.findall(str(defaults))))
+</pre>
+</p>
+
+<p>This gave me the 50 default subreddits:<br /><pre>
+<a href="https://reddit.com/r/LifeProTips/">/r/LifeProTips/</a>,  <a href="https://reddit.com/r/Futurology/">/r/Futurology/</a>,  <a href="https://reddit.com/r/OldSchoolCool/">/r/OldSchoolCool/</a>,  <a href="https://reddit.com/r/mildlyinteresting/">/r/mildlyinteresting/</a>,  <a href="https://reddit.com/r/askscience/">/r/askscience/</a>,  <a href="https://reddit.com/r/UpliftingNews/">/r/UpliftingNews/</a>,  <a href="https://reddit.com/r/aww/">/r/aww/</a>, <a href="https://reddit.com/r/GetMotivated/">/r/GetMotivated/</a>,  <a href="https://reddit.com/r/personalfinance/">/r/personalfinance/</a>,  <a href="https://reddit.com/r/gadgets/">/r/gadgets/</a>,  <a href="https://reddit.com/r/science/">/r/science/</a>,  <a href="https://reddit.com/r/dataisbeautiful/">/r/dataisbeautiful/</a>,  <a href="https://reddit.com/r/DIY/">/r/DIY/</a>,  <a href="https://reddit.com/r/AskReddit/">/r/AskReddit/</a>,  <a href="https://reddit.com/r/space/">/r/space/</a>,  <a href="https://reddit.com/r/nosleep/">/r/nosleep/</a>,  <a href="https://reddit.com/r/Documentaries/">/r/Documentaries/</a>,  <a href="https://reddit.com/r/todayilearned/">/r/todayilearned/</a>,  <a href="https://reddit.com/r/television/">/r/television/</a>,  <a href="https://reddit.com/r/IAmA/">/r/IAmA/</a>,  <a href="https://reddit.com/r/Art/">/r/Art/</a>,  <a href="https://reddit.com/r/EarthPorn/">/r/EarthPorn/</a>,  <a href="https://reddit.com/r/books/">/r/books/</a>,  <a href="https://reddit.com/r/gifs/">/r/gifs/</a>,  <a href="https://reddit.com/r/Showerthoughts/">/r/Showerthoughts/</a>,  <a href="https://reddit.com/r/blog/">/r/blog/</a>,  <a href="https://reddit.com/r/news/">/r/news/</a>,  <a href="https://reddit.com/r/Jokes/">/r/Jokes/</a>,  <a href="https://reddit.com/r/TwoXChromosomes/">/r/TwoXChromosomes/</a>,  <a href="https://reddit.com/r/videos/">/r/videos/</a>,  <a href="https://reddit.com/r/philosophy/">/r/philosophy/</a>,  <a href="https://reddit.com/r/nottheonion/">/r/nottheonion/</a>,  <a href="https://reddit.com/r/explainlikeimfive/">/r/explainlikeimfive/</a>,  <a href="https://reddit.com/r/movies/">/r/movies/</a>,  <a href="https://reddit.com/r/Music/">/r/Music/</a>,  <a href="https://reddit.com/r/WritingPrompts/">/r/WritingPrompts/</a>,  <a href="https://reddit.com/r/worldnews/">/r/worldnews/</a>,  <a href="https://reddit.com/r/pics/">/r/pics/</a>,  <a href="https://reddit.com/r/history/">/r/history/</a>,  <a href="https://reddit.com/r/listentothis/">/r/listentothis/</a>,  <a href="https://reddit.com/r/sports/">/r/sports/</a>,  <a href="https://reddit.com/r/food/">/r/food/</a>,  <a href="https://reddit.com/r/creepy/">/r/creepy/</a>,  <a href="https://reddit.com/r/announcements/">/r/announcements/</a>,  <a href="https://reddit.com/r/gaming/">/r/gaming/</a>,  <a href="https://reddit.com/r/tifu/">/r/tifu/</a>,  <a href="https://reddit.com/r/funny/">/r/funny/</a>,  <a href="https://reddit.com/r/photoshopbattles/">/r/photoshopbattles/</a>,  <a href="https://reddit.com/r/InternetIsBeautiful/">/r/InternetIsBeautiful/</a>
+</pre>
+</p>
+
+
+<p>I now know that there is an API wrapper written in python for accessing reddit Data, so I would probably use that if I wanted to do any more work on this project.</p>
+<p>The next step is to loop through these subreddits and collect the HTML for each page into individual text files:</p>
+<p>
+<pre>
+  #first we navigate to the correct folder where we will store the first level of related subreddits
+os.chdir(os.path.expanduser('~/Documents/Projects/Data/Subreddits/one/'))
+
+#next we instantiate the webdriver we will be using: PhantomJS
+driver = webdriver.PhantomJS()
+
+#loop through the list of default subreddits
+for num, subreddit in enumerate(default_subreddits):
+
+    #for each subreddit, we append the /r/subreddit path to the base URL (reddit.com)
+    driver.get('https://www.reddit.com'+subreddit)
+
+    #wait for two seconds
+    time.sleep(2 + np.random.random())
+
+    #save the html of the loaded page to a variable: html
+    html = driver.page_source.encode('utf-8')
+
+    #remove '/r/' from the subreddit name string
+    name = subreddit.split('/')[2]
+
+    #open a new file and give it the name of the subreddit we just scraped
+    subreddit_html_file = open(name+'.txt', 'w+')
+
+    #write the html contents to the file
+    subreddit_html_file.write(html)
+
+    #clost the file
+    subreddit_html_file.close()
+
+    #print out the number and name of the subreddit we just scrapped to make sure things are working
+    print str(num) + ' ' + subreddit,
+</pre>
+</p>
+<p>Lastly I looped through each of the 50 text files to gather the related subreddits:</p>
+<p>
+<pre>
+#navigate to where the html files are stored (I moved them around a bit so it is not consistent with the script above)
+os.chdir('E://DATA/Subreddits/subreddits_html/')
+
+#generate a list of files that we will loop through
+files = os.listdir('E://DATA/Subreddits/subreddits_html/')
+
+#set up an empty list that we will append dictionaries to
+dict_list = []
+
+#loop through the files
+for file_ in files:
+
+    #print out the name of the current file in the loop
+    print file_,
+
+    #open the file
+    f = open(file_, 'r')
+    #read the file contents to a local variable
+    html = f.read()
+    #create a BeautifulSoup object that we will use to parse the HTML
+    b = BeautifulSoup(html, 'lxml')
+
+    #get the subreddit name that we are working with (from the `file` variable)
+    subreddit_name = '/r/' + file_[:-4].lower()
+    #put the name into a dictionary
+    subreddit_name_dict = {'subreddit':subreddit_name}
+
+    #get number of subscribers
+    subs = b.find('span', attrs={'class':'subscribers'})
+    #if the number of subscribers is displayed on the page, then we find it and add it to a dictionary
+    if subs:
+        subs = b.find('span', attrs={'class':'subscribers'}).find('span', attrs={'class':'number'}).text.replace(',', '')
+        subs_dict = {'subscribers':int(subs)}
+    #if the number of subscribers is not displayed on the page, then we set the number of subscribers in the dictionary to None
+    else:
+        subs_dict = {'subscribers':None}
+
+    #similar process for the description: if the description is displayed, get it and save it to desc
+    #if it is not available, then desc will be set to `None`
+    desc = b.find('div', attrs={'class':'md'})
+    if desc:
+        desc = b.find('div', attrs={'class':'md'}).text
+        desc = desc.replace('\n', ' ')
+    desc_dict = {'description':desc}
+
+    #here we use regular expressions to find links anywhere on the page that have the structure: "/r/something/"
+    rel_subr = re.compile(r"\/r\/[\w.]+\/?")
+    #make a list of these links based on the "/r/something/" pattern
+    related_subreddits = rel_subr.findall(html)
+
+    #save the list to a dictionary
+    subreddits_dict = {'related':related_subreddits}
+
+    #same processes for recording the date that the subreddit was created: get the date from an HTML element,
+    #then save it to a dictionary. There were two different formats available in the HTML so I grabbed both
+    age = b.find('span', attrs={'class':'age'})
+    if age:
+        time1 = age.find('time')['title']
+        time2 = age.find('time')['datetime']
+
+    #save the date to a dictionary
+    time_dict = {"date1":time1, "date2":time2}
+
+    #take all the dictionaries we just created and put them together into one big dictionary
+    dictionary = dict(subs_dict.items()+desc_dict.items()+subreddits_dict.items()+subreddit_name_dict.items()+time_dict.items())
+
+    #append the big dictionary to the list that we defined right before the beginning of the loop
+    dict_list.append(dictionary)
+
+    #deconstruct the Beautiful Soup object (this can eat up memory very quickly, so it is very important when processing lots of data)
+    b.decompose()
+
+    #clost the file
+    f.close()
+</pre>
+</p>
+
+<p>Since I was accessing these pages as an anonymous guest user, I didn't collect any data on "mature" subreddits, of which there are many. I repeated this process a (I think) five times until I collected about 18,500 unique subreddits. I then put the data into a pandas dataframe:</p>
+<p>
+<pre>
+import pandas as pd
+df = pd.DataFrame(dict_list, index=None)
+</pre>
+</p>
+<p>From this dataframe I removed duplicates and otherwise "bad data" and then stripped it down to two columns: subreddits and their related subreddits, and then finally exported this into another dictionary and imported that dictionary into NetworkX to build the graph. NetworkX provides built-in functions for returning the shortest path for both unweighted graphs (where the "distance" between nodes is uniform, like my data) and weighted graphs (where the edges of the graph have weights, or distances, like real-world sat-nav applications), so at this point finding the shortest path between any two subreddits is fairly easy. One thing I did to make things either was to convert the graph to an undirected graph. This guarantees that if node <code>a</code> is connected to node <code>b</code>, then node <code>b</code> is connected to node <code>a</code> for all pairs of edges in the graph.</p>
+
+<p>Since learning the basics of Django, I wanted to see if I could implement this project in a simple applet that lets users explore relationships among two selected subreddits. Without any idea of whether or not it would work with a Django app hosted on Heroku, here is the approach I took:</p>
 
 <ol>
-  <li>install most of the condas <a href="https://github.com/briancaffey/briancaffey.com/blob/master/requirements.txt">dependencies</a> and <code>pip freeze</code> them into <code>requirements.txt</code>.</li>
-  <li>push a 22.9MB <a href="https://github.com/briancaffey/reddit-graph-analysis/blob/master/pickle/master_df.p">pickled data file</a>  containing a large ddictionary (where keys are nodes and values are lists of connections) to my heroku repo.</li>
-  <li>set up a <a href="https://github.com/briancaffey/briancaffey.com/blob/master/srgraph/utils.py">utility script</a> that reads in the pickled file and then create an undirected graph from the dictionary.</li>
-  <li>call the utility function in my views, and display links to the subreddits that make up the shortest path.</li>
+  <li>Install the  <a href="https://github.com/briancaffey/briancaffey.com/blob/master/requirements.txt">condas dependencies</a> and <code>pip freeze</code> them into <code>requirements.txt</code>.</li>
+  <li>Push to my heroku repo a 22.9MB <a href="https://github.com/briancaffey/reddit-graph-analysis/blob/master/pickle/master_df.p">pickle file</a> containing a large dictionary where keys are nodes (subreddits) and values are lists of connections (where a connection between two subreddits is exists when one subreddit lists another in its description).</li>
+  <li>Set up a <a href="https://github.com/briancaffey/briancaffey.com/blob/master/srgraph/utils.py">utility script</a> that reads in the pickled file and then create an undirected graph from the dictionary.</li>
+  <li>Define a function in the utility script that takes two subreddits as arguments and returns a list of subreddits that is the (or one of the) shortest paths between the two subreddits.
+  <li>Call the utility function in my views, and display links to the subreddits that make up the shortest path.</li>
 </ol>
-<p>here the <code>utils.py</code> file that powers the graph search:</p>
+<p>here's the <code>utils.py</code> file that powers the graph search:</p>
+<p>
 <pre>
 import pandas as pd
 import networkx as nx
 import numpy as np
 from .models import Subreddit
 
+#import the dataframe from pickle file and filter out null values
 master_df = pd.read_pickle('master_df.p')
 master_df_ = master_df[master_df.notnull()]
 
+#cleanup and remove duplicates in the pandas dataframe
 master_df_u = master_df_.drop_duplicates('subreddit')
 master_df_u = master_df_u.drop(master_df_u.index[master_df_u.subreddit=='/r/track__subreddits_'])
 graph = {x:y for x, y in zip(master_df_u.subreddit, master_df_u.related)}
@@ -27,14 +189,117 @@ G=nx.from_dict_of_lists(graph)
 G1 = G.to_undirected()
 
 def path(sr_one, sr_two):
-  data = {'one':sr_one, 'two':sr_two}
-  if nx.has_path(G1, sr_one, sr_two):
-      path = [x+'\n' for x in nx.shortest_path(G1, sr_one, sr_two)]
-      data['path'] = path
-      collection = list(Subreddit.objects.filter(name__in=path))
-      collection.sort(key=lambda t:path.index(t.name))
-      data['collection']  = collection
-      return data
+    data = {'one':sr_one, 'two':sr_two}
+    if nx.has_path(G1, sr_one, sr_two):
+        path = [x+'\n' for x in nx.shortest_path(G1, sr_one, sr_two)]
+        data['path'] = path
+        collection = list(Subreddit.objects.filter(name__in=path))
+        collection.sort(key=lambda t:path.index(t.name))
+        data['collection']  = collection
+        return data
 </pre>
-<p>I think the efficiency could be significanlty improved, and things got a little but clumsy when working with both a database of subreddit names and the dictionary/graph. Overall I'm please things are working the way they are. I couldn't find a good answer about whether or not I could store a large pickle file in the Heroku file system, since it is <a href="https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem">ephemeral</a>.
+</p>
+<p>Heroku usese an <a href="https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem">ephemeral</a>
+</p> file system, so I wasn't sure if it would work to keep a rather large file stored on their servers. It works, but I'm not sure if this is the best way to organize the app and the graph queries.</p>
+
+<p>Here's a look at the function that runs when a user searches for the path between two subreddits:</p>
+<p>
+<pre>
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from .models import Subreddit, SearchResult
+import json
+from urllib.parse import quote
+from datetime import datetime, timedelta
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+def graph_view(request):
+
+    sr1 = request.GET.get('sr1')
+    if sr1:
+        sr1 = quote(sr1)
+
+    sr2 = request.GET.get('sr2')
+    if sr2:
+        sr2 = quote(sr2)
+
+    if sr1 and sr2:
+        sr_one = Subreddit.objects.filter(name=sr1 + '\n').first()
+        sr_two = Subreddit.objects.filter(name=sr2 + '\n').first()
+
+        if sr_one and sr_two:
+            search_result = path(sr_one.name.strip('\n'), sr_two.name.strip('\n'))
+            check = SearchResult.objects.filter(s_one=sr_one, s_two=sr_two)
+            new_search_result = SearchResult(s_one=sr_one, s_two=sr_two, path=search_result['path'])
+
+            if len(check) == 0:
+                sr = SearchResult(s_one=sr_one, s_two=sr_two, path=search_result['path'])
+                sr.last_searched = datetime.now()
+                sr.save()
+            else:
+                record = check.first()
+                record.last_searched = datetime.now()
+                record.save()
+
+    previous_searches = SearchResult.objects.all()
+    page = request.GET.get('page', 1)
+    paginator = Paginator(previous_searches, 20)
+    try:
+        results = paginator.page(page)
+    except PageNotAnInteger:
+        results = paginator.page(1)
+    except EmptyPage:
+        results = paginator.page(paginator.num_pages)
+
+    return render(request, 'srgraph/srgraph_infinite_scroll.html', {'results':results})
+</pre>
+</p>
+<p>This function takes two subreddits as arguments, and then queries a simple table to see if the subreddits exist. If they both exits, then the NetworkX function is called and with the "shortest path" result from the utility function I create a "SearchResult" object with a timestamp. If someone queries the same two subreddits again, then the "SearchResult" object's timestamp is updated (and the object is not duplicated).</p>
+<p>In this project I tried to implement some fancy front-end features. Using jQuery and AJAX, users can upvote and downvote search result items as many times as they want. When searching subreddits, jQuery's autocomplete helps suggest which subreddit the use is searching for. There is also a "random" button that selects a random item from the database. Finally, I implemented infinite scroll for both a list-view of the recent search results as well as the popular search results sorted by highest vote count.</p>
+<p>Upon implementing infinite scroll, newly populated items didn't didn't have like-button functionality. I added this this with jQuery upon successful loading of a new batch of items, but another problem surfaced: the function would be applied doubly for to the first 20 search results loaded on the page. To fix this I created added an attribute in the like button tags to keep track of which like-buttons had already received the functionality from jQuery, and then only apply the function to buttons that had not had the function applied. Here's a look at this cusomt jQuery inside the infinte scroll function using the Waypoint library:</p>
+<p>
+<pre>
+var infinite = new Waypoint.Infinite({
+  element: $('.infinite-container')[0],
+      onBeforePageLoad: function () {
+        $('.loading').show();
+      },
+
+      onAfterPageLoad: function ($items) {
+
+        function updateText(btn, newCount){
+          btn.text(newCount)
+          btn.attr('data-like', newCount)
+        }
+
+        $(".up-vote").each(function(index){
+          var value = $(this).attr("applied")
+          if ( value == 'false' ) {
+          $(this).click(function(e){
+            e.preventDefault()
+            var this_ = $(this)
+            var likeCountSpan = this_.parent().next()
+            var likeCount = parseInt(this_.parent().next().text())
+            var likeUrl = this_.attr("data-href")
+            if (likeUrl){
+              $.ajax({
+                url: likeUrl,
+                method: "GET",
+                data: {},
+                success: function(data){
+                  updateText(likeCountSpan, data)
+
+                }
+              })
+            }
+
+          })
+        }
+        $(this).attr("applied", 'true')
+        })
+
+
+        $(".down-vote").each(function(index){
+          ...
+</pre>
 </p>
