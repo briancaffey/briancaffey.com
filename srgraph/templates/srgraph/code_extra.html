@@ -1,9 +1,9 @@
 <h3>background</h3>
 
 <p>First, all of the code for this project can be found in <a href="https://github.com/briancaffey/briancaffey.com/tree/master/srgraph">this folder</a>, which is a "Django app" or module that contains all of the models, templates, views, urls, etc. for the "six degress of subreddits" portion of my site.</p>
-<p>I did wrote up <a href="http://briancaffey.github.io/2017/03/03/graph_subreddit.html">an offline version of this project</a> about 4 months ago, before I learned anything about Django (the python web framework that powers this website). </p>
+<p>I completed <a href="http://briancaffey.github.io/2017/03/03/graph_subreddit.html">an offline version of this project</a> about 4 months ago, before I learned anything about Django (the python web framework that powers this website). </p>
 
-<p>I used Selenium and PhantomJS to scrape the first 50 subreddits that are shown when you browse reddit anonymously. Here's the script I wrote:</p>
+<p>I used Selenium and PhantomJS to scrape the first 50 subreddits that are shown when you browse reddit anonymously. Here's the script I wrote to do that:</p>
 <p>
 <pre>
 from selenium import webdriver
@@ -30,7 +30,7 @@ default_subreddits = list(set(subs.findall(str(defaults))))
 </p>
 
 
-<p>I now know that there is an API wrapper written in python for accessing reddit Data, so I would probably use that if I wanted to do any more work on this project.</p>
+<p>I now know that there is an API wrapper written in python for accessing reddit data, so I would probably use that if I wanted to do any more work on this project.</p>
 <p>The next step is to loop through these subreddits and collect the HTML for each page into individual text files:</p>
 <p>
 <pre>
@@ -68,7 +68,7 @@ for num, subreddit in enumerate(default_subreddits):
     print str(num) + ' ' + subreddit,
 </pre>
 </p>
-<p>Lastly I looped through each of the 50 text files to gather the related subreddits:</p>
+<p>Lastly, I looped through each of the 50 text files to gather the related subreddits:</p>
 <p>
 <pre>
 #navigate to where the html files are stored (I moved them around a bit so it is not consistent with the script above)
@@ -143,19 +143,19 @@ for file_ in files:
     #deconstruct the Beautiful Soup object (this can eat up memory very quickly, so it is very important when processing lots of data)
     b.decompose()
 
-    #clost the file
+    #close the file
     f.close()
 </pre>
 </p>
 
-<p>Since I was accessing these pages as an anonymous guest user, I didn't collect any data on "mature" subreddits, of which there are many. I repeated this process a (I think) five times until I collected about 18,500 unique subreddits. I then put the data into a pandas dataframe:</p>
+<p>Since I was accessing these pages as an anonymous guest user, I didn't collect any data on "mature" subreddits, of which there are many. I repeated this process (I think) five times until I collected about 18,500 unique subreddits. I then put the data into a pandas dataframe:</p>
 <p>
 <pre>
 import pandas as pd
 df = pd.DataFrame(dict_list, index=None)
 </pre>
 </p>
-<p>From this dataframe I removed duplicates and otherwise "bad data" and then stripped it down to two columns: subreddits and their related subreddits, and then finally exported this into another dictionary and imported that dictionary into NetworkX to build the graph. NetworkX provides built-in functions for returning the shortest path for both unweighted graphs (where the "distance" between nodes is uniform, like my data) and weighted graphs (where the edges of the graph have weights, or distances, like real-world sat-nav applications), so at this point finding the shortest path between any two subreddits is fairly easy. One thing I did to make things either was to convert the graph to an undirected graph. This guarantees that if node <code>a</code> is connected to node <code>b</code>, then node <code>b</code> is connected to node <code>a</code> for all pairs of edges in the graph.</p>
+<p>From this dataframe I removed duplicates and other "bad data" and then stripped it down to two columns: subreddits and their related subreddits, and then exported this dataframe into another dictionary which I then imported into NetworkX to build the graph. NetworkX provides built-in functions for returning the shortest path for both unweighted graphs (where the "distance" between nodes is uniform, like my data) and weighted graphs (where the edges of the graph have weights, or distances, like real-world sat-nav applications), so at this point finding the shortest path between any two subreddits is fairly easy. One thing I did to make things either was to convert the graph to an undirected graph. This guarantees that if node <code>a</code> is connected to node <code>b</code>, then node <code>b</code> is connected to node <code>a</code> for all pairs of edges in the graph.</p>
 
 <p>Since learning the basics of Django, I wanted to see if I could implement this project in a simple applet that lets users explore relationships among two selected subreddits. Without any idea of whether or not it would work with a Django app hosted on Heroku, here is the approach I took:</p>
 
@@ -200,7 +200,7 @@ def path(sr_one, sr_two):
 </pre>
 </p>
 <p>Heroku usese an <a href="https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem">ephemeral</a>
-</p> file system, so I wasn't sure if it would work to keep a rather large file stored on their servers. It works, but I'm not sure if this is the best way to organize the app and the graph queries.</p>
+ file system, so I wasn't sure if it would work to keep a rather large file stored on their servers. It works, but I'm not sure if this is the best way to organize the app and the graph queries.</p>
 
 <p>Here's a look at the function that runs when a user searches for the path between two subreddits:</p>
 <p>
