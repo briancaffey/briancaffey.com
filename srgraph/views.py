@@ -10,7 +10,6 @@ from .utils import path
 # Create your views here.
 def graph_view(request):
 
-
     sr1 = request.GET.get('sr1')
     if sr1:
         sr1 = quote(sr1)
