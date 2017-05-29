@@ -1,0 +1,1074 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<table class="grid qr-code">
+</table>
+
+
+<script>
+
+
+var cells = 1600;
+var height = 40;
+
+function add_cell (cell_id) {
+  var $div = $("<td>", {id: cell_id, "class": "black", 'style':"border-top-width:0;width:25px;height:25px"});
+  return $div
+ }
+
+function add_row (row_num) {
+  var $div = $("<tr>", {id: row_num, "class":"row"});
+  return $div
+}
+
+var x = 0;
+for (x; x<cells; x++) {
+  console.log('building grid')
+  if (x % height == 0) {
+    $(".grid").append(add_row(x))
+  }
+  $(".grid").find('tr').last().append(add_cell(x))
+}
+
+var direction = 1;
+var position = cells/2 + height/2
+console.log(position)
+
+function moveRight(){
+  position += 1;
+  console.log("moved right")
+}
+
+function moveLeft(){
+  position -= 1;
+}
+
+function moveUp(){
+  position += height;
+}
+
+function moveDown(){
+  position -= height;
+}
+
+
+$(".grid").click(function(){
+
+
+sleep_time = 1;
+steps = 3;
+step = 1;
+for (step; step<steps; step++){
+  var currentCell = $(".grid").find('tr #' + position )
+  var currentColor = currentCell.attr('class')
+  console.log(currentColor)
+  if (direction == 1 && currentColor == 'black') {
+    currentCell.removeClass('black')
+    currentCell.addClass('white')
+    console.log('pointing right and on black')
+    var init = position
+    // setTimeout(moveUp, sleep_time);
+    moveUp();
+    var end = position
+    direction = init - end
+    console.log(direction)
+    continue
+  } else if ( direction == -1 && currentColor == 'black'){
+      currentCell.removeClass('black')
+      currentCell.addClass('white')
+      console.log('pointing left and on black')
+      var init = position
+      moveDown();
+      var end = position
+      direction = init - end
+      console.log(direction)
+      continue
+  } else if ( direction == height && currentColor == 'black' ){
+      currentCell.removeClass('black')
+      currentCell.addClass('white')
+      console.log('pointing up and on black')
+      var init = position
+      moveLeft();
+      var end = position
+      direction = init - end
+      console.log(direction)
+      continue
+  } else if ( direction == (-1)*height && currentColor == 'black'){
+      currentCell.removeClass('black')
+      currentCell.addClass('white')
+      console.log('pointing down and on black')
+      var init = position
+      moveRight();
+      var end = position
+      direction = init - end
+      console.log(direction)
+      continue
+  } else if (direction == 1 && currentColor == 'white') {
+    currentCell.removeClass('white')
+    currentCell.addClass('black')
+    console.log('pointing right and on white')
+    var init = position
+    moveDown();
+    var end = position
+    direction = init - end
+    console.log(direction)
+    continue
+  } else if ( direction == -1 && currentColor == 'white'){
+      currentCell.removeClass('white')
+      currentCell.addClass('black')
+      console.log('pointing left and on white')
+      var init = position
+      moveUp();
+      var end = position
+      direction = init - end
+      console.log(direction)
+      continue
+  } else if ( direction == height && currentColor == 'white' ){
+      currentCell.removeClass('white')
+      currentCell.addClass('black')
+      console.log('pointing up and on white')
+      var init = position
+      moveRight();
+      var end = position
+      direction = init - end
+      console.log(direction)
+      continue
+  } else if ( direction == -height && currentColor == 'white'){
+      currentCell.removeClass('white')
+      currentCell.addClass('black')
+      console.log('pointing down and on white')
+      var init = position
+      moveLeft();
+      var end = position
+      direction = init - end
+      console.log(direction)
+      continue
+  }
+
+}
+
+})
+
+</script>
+
+<!-- <div class="qr-container"> -->
+<!-- <table style="table-layout: fixed;" width="100%"  class="qr-code"> -->
+        <tbody><tr style="height:5px">
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+        </tr>
+        <tr style="height:5px">
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+        </tr>
+        <tr style="height:5px">
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+        </tr>
+        <tr style="height:5px">
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+        </tr>
+        <tr style="height:5px">
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+        </tr>
+        <tr style="height:5px">
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+        </tr>
+        <tr style="height:5px">
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+        </tr>
+        <tr style="height:5px">
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+        </tr>
+        <tr style="height:5px">
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+        </tr>
+        <tr style="height:5px">
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+        </tr>
+        <tr style="height:5px">
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+        </tr>
+        <tr style="height:5px">
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+        </tr>
+        <tr style="height:5px">
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+        </tr>
+        <tr style="height:5px">
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+        </tr>
+        <tr style="height:5px">
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+        </tr>
+        <tr style="height:5px">
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+        </tr>
+        <tr style="height:5px">
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+        </tr>
+        <tr style="height:5px">
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+        </tr>
+        <tr style="height:5px">
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+        </tr>
+        <tr style="height:5px">
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+        </tr>
+        <tr style="height:5px">
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+        </tr>
+        <tr style="height:5px">
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+        </tr>
+        <tr style="height:5px">
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+        </tr>
+        <tr style="height:5px">
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+        </tr>
+        <tr style="height:5px">
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+        </tr>
+        <tr style="height:5px">
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+        </tr>
+        <tr style="height:5px">
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+        </tr>
+        <tr style="height:5px">
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+        </tr>
+        <tr style="height:5px">
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="black"></td>
+              <td style="border-top-width:0;width:5px;height:5px" class="white"></td>
+        </tr>
+    </tbody></table>
+  </div>
+
+    <script>
+      var width = $(".qr-container").width()
+      $(".qr-code").height(width)
+
+
+
+      $(window).resize(function(){
+        var width = $(".qr-container").width()
+        $(".qr-code").height(width)
+      })
+    </script>
+
+
+
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+
+{% block head_extra %}
+   <link rel="stylesheet" href="http://cdn.pydata.org/bokeh/release/bokeh-0.9.0.min.css" type="text/css" />
+{% endblock %}
+
+{% block content %}
+
+{{ div | safe }}
+
+
+
+{% endblock %}
+
+
+{% block after_body %}
+
+<script type="text/javascript" src="http://cdn.pydata.org/bokeh/release/bokeh-0.9.0.min.js"></script>
+{{ script | safe }}
+
+{% endblock %}

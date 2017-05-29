@@ -1,0 +1,318 @@
+{% load staticfiles %}
+{% static 'music' %}
+
+<!doctype html>
+<html>
+<head>
+  <title>King's Encounter</title>
+
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+</head>
+
+
+
+<body style="padding-top:30px;">
+
+
+      <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#kingsencounter">👑&nbsp;&nbsp;King's Encounter ⚔</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+
+              <li style="display:none;" class="stat"><a>❤️ ✖️ <span class="health"></span></a></li>
+              <li style="display:none;" class="stat"><a>💎 ✖️ <span class="diamonds"></span></a></li>
+              <li style="display:none;" class="stat"><a>📜 ✖️ <span class="scrolls"></span></a></li>
+              <li style="display:none;" class="stat"><a>⏳&nbsp;&nbsp;<span class="clock">0 : 00</span></a></li>
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#music" type="button" data-toggle="modal" data-target="#myModal-music">🔊</a></li>
+              <li><a>Sir {{ request.username }}</a></li>
+              <li><a>Help</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+
+      <div class="modal fade" id="myModal-music" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div style="text-align:center;" class="modal-body">
+              <h1>🎻🎹🎶</h1>
+              <audio loop="loop" autoplay="true" audio="" controls="controls">
+                    <source src="{% static 'music/plirwin.ogg' %}">
+                    <embed type="application/x-shockwave-flash" src="http://www.google.com/reader/ui/3523697345-audio-player.swf" quality="best" flashvars="audioUrl=http://www.contemplator.com/mp3/plirwin.mp3" width="500" height="27">
+                    </audio>
+            </div>
+            <div class="modal-footer">
+              <div class="pull-left">Source: <a href="http://www.contemplator.com/">contemplator.com</a></div>
+              <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+  <div style="background-color:" class="container">
+    <div class="row">
+
+      </div>
+      <div style="padding-top:30px;" class="row">
+<div style="text-align:center;" class="jumbotron" id="welcomeJumbo">
+  <h1>👑⚔🛡🐉❤️<br />Welcome to King's Encounter!</h1>
+  <br />
+  <p>Prepare yourself! A journey awaits you...</p>
+  <br />
+  <a class="btn btn-success btn-lg togglePlay" href="#start" class="togglePlay">Begin!</a>
+</div>
+
+<div class="col-md-10">
+<div style="align:center;" class="canvas"><table style="font-size:5em;" class="grid"><tbody></tbody></table>
+
+</div>
+</div>
+</div>
+</div>
+</body>
+
+</html>
+
+<script>
+
+var avatar = '😀';
+var dragon_emoji = '🐉';
+
+var dragon = {
+  current: [5,7]
+}
+
+
+
+
+var current_scene = 0;
+
+var scenes = {
+                0: {map:
+                  [ ['🌳','🌳','🌳','🌳','🌳','🌳','🌳','🌳','🌳','🌳','🌳','🌳','🌳','🌳','🌳','🌳',],
+                    ['🌳','','','','🌳','🌳','🌳','','❤️','🌳','🌳','','','','🌳','🌳',],
+                    ['🌳','🌳','','🌳','🌳','🌳','🌳','','🌳','🌳','💎','','🌳','','','🌳',],
+                    ['🌳','🌳','','','','','','','🌳','🌳','🌳','','','🌳','','🌳',],
+                    ['🌳','🌳','🌳','🌳','🌳','🌳','🌳','','🌳','🌳','','','🌳','','','🌳',],
+                    ['🌳','🌳','🌳','🌳','🌳','🌳','🌳','','🌳','🌳','','🌳','🌳','','🌳','🌳',],
+                    ['🌳','❤️','','💎','🌳','🌳','🌳','','','➡️','','🌳','🌳','','🌳','🌳',],
+                    ['🌳','🌳','','🌳','🌳','🌳','🌳','','🌳','🌳','🌳','🌳','','','❤️','🌳',],
+                    ['🌳','🌳','','','','','','','🌳','🌳','📜','','','🌳','','➡️',],
+                    ['🌳','🌳','🌳','🌳','🌳','🌳','🌳','🌳','🌳','🌳','🌳','🌳','🌳','🌳','🌳','🌳',]],
+
+                    meta:{
+                      start: [1,2],
+                      exit: [9,15],
+                    },
+                  },
+                1:{map:
+                  [ ['🌳','🌳','🌳','🌳','🌳','🌳','🌳','🌳','🌳','🌳',],
+                    ['🌳','','','','🌳','🌳','🌳','','❤️','🌳',],
+                    ['🌳','🌳','','🌳','🌳','🌳','🌳','','🌳','🌳',],
+                    ['🌳','🌳','','','','','','','🌳','🌳',],
+                    ['🌳','🌳','🌳','🌳','🌳','🌳','🌳','','🌳','🌳',],
+                    ['🌳','🌳','🌳','🌳','🌳','🌳','🌳','','🌳','🌳',],
+                    ['🌳','❤️','','💎','🌳','🌳','🌳','','','➡️',],
+                    ['🌳','🌳','','🌳','🌳','🌳','🌳','','🌳','🌳',],
+                    ['🌳','🌳','','','','','','','🌳','🌳',],
+                    ['🌳','🌳','🌳','🌳','🌳','🌳','🌳','🌳','🌳','🌳',]],
+                  },
+                  meta: {
+                    start: [1,2],
+                    exit: [9,15],
+                  }
+            }
+
+
+var scene = scenes[current_scene].map
+
+
+var player = {
+ current: [1,2],
+ health: 1,
+ diamonds: 0,
+ scrolls: 0,
+};
+
+function buildScene(){
+  $("tbody tr").remove();
+  scene[player.current[0]][player.current[1]] = avatar;
+  scene[dragon.current[0]][dragon.current[1]] = dragon_emoji;
+  for (row in scene){
+
+    var current = $('.grid tbody').append("<tr row="+row+"></tr>")
+
+    for (square in scene[row]){
+      $('tr[row='+ row +']').append("<td col="+square+">"+scene[row][square]+"</td>")
+    }
+  }
+};
+
+
+
+function playerDie(){
+  $("tbody tr").remove();
+}
+
+function checkSquare(square){
+  //heart
+  if (square == '❤️'){
+    player.health += 1;
+    if (player.health < 1){
+      playerDie();
+    }
+  }
+
+  if (square == '💎'){
+    player.diamonds += 1;
+  }
+  if (square == '📜'){
+    player.scrolls += 1;
+  }
+
+
+
+}
+
+
+function updateStats(){
+  $(".health").text(player.health)
+  $(".diamonds").text(player.diamonds)
+  $(".scrolls").text(player.scrolls)
+
+}
+updateStats();
+
+function start(){
+
+
+var pushKeys = addEventListener("keydown", function(event) {
+//down
+  if (event.keyCode == 40 || event.keyCode == 83){
+    var current = player.current[0];
+    var next_ = current + 1;
+    var next_square = scene[next_][player.current[1]];
+    if (next_square != '🌳'){
+      scene[player.current[0]][player.current[1]] = '';
+      player.current[0] += 1;
+      }
+    checkSquare(next_square);
+    }
+//up
+  if (event.keyCode == 38 || event.keyCode == 87){
+    var current = player.current[0];
+    var next_ = current - 1;
+    var next_square = scene[next_][player.current[1]];
+    if (next_square != '🌳'){
+      scene[player.current[0]][player.current[1]] = '';
+      player.current[0] -= 1;
+      }
+    checkSquare(next_square);
+    }
+//left
+  if (event.keyCode == 37 || event.keyCode == 65){
+    var current = player.current[1];
+    var next_ = current - 1;
+    var next_square = scene[player.current[0]][next_]
+    if (next_square != '🌳'){
+      scene[player.current[0]][player.current[1]] = '';
+      player.current[1] -= 1;
+      }
+    checkSquare(next_square);
+
+    }
+
+    if (event.keyCode == 39 || event.keyCode == 68){
+      var current = player.current[1];
+      var next_ = current + 1;
+      var next_square = scene[player.current[0]][next_]
+      if (next_square != '🌳'){
+        scene[player.current[0]][player.current[1]] = '';
+        player.current[1] += 1;
+        }
+        checkSquare(next_square);
+      }
+
+          buildScene();
+          updateStats();
+});
+
+
+
+var direction = -1;
+
+function dragonMove(){
+  var dragon_pos = dragon.current;
+  var current_ = dragon.current[1];
+  var next_ = current_ + 1;
+
+  var next_dragon = scene[next_][player.current[1]];
+  scene[dragon.current[0]][dragon.current[1]] = '';
+  if (dragon.current[0] == 1){
+    direction = 1;
+  } else if (dragon.current[0] == 7){
+    direction = -1;
+  };
+
+  dragon.current[0] += direction;
+
+  if (dragon.current[0] == player.current[0] && dragon.current[1] == player.current[1]){
+    player.health -= 1;
+    updateStats();
+  }
+
+buildScene();
+}
+
+
+var enemy1 = setInterval(dragonMove, 350);
+var total_seconds = 0;
+var startClock = setInterval(function updateClock(){
+  total_seconds += 1;
+  var pad_zero;
+  if (total_seconds % 60 < 10) {
+    pad_zero = '0';
+  } else {
+    pad_zero = '';
+  }
+  var time = (Math.ceil(total_seconds/60 - 1)) +' : ' + pad_zero + (total_seconds % 60);
+  $(".clock").text(time)
+}, 1000);
+
+buildScene();
+
+};
+
+
+
+$('.togglePlay').click(function(){
+  start();
+  $(this).text('Stop')
+  $('#welcomeJumbo').hide()
+  $('.stat').show();
+
+})
+
+
+</script>

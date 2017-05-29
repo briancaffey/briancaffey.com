@@ -39,6 +39,7 @@ urlpatterns = [
     url(r'^comments/', include('comments.urls', namespace='comments')),
     url(r'^accounts/', include('accounts.urls', namespace='accounts')),
     url(r'^readinglist/', include('readinglist.urls', namespace='reading-list')),
+    url(r'^ant/', include('langton.urls', namespace='langton')),
 
 ]
 
