@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
 </head>
 
 
@@ -29,7 +29,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#kingsencounter">👑&nbsp;&nbsp;King's Encounter ⚔</a>
+            <a class="navbar-brand" href="{% url 'projects:kings' %}">👑&nbsp;&nbsp;King's Encounter ⚔</a>
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -43,8 +43,8 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li><a href="#music" type="button" data-toggle="modal" data-target="#myModal-music">🔊</a></li>
-              <li><a>Sir {{ request.user.username }}</a></li>
-              <li><a>Help</a></li>
+              <li><a>Guest</a></li>
+              <li><a href="{% url 'home:home' %}">Exit</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -78,7 +78,7 @@
       <span id="welcomeJumbo">
       <div style="padding-top:40px;" class="row">
 <div style="text-align:center;" class="jumbotron" >
-  <h1>👑⚔🛡🐉❤️<br />Welcome to King's Encounter!</h1>
+  <h1>👑⚔🏰🐉❤️<br />Welcome to King's Encounter!</h1>
   <br />
   <p>Prepare yourself! A journey awaits...</p>
   <br />
@@ -98,7 +98,7 @@ Your kingdom is threatened by a set of evil forces. You have been selected by th
 </span>
 
 <div style="padding-top:40px;" class="col-md-10">
-<div style="align:center;" class="canvas"><table style="font-size:5em;" class="grid"><tbody></tbody></table>
+<div style="align:center;" class="canvas"><table style="align:center; font-size:5em;" class="grid"><tbody id="scene"></tbody></table>
 
 </div>
 </div>
@@ -110,10 +110,10 @@ Your kingdom is threatened by a set of evil forces. You have been selected by th
 
 <script>
 
-// var avatar = {emoji: '😀',
-// }
 var dragon = {emoji:'🐉',
               current: [5,7],
+              wall: true,
+              health: 3,
 }
 
 var tree = {
@@ -146,8 +146,15 @@ var exitway = {
   next:1,
 }
 
+orb = {
+  emoji: '🔮',
+}
+
+
+
 var fountain = {
   emoji: '⛲',
+  wall: true,
 };
 
 var key = {
@@ -156,9 +163,15 @@ var key = {
 
 var woman = {
   emoji: '👸🏼',
+  wall: true,
 }
 
-var current_scene = 0;
+var sword = {
+  emoji: '🗡',
+
+}
+
+var current_scene = 2;
 
 var scenes = {
                 0: {map_:
@@ -177,7 +190,6 @@ var scenes = {
                     next: 1,
                   },
 
-
                 2:{map_:
                   [ [tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
                     [tree,open_,open_,open_,open_,open_,tree,open_,open_,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
@@ -185,15 +197,14 @@ var scenes = {
                     [tree,tree,open_,open_,open_,open_,open_,open_,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
                     [tree,tree,tree,tree,tree,tree,tree,open_,tree,tree,tree,fountain,tree,tree,tree,tree,tree,tree,tree,tree,],
                     [tree,tree,tree,tree,tree,tree,tree,open_,tree,tree,tree,woman,tree,tree,tree,tree,tree,tree,tree,tree,],
-                    [tree,scroll,open_,scroll,tree,tree,tree,open_,open_,open_,open_,open_,tree,tree,tree,tree,tree,tree,tree,tree,],
-                    [tree,tree,open_,tree,tree,tree,tree,open_,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
+                    [tree,scroll,open_,scroll,tree,tree,tree,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,exitway,],
+                    [tree,tree,open_,tree,tree,tree,tree,open_,tree,tree,tree,sword,tree,tree,tree,tree,tree,tree,tree,tree,],
                     [tree,tree,open_,open_,open_,open_,open_,open_,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
                     [tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,]],
+
                     next: 0,
                     dragon:true,
                     meta_info: [1,2],
-
-
                   },
 
                   1:{map_:
@@ -208,15 +219,10 @@ var scenes = {
                       [tree,tree,open_,open_,open_,open_,open_,open_,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
                       [tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,]],
 
-
-
                       dragon:true,
                       meta_info: [1,2],
                       next:2,
                     },
-
-
-
             }
 
 
@@ -229,6 +235,9 @@ var player = {
  scrolls: 0,
  keys: 0,
  emoji: '😀',
+ sword: false,
+ orb: false,
+ card: false,
 };
 
 
@@ -245,15 +254,10 @@ function checkHealth(){
 
 var playerDie = function(){
 
-  // $("tbody tr").remove();
-  // $("#jumbotron").toggle();
-  // window.removeEventListener("keydown", pushKeys);
-  clearInterval(startClock);
 }
 
 function populateEnemies(){
   map_[dragon.current[0]][dragon.current[1]] = dragon;
-  console.log('ok')
 };
 
 function placePlayer(){
@@ -263,7 +267,6 @@ function placePlayer(){
 }
 
 function buildScene(){
-  console.log('current scene', current_scene)
   scene = scenes[current_scene].map_;
   $("tbody tr").remove();
   updateScene();
@@ -282,18 +285,6 @@ function buildScene(){
   }
 };
 
-
-
-
-// function checkNextScene(square){
-//   if (square == exitway){
-//     next_scene = exitway.next;
-//     player.current = [1,2]//scenes[exitway.next].meta_info;
-//     current_scene = scene_data.next;;
-//     buildScene();
-//   }
-// }
-
 function checkSquare(square){
 
   if (square == heart){
@@ -311,97 +302,137 @@ function checkSquare(square){
     player.keys += 1;
   }
 
+  if (square == orb){
+    player.orb = true;
+  }
+
   if (square == woman){
-    alert('You won!');
+    if (player.orb){
+      if (!player.card){
+      alert('Oh my goodness!! The sacred orb! What a brave young man! For your bravery and courage I would like to give you something... here is a pass to the royal castle 🃏');
+      player.card = true;
+    } else {
+      alert('Hurry along to the castle, it is just beyong the village up ahead. I will stay here and enjoy this fountain for now.');
+    }
+
+    } else {
+    alert('Oh would you take this sword and slay that beastly dragon! He has stolen the regal orb! I need it!!! Thank you!');
+    }
+  }
+
+  if (square == sword){
+    player.sword = true;
+    square = open_;
+    alert('Press SPACE to use you sword!')
   }
 
   if (square == exitway){
     current_scene = scene_data.next;
-    player.current = scenes[current_scene].meta_info;//scenes[exitway.next].meta_info;
+    player.current = scenes[current_scene].meta_info;
     buildScene();
-
   }
-  // if (square == exitway){
-  //   console.log('exit');
-  //   current_scene += 1;
-  //   updateScene();
-  //
-  // }
-
-
 }
-
 
 function updateStats(){
   $(".health").text(player.health)
   $(".diamonds").text(player.diamonds)
   $(".scrolls").text(player.scrolls)
   $(".keys").text(player.keys)
-
 }
+
 updateStats();
 
 function start(){
 
+function move(next_square, axis, operation){
+  if (!next_square.wall){
+    scene[player.current[0]][player.current[1]] = open_;
+    if (operation == "+"){
+      if (axis == 0){
+        player.current[0] += 1;
+      } else{
+        player.current[1] += 1;
+      }
+    } else {
+      if (axis == 0){
+        player.current[0] -= 1;
+      } else {
+        player.current[1] -= 1;
+      }
+    }
+  }
+}
 
 var pushKeys = window.addEventListener("keydown", function(event) {
-//down
+
   if (event.keyCode == 40 || event.keyCode == 83){
     var current = player.current[0];
     var next_ = current + 1;
     var next_square = scene[next_][player.current[1]];
-    if (next_square != tree){
-      scene[player.current[0]][player.current[1]] = open_;
-      player.current[0] += 1;
-      }
-    // checkNextScene(next_square);
+    move(next_square, 0, "+");
     checkSquare(next_square);
     }
-//up
+
   if (event.keyCode == 38 || event.keyCode == 87){
     var current = player.current[0];
     var next_ = current - 1;
     var next_square = scene[next_][player.current[1]];
-    if (next_square != tree){
-      scene[player.current[0]][player.current[1]] = open_;
-      player.current[0] -= 1;
-      }
-    // checkNextScene(next_square);
+    move(next_square, 0, "-");
     checkSquare(next_square);
     }
-//left
+
   if (event.keyCode == 37 || event.keyCode == 65){
     var current = player.current[1];
     var next_ = current - 1;
     var next_square = scene[player.current[0]][next_]
-    if (next_square != tree){
-      scene[player.current[0]][player.current[1]] = open_;
-      player.current[1] -= 1;
-      }
-    // checkNextScene(next_square);
+    move(next_square, 1, "-");
     checkSquare(next_square);
 
     }
-//right
-    if (event.keyCode == 39 || event.keyCode == 68){
-      var current = player.current[1];
-      var next_ = current + 1;
-      var next_square = scene[player.current[0]][next_]
-      if (next_square != tree){
-        scene[player.current[0]][player.current[1]] = open_;
-        player.current[1] += 1;
-        }
-        // checkNextScene(next_square);
-        checkSquare(next_square);
-      }
 
-          buildScene();
-          updateStats();
+  if (event.keyCode == 39 || event.keyCode == 68){
+    var current = player.current[1];
+    var next_ = current + 1;
+    var next_square = scene[player.current[0]][next_]
+    move(next_square, 1, "+");
+    checkSquare(next_square);
+    }
+
+  if (event.keyCode == 32){
+    if (player.sword){
+
+      var current = player.current;
+
+      var attack_squares = [scene[current[0]+1][current[1]],
+                            scene[current[0]-1][current[1]],
+                            scene[current[0]][current[1]+1],
+                            scene[current[0]][current[1]-1]]
+      console.log(attack_squares);
+      for (square in attack_squares){
+        if (attack_squares[square] == dragon){
+          dragon.health -= 1;
+          checkDragonHealth();
+        }
+      }
+    }
+  }
+
+  buildScene();
+  updateStats();
+
 });
 
-
-
 var direction = -1;
+
+function checkDragonHealth(){
+  if (dragon.health < 0){
+    scene[dragon.current[0]][dragon.current[1]] = orb;
+    scene_data.dragon = false;
+
+    buildScene();
+
+  }
+}
 
 var dragonMove = function(){
   if (scene_data.dragon == true){
@@ -422,29 +453,21 @@ var dragonMove = function(){
       player.health -= 1;
       updateStats();
     }
-
     buildScene();
   }
 }
 
 var enemy1 = function(){ setInterval(dragonMove, 350);};
-
 enemy1();
-
 buildScene();
 
 };
 
 var map_ = null;
 function updateScene(){
-  // console.log('current scene', current_scene);
   scene_data = scenes[current_scene]
   map_ = scene_data.map_;
   player.current = scene_data.meta_info
-  console.log(player.current);
-  // console.log('player current', player.current);
-  // player.current = scenes[current_scene].meta_info;
-  // buildScene();
 }
 
 var total_seconds = 0;
@@ -467,8 +490,6 @@ $('.togglePlay').click(function(){
   $(this).text('Stop')
   $('#welcomeJumbo').hide()
   $('.stat').show();
-
 })
-
 
 </script>
