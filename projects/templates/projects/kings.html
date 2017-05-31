@@ -13,6 +13,50 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="{% static 'css/base.css' %}">
+
+  <style>
+  /* The Modal (background) */
+  .dialogue-modal {
+      display: none; /* Hidden by default */
+      position: fixed; /* Stay in place */
+      z-index: 1; /* Sit on top */
+      padding-top: 100px; /* Location of the box */
+      left: 0;
+      top: 0;
+      width: 100%; /* Full width */
+      height: 100%; /* Full height */
+      overflow: auto; /* Enable scroll if needed */
+      background-color: rgb(0,0,0); /* Fallback color */
+      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+
+  /* Modal Content */
+  .modal-content {
+      background-color: #fefefe;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+  }
+
+  /* The Close Button */
+  .close {
+      color: #aaaaaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+  }
+  </style>
+
+
+
 </head>
 
 
@@ -82,6 +126,17 @@
   <br />
   <p>Prepare yourself! A journey awaits...</p>
   <br />
+<p>choose your character</p>
+  <form action="." class="form-contorl input-lg">
+    <select class="choose_avatar" name="choose_avatar">
+      <option value="😃">&nbsp;&nbsp;😃&nbsp;&nbsp;</option>
+      <option value="👦🏼">&nbsp;&nbsp;👦🏼&nbsp;&nbsp;</option>
+      <option value="👨🏻">&nbsp;&nbsp;👨🏻&nbsp;&nbsp;</option>
+      <option value="👩🏻">&nbsp;&nbsp;👩🏻&nbsp;&nbsp;</option>
+      <option value="👩🏽">&nbsp;&nbsp;👩🏽&nbsp;&nbsp;</option>
+    </select>
+    <br /><br />
+  </form>
   <a class="btn btn-success btn-lg togglePlay" href="#start" class="togglePlay">Begin!</a>
 </div>
 </div>
@@ -103,6 +158,48 @@ Your kingdom is threatened by a set of evil forces. You have been selected by th
 </div>
 </div>
 </div>
+
+<!-- Dialogue Modal -->
+<div id="myModal" class="dialogue-modal">
+  <!-- Modal Content -->
+  <div   class="modal-content">
+    <span class="close">&times;</span>
+    <p id="dialogue-title" style="text-align:center; font-size:6em"></p>
+    <p id="dialogue-body" style="font-size:3em;"></p>
+  </div>
+</div>
+
+<script>
+
+// Get the modal
+var modal = document.getElementById('myModal');
+
+// Get the button that opens the modal
+
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal
+var showModal = function() {
+    modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+
+    modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+
+    }
+}
+</script>
+
 </div>
 </body>
 
@@ -144,13 +241,87 @@ var scroll = {
 var exitway = {
   emoji:'↔️',
   next:1,
+  exitway:true,
 }
 
-orb = {
+var orb = {
   emoji: '🔮',
 }
 
+var castle = {
+  emoji: '🏰',
+  wall:true,
+  exitway:true,
+}
 
+var flower = {
+  emoji: '🌷',
+  wall:true,
+}
+
+var squirrle = {
+  emoji: '🐿',
+}
+
+var owl = {
+  emoji: '🦉',
+  wall:true,
+}
+
+var arms = {
+  emoji: '🛡',
+  wall:true,
+}
+
+var candle = {
+  emoji: '🕯',
+  wall:true,
+}
+
+var square_diamond = {
+  emoji: '💠',
+  wall: true,
+}
+
+var spd = {
+  emoji: '🔹'
+}
+
+var clb = {
+  emoji: '🔶'
+}
+
+var dmnd = {
+  emoji: '🔸'
+}
+
+var hrt = {
+  emoji: '🔷'
+}
+
+var door = {
+  emoji: '🚪',
+
+}
+
+var painting = {
+  emoji: '🖼',
+  wall: true,
+}
+
+var festive = {
+  emoji: '🏵',
+  wall:true,
+}
+
+var cheese = {
+  emoji: '🧀',
+}
+
+//🃏🤔😏😨👻👋👏🙏👸🏼👑🎒💍🐮🐰🐭🦁🐸🐷🐔🐤🐺🐗🦄🐛🐝🐌🐞🐜🕷🐍🐑🐀🐁🐿
+//🐉🐲🌲🌳🌾🌻🌷🍄🌰🐚🕸🌝🌤🔥🍎🍇🧀🍗🍖🍺🍻🏹🎣🏵🎭🎨🎪⛲️⛰🏔🏞🏝🏰🌈
+//🌌🏤⛪️🏛⌛️
+//💎⚖💰🕯⚙💣🗡⚔🛡☠️⚰🔮📿⚗🚪🖼🎉🎊📯📜🏳❤️💛💚💙💜❣️♨️🔱⚜🔰💠🌀
 
 var fountain = {
   emoji: '⛲',
@@ -168,10 +339,37 @@ var woman = {
 
 var sword = {
   emoji: '🗡',
-
 }
 
-var current_scene = 2;
+var card = {
+  emoji: '🃏',
+}
+
+var snail = {
+  emoji: '🐌',
+}
+
+var mouse = {
+  emoji: '🐭',
+}
+
+var swords = {
+  emoji: '⚔️',
+  wall: true,
+}
+
+var mother = {
+  emoji: '🤶🏻',
+  wall: true,
+}
+
+var up_down = {
+  emoji: '↕️'
+}
+
+
+
+var current_scene = 0;
 
 var scenes = {
                 0: {map_:
@@ -196,13 +394,13 @@ var scenes = {
                     [tree,tree,open_,tree,tree,tree,tree,open_,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
                     [tree,tree,open_,open_,open_,open_,open_,open_,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
                     [tree,tree,tree,tree,tree,tree,tree,open_,tree,tree,tree,fountain,tree,tree,tree,tree,tree,tree,tree,tree,],
-                    [tree,tree,tree,tree,tree,tree,tree,open_,tree,tree,tree,woman,tree,tree,tree,tree,tree,tree,tree,tree,],
+                    [tree,tree,tree,tree,tree,tree,tree,open_,tree,tree,tree,woman,tree,tree,tree,tree,owl,tree,tree,tree,],
                     [tree,scroll,open_,scroll,tree,tree,tree,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,exitway,],
                     [tree,tree,open_,tree,tree,tree,tree,open_,tree,tree,tree,sword,tree,tree,tree,tree,tree,tree,tree,tree,],
                     [tree,tree,open_,open_,open_,open_,open_,open_,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
                     [tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,]],
 
-                    next: 0,
+                    next: 3,
                     dragon:true,
                     meta_info: [1,2],
                   },
@@ -223,12 +421,47 @@ var scenes = {
                       meta_info: [1,2],
                       next:2,
                     },
+
+                    3:{map_:
+                      [ [tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
+                        [tree,open_,open_,open_,open_,open_,tree,open_,open_,tree,tree,tree,tree,tree,tree,tree,tree,open_,open_,exitway,],
+                        [tree,tree,open_,tree,tree,tree,tree,open_,tree,tree,tree,castle,tree,tree,tree,diamond,diamond,diamond,tree,tree,],
+                        [tree,tree,open_,open_,open_,open_,open_,open_,tree,tree,flower,open_,flower,tree,open_,open_,tree,tree,tree,tree,],
+                        [tree,tree,tree,tree,tree,tree,tree,open_,tree,tree,flower,open_,flower,tree,tree,open_,open_,tree,tree,tree,],
+                        [tree,tree,key,tree,tree,tree,tree,open_,tree,tree,flower,open_,flower,tree,tree,tree,open_,tree,tree,tree,],
+                        [tree,scroll,open_,scroll,tree,tree,tree,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,tree,tree,tree,],
+                        [tree,tree,open_,tree,tree,tree,tree,open_,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
+                        [tree,tree,open_,open_,open_,open_,open_,open_,tree,tree,squirrle,tree,snail,tree,tree,tree,tree,tree,tree,tree,],
+                        [tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,]],
+
+                        dragon:false,
+                        meta_info: [1,2],
+                        next:4,
+                      },
+
+                      4:{map_:
+                        [ [arms,arms,painting,arms,arms,painting,arms,arms,door,arms,arms,painting,arms,arms,painting,arms,arms,],
+                          [arms,cheese,open_,open_,open_,open_,open_,swords,open_,swords,open_,open_,open_,open_,open_,open_,arms,],
+                          [square_diamond,open_,open_,open_,open_,open_,festive,open_,open_,open_,festive,open_,open_,open_,open_,mother,square_diamond,],
+                          [arms,open_,open_,open_,open_,festive,candle,open_,open_,open_,candle,festive,open_,open_,open_,open_,arms,],
+                          [door,open_,open_,open_,open_,open_,open_,open_,fountain,open_,open_,open_,open_,open_,open_,open_,door,],
+                          [arms,open_,open_,open_,open_,festive,candle,open_,open_,open_,candle,festive,open_,open_,open_,open_,arms,],
+                          [square_diamond,open_,open_,open_,open_,open_,festive,open_,open_,open_,festive,open_,open_,open_,open_,open_,square_diamond,],
+                          [arms,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,mouse,arms,],
+                          [arms,arms,painting,arms,arms,painting,arms,arms,up_down,arms,arms,painting,arms,arms,painting,arms,arms,]],
+
+                          dragon:false,
+                          meta_info: [7,8],
+                          next:2,
+                        },
+
             }
 
 
 var scene;
 
 var player = {
+ avatar: null,
  current: [1,2],
  health: 1,
  diamonds: 0,
@@ -240,15 +473,13 @@ var player = {
  card: false,
 };
 
-
-
 function checkHealth(){
   if (player.health < 1){
     player.emoji = '😵';
     playerDie();
 
   } else {
-  player.emoji = '😀'
+  player.emoji = player.avatar;
 }
 }
 
@@ -309,29 +540,36 @@ function checkSquare(square){
   if (square == woman){
     if (player.orb){
       if (!player.card){
-      alert('Oh my goodness!! The sacred orb! What a brave young man! For your bravery and courage I would like to give you something... here is a pass to the royal castle 🃏');
+      box(woman.emoji + " " + card.emoji, 'Oh my goodness!! The sacred orb! What a brave young man! For your bravery and courage I would like to give you something... here is a pass to the royal castle 🃏');
       player.card = true;
     } else {
-      alert('Hurry along to the castle, it is just beyong the village up ahead. I will stay here and enjoy this fountain for now.');
+      box(woman.emoji, 'Hurry along to the castle, it is just beyong the village up ahead. I will stay here and enjoy this fountain for now.');
     }
 
     } else {
-    alert('Oh would you take this sword and slay that beastly dragon! He has stolen the regal orb! I need it!!! Thank you!');
+    box(woman.emoji, 'Oh would you take this sword and slay that beastly dragon! He has stolen the regal orb! I need it!!! Thank you!');
     }
   }
 
   if (square == sword){
     player.sword = true;
     square = open_;
-    alert('Press SPACE to use you sword!')
+    box(sword.emoji, 'Press SPACE to use you sword!')
   }
 
-  if (square == exitway){
+  if (square.exitway){
     current_scene = scene_data.next;
     player.current = scenes[current_scene].meta_info;
     buildScene();
   }
 }
+
+var box = function(header, text){
+  $("#dialogue-title").text(header)
+  $("#dialogue-body").text(text)
+  showModal();
+}
+
 
 function updateStats(){
   $(".health").text(player.health)
@@ -363,9 +601,18 @@ function move(next_square, axis, operation){
   }
 }
 
-var pushKeys = window.addEventListener("keydown", function(event) {
 
+
+var pushKeys = window.addEventListener("keydown", function(event) {
+if (modal.style.display == 'block'){
+  console.log('close modal');
+  if (event.keyCode == 32){
+    event.preventDefault();
+    modal.style.display = 'none';
+  }
+}else {
   if (event.keyCode == 40 || event.keyCode == 83){
+    event.preventDefault();
     var current = player.current[0];
     var next_ = current + 1;
     var next_square = scene[next_][player.current[1]];
@@ -374,6 +621,7 @@ var pushKeys = window.addEventListener("keydown", function(event) {
     }
 
   if (event.keyCode == 38 || event.keyCode == 87){
+    event.preventDefault();
     var current = player.current[0];
     var next_ = current - 1;
     var next_square = scene[next_][player.current[1]];
@@ -382,6 +630,7 @@ var pushKeys = window.addEventListener("keydown", function(event) {
     }
 
   if (event.keyCode == 37 || event.keyCode == 65){
+    event.preventDefault();
     var current = player.current[1];
     var next_ = current - 1;
     var next_square = scene[player.current[0]][next_]
@@ -391,6 +640,7 @@ var pushKeys = window.addEventListener("keydown", function(event) {
     }
 
   if (event.keyCode == 39 || event.keyCode == 68){
+    event.preventDefault();
     var current = player.current[1];
     var next_ = current + 1;
     var next_square = scene[player.current[0]][next_]
@@ -399,6 +649,7 @@ var pushKeys = window.addEventListener("keydown", function(event) {
     }
 
   if (event.keyCode == 32){
+    event.preventDefault();
     if (player.sword){
 
       var current = player.current;
@@ -416,6 +667,7 @@ var pushKeys = window.addEventListener("keydown", function(event) {
       }
     }
   }
+}
 
   buildScene();
   updateStats();
@@ -485,11 +737,20 @@ var startClock = function(){setInterval(function updateClock(){
 };
 
 $('.togglePlay').click(function(){
+  var avatar = $(".choose_avatar").val();
+  player.avatar = avatar;
   start();
   startClock();
   $(this).text('Stop')
   $('#welcomeJumbo').hide()
   $('.stat').show();
+
 })
+
+$(".choose_avatar").change(function (){
+    player.emoji = $(this).val();
+});
+
+
 
 </script>
