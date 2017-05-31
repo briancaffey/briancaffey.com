@@ -83,7 +83,8 @@
               <li style="display:none;" class="stat"><a>📜 ✖️ <span class="scrolls"></span></a></li>
               <li style="display:none;" class="stat"><a>🗝 ✖️ <span class="keys"></span></a></li>
               <li style="display:none;" class="stat"><a>⏳&nbsp;&nbsp;<span class="clock">0 : 00</span></a></li>
-
+              <li style="display:none;" class="stat"><a>Scene: <span class="scene"></span></a></li>
+              <li style="display:none;" class="stat"><a>Pos: <span class="pos"></span></a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li><a href="#music" type="button" data-toggle="modal" data-target="#myModal-music">🔊</a></li>
@@ -153,7 +154,7 @@ Your kingdom is threatened by a set of evil forces. You have been selected by th
 </span>
 
 <div style="padding-top:40px;" class="col-md-10">
-<div style="align:center;" class="canvas"><table style="align:center; font-size:5em;" class="grid"><tbody id="scene"></tbody></table>
+<div style="align:center;" class="canvas"><table style="align:center; font-size:6em;" class="grid"><tbody id="scene"></tbody></table>
 
 </div>
 </div>
@@ -206,6 +207,13 @@ window.onclick = function(event) {
 </html>
 
 <script>
+// theme emoji
+//🃏🤔😏😨👻👋👏🙏👸🏼👑🎒💍🐮🐰🐭🦁🐸🐷🐔🐤🐺🐗🦄🐛🐝🐌🐞🐜🕷🐍🐑🐀🐁🐿
+//🐉🐲🌲🌳🌾🌻🌷🍄🌰🐚🕸🌝🌤🔥🍎🍇🧀🍗🍖🍺🍻🏹🎣🏵🎭🎨🎪⛲️⛰🏔🏞🏝🏰🌈
+//💎⚖💰🕯⚙💣🗡⚔🛡☠️⚰🔮📿⚗🚪🖼🎉🎊📯📜🏳❤️💛💚💙💜❣️♨️🔱⚜🔰💠🌀🌌
+//🏤⛪️🏛⌛️🦆🐥🐣🐯🦁🦎🐒🎲🌈🌹🥀
+
+
 
 var dragon = {emoji:'🐉',
               current: [5,7],
@@ -261,6 +269,7 @@ var flower = {
 
 var squirrle = {
   emoji: '🐿',
+  wall: true,
 }
 
 var owl = {
@@ -291,6 +300,7 @@ var clb = {
   emoji: '🔶'
 }
 
+
 var dmnd = {
   emoji: '🔸'
 }
@@ -299,8 +309,24 @@ var hrt = {
   emoji: '🔷'
 }
 
+var crown = {
+  emoji: '🤴🏻',
+  wall: true,
+}
+
+var horn = {
+  emoji: '📯',
+  wall: true,
+}
+
+var guard = {
+  emoji: '💂🏻',
+  wall:true,
+}
+
 var door = {
   emoji: '🚪',
+  exitway:true,
 
 }
 
@@ -318,11 +344,6 @@ var cheese = {
   emoji: '🧀',
 }
 
-//🃏🤔😏😨👻👋👏🙏👸🏼👑🎒💍🐮🐰🐭🦁🐸🐷🐔🐤🐺🐗🦄🐛🐝🐌🐞🐜🕷🐍🐑🐀🐁🐿
-//🐉🐲🌲🌳🌾🌻🌷🍄🌰🐚🕸🌝🌤🔥🍎🍇🧀🍗🍖🍺🍻🏹🎣🏵🎭🎨🎪⛲️⛰🏔🏞🏝🏰🌈
-//🌌🏤⛪️🏛⌛️
-//💎⚖💰🕯⚙💣🗡⚔🛡☠️⚰🔮📿⚗🚪🖼🎉🎊📯📜🏳❤️💛💚💙💜❣️♨️🔱⚜🔰💠🌀
-
 var fountain = {
   emoji: '⛲',
   wall: true,
@@ -339,6 +360,7 @@ var woman = {
 
 var sword = {
   emoji: '🗡',
+
 }
 
 var card = {
@@ -358,16 +380,174 @@ var swords = {
   wall: true,
 }
 
+var nut = {
+  emoji: '🌰',
+}
+
+var beer = {
+  emoji: '🍺'
+}
+
+var grapes = {
+  emoji: '🍇'
+}
+
+var meat = {
+  emoji: '🍗',
+}
+
+var apple = {
+  emoji: '🍎',
+}
+
+var clown = {
+  emoji: '🤡',
+  wall: true,
+}
+
+var jester = {
+  emoji: '🤹‍',
+  wall:true,
+
+}
+
 var mother = {
   emoji: '🤶🏻',
   wall: true,
 }
 
+var fleur = {
+  emoji: '⚜️',
+  wall: true,
+}
+
+var man = {
+  emoji: '👱🏼',
+  wall: true,
+}
+
+var lady = {
+  emoji: '👩🏼',
+  wall: true,
+}
 var up_down = {
-  emoji: '↕️'
+  emoji: '↕️',
+  exitway: true,
+}
+
+var lock = {
+  emoji: '🔒',
+  wall: true,
 }
 
 
+var flag = {
+  emoji: '🇧🇹',
+}
+
+ew_0_0 = {
+  'emoji': '↔️',
+  next: 1,
+  exitway:true,
+  entry: [1,1],
+  wall:true,
+}
+
+var ew_1_0 = {
+  'emoji': '↔️',
+  next: 0,
+  entry: [8,14],
+  exitway:true,
+  wall:true,
+}
+
+var ew_1_1 = {
+  'emoji': '↔️',
+  next: 2,
+  entry: [1,1],
+  exitway:true,
+  wall:true,
+}
+
+var ew_2_0 = {
+  'emoji': '↔️',
+  next: 1,
+  entry: [1,18],
+  exitway:true,
+  wall:true,
+}
+
+var ew_2_1 = {
+  'emoji': '↔️',
+  next: 3,
+  entry: [1,1],
+  exitway:true,
+  wall:true,
+}
+
+var ew_3_0 = {
+  'emoji': '↔️',
+  next: 2,
+  entry: [6,18],
+  exitway:true,
+  wall:true,
+}
+
+var ew_3_1 = {
+  'emoji': '🏰',
+  next: 4,
+  entry: [7,8],
+  exitway:true,
+  wall:true,
+}
+
+var ew_4_0 = {
+  'emoji': '🚪',
+  next: 3,
+  entry: [3,11],
+  exitway:true,
+  wall:true,
+}
+
+var ew_4_1 = {
+  'emoji': '🚪',
+  next: 5,
+  entry: [4,15],
+  exitway:true,
+  wall:true,
+}
+
+var ew_5_0 = {
+  'emoji': '🚪',
+  next: 4,
+  entry: [4,1],
+  exitway:true,
+  wall:true,
+}
+
+var ew_5_1 = {
+  'emoji': '🚪',
+  next: 6,
+  entry: [7,8],
+  exitway:true,
+  wall:true,
+}
+
+var ew_6_0 = {
+  'emoji': '🚪',
+  next: 5,
+  entry: [1,8],
+  exitway:true,
+  wall:true,
+}
+
+var ew_6_1 = {
+  'emoji': '🚪',
+  next: 7,
+  entry: [7,8],
+  exitway:true,
+  wall:true,
+}
 
 var current_scene = 0;
 
@@ -381,7 +561,7 @@ var scenes = {
                     [tree,tree,tree,tree,tree,tree,tree,open_,tree,tree,open_,tree,tree,open_,tree,tree,],
                     [tree,heart,open_,diamond,tree,tree,tree,open_,open_,open_,open_,tree,tree,open_,tree,tree,],
                     [tree,tree,open_,tree,tree,tree,tree,open_,tree,tree,tree,tree,open_,open_,heart,tree,],
-                    [tree,tree,open_,open_,open_,open_,open_,open_,tree,tree,scroll,open_,open_,tree,open_,exitway,],
+                    [tree,tree,open_,open_,open_,open_,open_,open_,tree,tree,scroll,open_,open_,tree,open_,ew_0_0,],
                     [tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,]],
                     dragon:true,
                     meta_info:[1,2],
@@ -390,12 +570,12 @@ var scenes = {
 
                 2:{map_:
                   [ [tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
-                    [tree,open_,open_,open_,open_,open_,tree,open_,open_,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
+                    [ew_2_0,open_,open_,open_,open_,open_,tree,open_,open_,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
                     [tree,tree,open_,tree,tree,tree,tree,open_,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
                     [tree,tree,open_,open_,open_,open_,open_,open_,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
                     [tree,tree,tree,tree,tree,tree,tree,open_,tree,tree,tree,fountain,tree,tree,tree,tree,tree,tree,tree,tree,],
                     [tree,tree,tree,tree,tree,tree,tree,open_,tree,tree,tree,woman,tree,tree,tree,tree,owl,tree,tree,tree,],
-                    [tree,scroll,open_,scroll,tree,tree,tree,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,exitway,],
+                    [tree,scroll,open_,scroll,tree,tree,tree,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,ew_2_1,],
                     [tree,tree,open_,tree,tree,tree,tree,open_,tree,tree,tree,sword,tree,tree,tree,tree,tree,tree,tree,tree,],
                     [tree,tree,open_,open_,open_,open_,open_,open_,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
                     [tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,]],
@@ -407,7 +587,7 @@ var scenes = {
 
                   1:{map_:
                     [ [tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
-                      [tree,open_,open_,open_,open_,open_,tree,open_,open_,tree,tree,tree,tree,tree,tree,tree,tree,open_,open_,exitway,],
+                      [ew_1_0,open_,open_,open_,open_,open_,tree,open_,open_,tree,tree,tree,tree,tree,tree,tree,tree,open_,open_,ew_1_1,],
                       [tree,tree,open_,tree,tree,tree,tree,open_,tree,tree,tree,tree,tree,tree,tree,diamond,diamond,diamond,tree,tree,],
                       [tree,tree,open_,open_,open_,open_,open_,open_,tree,tree,tree,tree,tree,tree,open_,open_,tree,tree,tree,tree,],
                       [tree,tree,tree,tree,tree,tree,tree,open_,tree,tree,tree,fountain,tree,tree,tree,open_,open_,tree,tree,tree,],
@@ -424,14 +604,14 @@ var scenes = {
 
                     3:{map_:
                       [ [tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
-                        [tree,open_,open_,open_,open_,open_,tree,open_,open_,tree,tree,tree,tree,tree,tree,tree,tree,open_,open_,exitway,],
-                        [tree,tree,open_,tree,tree,tree,tree,open_,tree,tree,tree,castle,tree,tree,tree,diamond,diamond,diamond,tree,tree,],
+                        [ew_3_0,open_,open_,open_,open_,open_,tree,open_,open_,tree,tree,tree,tree,tree,tree,tree,tree,open_,squirrle,tree,],
+                        [tree,tree,open_,tree,tree,tree,tree,open_,tree,tree,tree,ew_3_1,tree,tree,tree,open_,open_,open_,tree,tree,],
                         [tree,tree,open_,open_,open_,open_,open_,open_,tree,tree,flower,open_,flower,tree,open_,open_,tree,tree,tree,tree,],
                         [tree,tree,tree,tree,tree,tree,tree,open_,tree,tree,flower,open_,flower,tree,tree,open_,open_,tree,tree,tree,],
                         [tree,tree,key,tree,tree,tree,tree,open_,tree,tree,flower,open_,flower,tree,tree,tree,open_,tree,tree,tree,],
-                        [tree,scroll,open_,scroll,tree,tree,tree,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,tree,tree,tree,],
+                        [tree,nut,open_,scroll,tree,tree,tree,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,tree,tree,tree,],
                         [tree,tree,open_,tree,tree,tree,tree,open_,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
-                        [tree,tree,open_,open_,open_,open_,open_,open_,tree,tree,squirrle,tree,snail,tree,tree,tree,tree,tree,tree,tree,],
+                        [tree,tree,open_,open_,open_,open_,open_,open_,tree,tree,tree,tree,snail,tree,tree,tree,tree,tree,tree,tree,],
                         [tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,]],
 
                         dragon:false,
@@ -441,19 +621,51 @@ var scenes = {
 
                       4:{map_:
                         [ [arms,arms,painting,arms,arms,painting,arms,arms,door,arms,arms,painting,arms,arms,painting,arms,arms,],
-                          [arms,cheese,open_,open_,open_,open_,open_,swords,open_,swords,open_,open_,open_,open_,open_,open_,arms,],
+                          [arms,cheese,open_,open_,open_,open_,open_,swords,lock,swords,open_,open_,open_,open_,open_,open_,arms,],
                           [square_diamond,open_,open_,open_,open_,open_,festive,open_,open_,open_,festive,open_,open_,open_,open_,mother,square_diamond,],
                           [arms,open_,open_,open_,open_,festive,candle,open_,open_,open_,candle,festive,open_,open_,open_,open_,arms,],
-                          [door,open_,open_,open_,open_,open_,open_,open_,fountain,open_,open_,open_,open_,open_,open_,open_,door,],
+                          [ew_4_1,open_,open_,open_,open_,open_,open_,open_,fountain,open_,open_,open_,open_,open_,open_,lock,door,],
                           [arms,open_,open_,open_,open_,festive,candle,open_,open_,open_,candle,festive,open_,open_,open_,open_,arms,],
                           [square_diamond,open_,open_,open_,open_,open_,festive,open_,open_,open_,festive,open_,open_,open_,open_,open_,square_diamond,],
                           [arms,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,mouse,arms,],
-                          [arms,arms,painting,arms,arms,painting,arms,arms,up_down,arms,arms,painting,arms,arms,painting,arms,arms,]],
+                          [arms,arms,painting,arms,arms,painting,arms,arms,ew_4_0,arms,arms,painting,arms,arms,painting,arms,arms,]],
 
                           dragon:false,
                           meta_info: [7,8],
-                          next:2,
+                          next:5,
                         },
+
+                        5:{map_:
+                          [ [arms,arms,painting,arms,arms,painting,arms,arms,ew_5_1,arms,arms,painting,arms,arms,painting,arms,arms,],
+                          [arms,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,arms,],
+                            [arms,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,arms,],
+                            [arms,open_,open_,open_,open_,open_,open_,open_,lady,open_,open_,open_,open_,open_,open_,open_,arms,],
+                            [arms,open_,open_,open_,meat,apple,cheese,beer,grapes,meat,mother,open_,open_,open_,open_,open_,ew_5_0,],
+                            [arms,open_,open_,open_,open_,open_,man,open_,open_,open_,open_,open_,open_,open_,open_,open_,arms,],
+                            [arms,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,arms,],
+                            [arms,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,arms,],
+                            [arms,arms,painting,arms,arms,painting,arms,arms,arms,arms,arms,painting,arms,arms,painting,arms,arms,]],
+
+                            dragon:false,
+                            meta_info: [4,15],
+                            next:6,
+                          },
+
+                          6:{map_:
+                            [ [arms,arms,painting,arms,arms,painting,arms,fleur,fleur,fleur,arms,painting,arms,arms,painting,arms,arms,],
+                            [arms,open_,open_,open_,open_,open_,open_,open_,crown,open_,open_,open_,open_,open_,open_,open_,arms,],
+                              [arms,open_,open_,open_,open_,open_,man,open_,open_,open_,man,open_,open_,open_,open_,open_,arms,],
+                              [arms,open_,open_,open_,open_,open_,horn,open_,open_,open_,horn,open_,open_,open_,open_,open_,arms,],
+                              [arms,open_,open_,open_,open_,open_,guard,open_,open_,open_,guard,open_,open_,open_,open_,open_,arms,],
+                              [arms,open_,open_,open_,open_,open_,swords,open_,open_,open_,swords,open_,open_,open_,open_,open_,arms,],
+                              [arms,open_,open_,open_,open_,open_,guard,open_,open_,open_,guard,open_,open_,open_,open_,open_,arms,],
+                              [arms,open_,open_,open_,open_,open_,swords,open_,open_,open_,swords,open_,open_,open_,open_,open_,arms,],
+                              [arms,arms,painting,arms,arms,painting,arms,arms,ew_6_0,arms,arms,painting,arms,arms,painting,arms,arms,]],
+
+                              dragon:false,
+                              meta_info: [7,8],
+                              next:5,
+                            },
 
             }
 
@@ -471,6 +683,7 @@ var player = {
  sword: false,
  orb: false,
  card: false,
+ nut: false,
 };
 
 function checkHealth(){
@@ -529,12 +742,34 @@ function checkSquare(square){
     player.scrolls += 1;
   }
 
+  if (square == nut){
+    player.nut = true;
+  }
+
   if (square == key){
     player.keys += 1;
   }
 
+  if (square == owl){
+    box(owl.emoji, "HOO! HOO!")
+  }
+
+  if (square == crown){
+    box(crown.emoji + ' 💌', "I have already heard about the great deed you did for my sister and the royal family. News travels quickly in our kingdom. I would like to invite you to a royal banquet this evening, please take this envelope and come back to the castle this evening. You may want to go explore the village before the banquet starts, you are sure to meet some interesting folk there. It's just beyond the castle. Thank you again.")
+  }
+
+
+
   if (square == orb){
     player.orb = true;
+  }
+
+  if (square == squirrle){
+    if (!player.nut){
+      box(squirrle.emoji, "I love nuts! If you see any nuts would you mind bringing them to me! If you do I might be able to do you a small favor...");
+    } else {
+      box(nut.emoji + "  " + squirrle.emoji + "  🎗", "Wow!! Thank you soo much! Chestnuts are my favorite! I want you to have this ribbon, I think it belongs to a wealthy family just outside of the village. They would be very grateful to have it.")
+    }
   }
 
   if (square == woman){
@@ -558,8 +793,9 @@ function checkSquare(square){
   }
 
   if (square.exitway){
-    current_scene = scene_data.next;
-    player.current = scenes[current_scene].meta_info;
+    current_scene = square.next;
+    player.current = square.entry;
+    // player.current = scenes[current_scene].meta_info;
     buildScene();
   }
 }
@@ -576,6 +812,8 @@ function updateStats(){
   $(".diamonds").text(player.diamonds)
   $(".scrolls").text(player.scrolls)
   $(".keys").text(player.keys)
+  $(".scene").text(current_scene)
+  $(".pos").text(player.current)
 }
 
 updateStats();
@@ -583,7 +821,7 @@ updateStats();
 function start(){
 
 function move(next_square, axis, operation){
-  if (!next_square.wall){
+  if (!next_square.wall && !next_square.exitway){
     scene[player.current[0]][player.current[1]] = open_;
     if (operation == "+"){
       if (axis == 0){
@@ -636,7 +874,6 @@ if (modal.style.display == 'block'){
     var next_square = scene[player.current[0]][next_]
     move(next_square, 1, "-");
     checkSquare(next_square);
-
     }
 
   if (event.keyCode == 39 || event.keyCode == 68){
@@ -719,7 +956,7 @@ var map_ = null;
 function updateScene(){
   scene_data = scenes[current_scene]
   map_ = scene_data.map_;
-  player.current = scene_data.meta_info
+  // player.current = scene_data.meta_info
 }
 
 var total_seconds = 0;
