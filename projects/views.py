@@ -18,6 +18,9 @@ def projects_home(request):
 
 def kings(request):
 	return render(request, 'projects/kings.html', {})
+
+def kings_two(request):
+	return render(request, 'projects/kings_v2.html', {})
 # def bokeh(request):
 # 	plot = figure()
 # 	plot.circle([1,2], [3,4])

@@ -145,12 +145,8 @@
 <div class="col-md-4"><h2>⬆️⬅️⬇️➡️<br />Walk with W, A, S and D.</h2><p>You can also use the arrow keys</p></div>
 <div class="col-md-4"><h2>🐲😱😲💀<br />Beware of dragons.</h2><p>Crossing paths with dragons will decrease your health.</p></div>
 <div class="col-md-4"><h2>📜👓💡✅<br />Collect scrolls.</h2><p>Scrolls contain hints and important knowledge.</p></div>
-
 </div>
-<h2>About</h2>
-<p>
-Your kingdom is threatened by a set of evil forces. You have been selected by the elders to lead the resistance.
-</p>
+
 </span>
 
 <div style="padding-top:40px;" class="col-md-10">
@@ -422,6 +418,21 @@ var man = {
   wall: true,
 }
 
+var tent = {
+  emoji: '🎪',
+  wall: true,
+}
+
+var building = {
+  emoji: '🏤',
+  wall: true,
+}
+
+var house = {
+  emoji: '🏡',
+  wall:true,
+}
+
 var lady = {
   emoji: '👩🏼',
   wall: true,
@@ -441,11 +452,16 @@ var flag = {
   emoji: '🇧🇹',
 }
 
-ew_0_0 = {
+var church = {
+  emoji: '⛪️',
+  wall: true,
+}
+
+var ew_0_0 = {
   'emoji': '↔️',
   next: 1,
   exitway:true,
-  entry: [1,1],
+  'entry': [1,1],
   wall:true,
 }
 
@@ -453,7 +469,7 @@ ew_0_0 = {
 var ew_1_0 = {
   'emoji': '↔️',
   next: 0,
-  entry: [8,14],
+  'entry': [8,14],
   exitway:true,
   wall:true,
 }
@@ -461,7 +477,7 @@ var ew_1_0 = {
 var ew_1_1 = {
   'emoji': '↔️',
   next: 2,
-  entry: [1,1],
+  'entry': [1,1],
   exitway:true,
   wall:true,
 }
@@ -469,7 +485,7 @@ var ew_1_1 = {
 var ew_2_0 = {
   'emoji': '↔️',
   next: 1,
-  entry: [1,18],
+  'entry': [1,18],
   exitway:true,
   wall:true,
 }
@@ -477,7 +493,7 @@ var ew_2_0 = {
 var ew_2_1 = {
   'emoji': '↔️',
   next: 3,
-  entry: [1,1],
+  'entry': [1,1],
   exitway:true,
   wall:true,
 }
@@ -485,7 +501,7 @@ var ew_2_1 = {
 var ew_3_0 = {
   'emoji': '↔️',
   next: 2,
-  entry: [6,18],
+  'entry': [6,18],
   exitway:true,
   wall:true,
 }
@@ -493,7 +509,15 @@ var ew_3_0 = {
 var ew_3_1 = {
   'emoji': '🏰',
   next: 4,
-  entry: [7,8],
+  'entry': [7,8],
+  exitway:true,
+  wall:true,
+}
+
+var ew_3_2 = {
+  'emoji': '↔️',
+  next: 'town',
+  'entry': [1,1],
   exitway:true,
   wall:true,
 }
@@ -501,7 +525,7 @@ var ew_3_1 = {
 var ew_4_0 = {
   'emoji': '🚪',
   next: 3,
-  entry: [3,11],
+  'entry': [3,11],
   exitway:true,
   wall:true,
 }
@@ -509,7 +533,7 @@ var ew_4_0 = {
 var ew_4_1 = {
   'emoji': '🚪',
   next: 5,
-  entry: [4,15],
+  'entry': [4,15],
   exitway:true,
   wall:true,
 }
@@ -517,7 +541,7 @@ var ew_4_1 = {
 var ew_5_0 = {
   'emoji': '🚪',
   next: 4,
-  entry: [4,1],
+  'entry': [4,1],
   exitway:true,
   wall:true,
 }
@@ -525,7 +549,7 @@ var ew_5_0 = {
 var ew_5_1 = {
   'emoji': '🚪',
   next: 6,
-  entry: [7,8],
+  'entry': [7,8],
   exitway:true,
   wall:true,
 }
@@ -533,7 +557,7 @@ var ew_5_1 = {
 var ew_6_0 = {
   'emoji': '🚪',
   next: 5,
-  entry: [1,8],
+  'entry': [1,8],
   exitway:true,
   wall:true,
 }
@@ -541,27 +565,13 @@ var ew_6_0 = {
 var ew_6_1 = {
   'emoji': '🚪',
   next: 7,
-  entry: [7,8],
+  'entry': [7,8],
   exitway:true,
   wall:true,
 }
 
 
-Object.freeze(ew_1_0);
-Object.freeze(ew_1_1);
-Object.freeze(ew_2_0);
-Object.freeze(ew_2_1);
-Object.freeze(ew_3_0);
-Object.freeze(ew_3_1);
-Object.freeze(ew_4_0);
-Object.freeze(ew_4_1);
-Object.freeze(ew_5_0);
-Object.freeze(ew_5_1);
-Object.freeze(ew_6_0);
-Object.freeze(ew_6_1);
-
-
-var current_scene = 0;
+var current_scene = 3;
 
 var scenes = {
                 0: {map:
@@ -612,8 +622,8 @@ var scenes = {
 
                     3:{map:
                       [ [tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
-                        [ew_3_0,open_,open_,open_,open_,open_,tree,open_,open_,tree,tree,tree,tree,tree,tree,tree,tree,open_,squirrle,tree,],
-                        [tree,tree,open_,tree,tree,tree,tree,open_,tree,tree,tree,ew_3_1,tree,tree,tree,open_,open_,open_,tree,tree,],
+                        [ew_3_0,open_,open_,open_,open_,open_,tree,open_,open_,tree,tree,tree,tree,tree,tree,tree,tree,open_,open_,ew_3_2,],
+                        [tree,tree,open_,tree,tree,tree,tree,open_,tree,tree,tree,ew_3_1,tree,tree,tree,open_,open_,open_,squirrle,tree,],
                         [tree,tree,open_,open_,open_,open_,open_,open_,tree,tree,flower,open_,flower,tree,open_,open_,tree,tree,tree,tree,],
                         [tree,tree,tree,tree,tree,tree,tree,open_,tree,tree,flower,open_,flower,tree,tree,open_,open_,tree,tree,tree,],
                         [tree,tree,key,tree,tree,tree,tree,open_,tree,tree,flower,open_,flower,tree,tree,tree,open_,tree,tree,tree,],
@@ -671,8 +681,45 @@ var scenes = {
 
                             },
 
+                            6:{map:
+                              [ [arms,arms,painting,arms,arms,painting,arms,fleur,fleur,fleur,arms,painting,arms,arms,painting,arms,arms,],
+                              [arms,open_,open_,open_,open_,open_,open_,open_,crown,open_,open_,open_,open_,open_,open_,open_,arms,],
+                                [arms,open_,open_,open_,open_,open_,man,open_,open_,open_,man,open_,open_,open_,open_,open_,arms,],
+                                [arms,open_,open_,open_,open_,open_,horn,open_,open_,open_,horn,open_,open_,open_,open_,open_,arms,],
+                                [arms,open_,open_,open_,open_,open_,guard,open_,open_,open_,guard,open_,open_,open_,open_,open_,arms,],
+                                [arms,open_,open_,open_,open_,open_,swords,open_,open_,open_,swords,open_,open_,open_,open_,open_,arms,],
+                                [arms,open_,open_,open_,open_,open_,guard,open_,open_,open_,guard,open_,open_,open_,open_,open_,arms,],
+                                [arms,open_,open_,open_,open_,open_,swords,open_,open_,open_,swords,open_,open_,open_,open_,open_,arms,],
+                                [arms,arms,painting,arms,arms,painting,arms,arms,ew_6_0,arms,arms,painting,arms,arms,painting,arms,arms,]],
+
+                                dragon:false,
+
+                              },
+
+                              'town':{map:
+                                [ [tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
+                                  [ew_3_0,open_,open_,open_,church,open_,tree,open_,tent,open_,tree,tree,building,tree,tree,tree,tree,open_,open_,ew_3_2,],
+                                  [tree,tree,open_,open_,open_,open_,open_,open_,open_,open_,open_,,open_,open_,tree,open_,open_,open_,squirrle,tree,],
+                                  [tree,tree,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,tree,tree,],
+                                  [tree,tree,tree,tree,tree,open_,open_,open_,open_,open_,open_,open_,house,open_,house,open_,open_,tree,tree,tree,],
+                                  [tree,tree,key,tree,tree,tree,tree,open_,tree,tree,open_,open_, open_,open_,open_,open_,open_,open_,tree,tree,],
+                                  [tree,nut,open_,scroll,tree,tree,tree,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,tree,tree,tree,],
+                                  [tree,tree,open_,tree,tree,tree,tree,open_,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
+                                  [tree,tree,open_,open_,open_,open_,open_,open_,tree,tree,tree,tree,snail,tree,tree,tree,tree,tree,tree,tree,],
+                                  [tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,]],
+
+
+                                  dragon:false,
+
+                                },
+
             }
 
+
+            //🃏🤔😏😨👻👋👏🙏👸🏼👑🎒💍🐮🐰🐭🦁🐸🐷🐔🐤🐺🐗🦄🐛🐝🐌🐞🐜🕷🐍🐑🐀🐁🐿
+            //🐉🐲🌲🌳🌾🌻🌷🍄🌰🐚🕸🌝🌤🔥🍎🍇🧀🍗🍖🍺🍻🏹🎣🏵🎭🎨🎪⛲️⛰🏔🏞🏝🏰🌈
+            //💎⚖💰🕯⚙💣🗡⚔🛡☠️⚰🔮📿⚗🚪🖼🎉🎊📯📜🏳❤️💛💚💙💜❣️♨️🔱⚜🔰💠🌀🌌
+            //🏤⛪️🏛⌛️🦆🐥🐣🐯🦁🦎🐒🎲🌈🌹🥀
 
 var scene;
 
@@ -701,13 +748,13 @@ function checkHealth(){
 }
 
 var clearScene = function(scene){
-  for (row in scene){
-    for (cell in row){
-      if (cell == player || cell == dragon){
-        cell = open_;
-      }
-    }
-  }
+  // for (row in scene){
+  //   for (cell in row){
+  //     if (cell == player || cell == dragon){
+  //       cell = open_;
+  //     }
+  //   }
+  // }
 }
 
 var playerDie = function(){
@@ -719,19 +766,28 @@ function populateEnemies(){
 };
 
 function placePlayer(){
-  clearScene();
-  scenes[current_scene].map[player.current[0]][player.current[1]] = player;
+
+  scene = scenes[current_scene].map;
+  clearScene(scene);
+  scene[player.current[0]][player.current[1]] = player;
 }
 // scene = scenes[current_scene].map;
+
+var scene = null;
 function buildScene(){
+  checkChange('a');
+  clearScene();
+  checkChange('c');
   scene = scenes[current_scene].map;
+  checkChange('d');
   $("tbody tr").remove();
-  updateScene();
-  checkHealth();
-  placePlayer();
+  checkChange('e');
+
+
   if (scenes[current_scene].dragon){
     populateEnemies();
   };
+  placePlayer();
   for (row in scene){
 
     var current = $('.grid tbody').append("<tr row="+row+"></tr>")
@@ -764,7 +820,7 @@ function checkSquare(square){
   }
 
   if (square == owl){
-    box(owl.emoji, "HOO! HOO!")
+    box(owl.emoji, "HOO! HOO!");
   }
 
   if (square == crown){
@@ -805,18 +861,34 @@ function checkSquare(square){
     box(sword.emoji, 'Press SPACE to use you sword!')
   }
 
-  if (square.exitway == true){
-    var next_entry = square.entry;
-    clearScene(scenes[current_scene].map);
+  if (square.exitway){
+    var entry_point = [square.entry[0],square.entry[1]];
+    player.current = entry_point;
     current_scene = square.next;
-
-    player.current = next_entry;
-    square.entry = next_entry;
-    // scenes[current_scene].map[player.current[0]][player.current[1]] = player;
-    clearScene(scenes[current_scene].map);
     buildScene();
-
   }
+
+
+
+
+
+
+  // if (square.exitway == true){
+  //   var next_entry = square.entry;
+  //   clearScene(scenes[current_scene].map);
+  //   current_scene = square.next;
+  //
+  //   player.current = next_entry;
+  //   square.entry = next_entry;
+  //   // scenes[current_scene].map[player.current[0]][player.current[1]] = player;
+  //   clearScene(scenes[current_scene].map);
+  //   buildScene();
+  //
+  // }
+}
+
+function checkChange(step){
+  console.log(scenes[3].map[2][11].entry, step)
 }
 
 var box = function(header, text){
@@ -877,6 +949,7 @@ if (modal.style.display == 'block'){
     var next_ = current + 1;
     var next_square = scene[next_][player.current[1]];
     move(next_square, 0, "+");
+
     checkSquare(next_square);
 
 
@@ -889,43 +962,36 @@ if (modal.style.display == 'block'){
     var next_square = scene[next_][player.current[1]];
     move(next_square, 0, "-");
     checkSquare(next_square);
-
-
     }
 
   if (event.keyCode == 37 || event.keyCode == 65){
+
     event.preventDefault();
     var current = player.current[1];
     var next_ = current - 1;
     var next_square = scene[player.current[0]][next_];
     move(next_square, 1, "-");
     checkSquare(next_square);
-
-
     }
 
   if (event.keyCode == 39 || event.keyCode == 68){
     event.preventDefault();
     var current = player.current[1];
     var next_ = current + 1;
-    var next_square = scene[player.current[0]][next_];
+    const const_val = scene[player.current[0]][next_];
+    var next_square = const_val;
     move(next_square, 1, "+");
     checkSquare(next_square);
-
-
     }
 
   if (event.keyCode == 32){
     event.preventDefault();
     if (player.sword){
-
       var current = player.current;
-
       var attack_squares = [scene[current[0]+1][current[1]],
                             scene[current[0]-1][current[1]],
                             scene[current[0]][current[1]+1],
                             scene[current[0]][current[1]-1]]
-      // console.log(attack_squares);
       for (square in attack_squares){
         if (attack_squares[square] == dragon){
           dragon.health -= 1;
@@ -937,10 +1003,11 @@ if (modal.style.display == 'block'){
 }
 
   buildScene();
+  checkHealth();
   updateStats();
 
 });
-
+//dragon direction
 var direction = -1;
 
 function checkDragonHealth(){
@@ -985,7 +1052,7 @@ buildScene();
 // var map_ = null;
 function updateScene(){
   // scene_data = scenes[current_scene]
-  // map_ = scene_data.map;
+  map_ = scene_data.map;
 }
 
 var total_seconds = 0;
