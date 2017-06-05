@@ -334,6 +334,7 @@ var festive = {
 
 var cheese = {
   emoji: '🧀',
+  wall: true,
 }
 
 var fountain = {
@@ -365,6 +366,7 @@ var snail = {
 
 var mouse = {
   emoji: '🐭',
+  wall: true,
 }
 
 var swords = {
@@ -377,23 +379,38 @@ var nut = {
 }
 
 var beer = {
-  emoji: '🍺'
+  emoji: '🍺',
+  wall: true,
 }
 
 var grapes = {
-  emoji: '🍇'
+  emoji: '🍇',
+  wall: true,
+
 }
 
 var meat = {
   emoji: '🍗',
+  wall: true,
 }
 
 var apple = {
   emoji: '🍎',
+  wall: true,
 }
 
 var clown = {
   emoji: '🤡',
+  wall: true,
+}
+
+var bread = {
+  emoji: '🥖',
+  wall: true,
+}
+
+var pan = {
+  emoji: '🥘',
   wall: true,
 }
 
@@ -412,6 +429,26 @@ var fleur = {
   emoji: '⚜️',
   wall: true,
 }
+
+var wine = {
+  emoji: '🍷',
+  wall:true,
+}
+
+var pear = {
+  emoji: '🍐',
+  wall: true,
+}
+
+var orange = {
+  emoji: '🍊',
+}
+
+var plate = {
+  emoji: '🍽',
+  wall: true,
+}
+
 
 var man = {
   emoji: '👱🏼',
@@ -447,9 +484,9 @@ var lock = {
   wall: true,
 }
 
-
 var flag = {
   emoji: '🇧🇹',
+  wall:true,
 }
 
 var church = {
@@ -571,7 +608,7 @@ var ew_6_1 = {
 }
 
 
-var current_scene = 3;
+var current_scene = 0;
 
 var scenes = {
                 0: {map:
@@ -650,15 +687,15 @@ var scenes = {
                           dragon:false,
 
                         },
-
+                        //banquet
                         5:{map:
                           [ [arms,arms,painting,arms,arms,painting,arms,arms,ew_5_1,arms,arms,painting,arms,arms,painting,arms,arms,],
                           [arms,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,arms,],
-                            [arms,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,arms,],
                             [arms,open_,open_,open_,open_,open_,open_,open_,lady,open_,open_,open_,open_,open_,open_,open_,arms,],
-                            [arms,open_,open_,open_,meat,apple,cheese,beer,grapes,meat,mother,open_,open_,open_,open_,open_,ew_5_0,],
-                            [arms,open_,open_,open_,open_,open_,man,open_,open_,open_,open_,open_,open_,open_,open_,open_,arms,],
-                            [arms,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,arms,],
+                            [arms,open_,open_,open_,meat,apple,cheese,beer,grapes,meat,wine,open_,open_,open_,open_,open_,arms,],
+                            [arms,open_,open_,open_,open_,festive,candle,festive,candle,festive,candle,festive,open_,open_,open_,open_,ew_5_0,],
+                            [arms,open_,open_,open_,open_,wine,bread,pan,plate,cheese,meat,pear,open_,open_,open_,open_,arms,],
+                            [arms,open_,open_,open_,open_,open_,man,open_,man,open_,open_,open_,open_,open_,open_,open_,arms,],
                             [arms,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,arms,],
                             [arms,arms,painting,arms,arms,painting,arms,arms,arms,arms,arms,painting,arms,arms,painting,arms,arms,]],
 
@@ -698,13 +735,13 @@ var scenes = {
 
                               'town':{map:
                                 [ [tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
-                                  [ew_3_0,open_,open_,open_,church,open_,tree,open_,tent,open_,tree,tree,building,tree,tree,tree,tree,open_,open_,ew_3_2,],
-                                  [tree,tree,open_,open_,open_,open_,open_,open_,open_,open_,open_,,open_,open_,tree,open_,open_,open_,squirrle,tree,],
+                                  [ew_3_0,open_,open_,open_,open_,church,open_,tree,open_,flag,open_,tree,open_,building,open_,open_,open_,open_,open_,ew_3_2,],
                                   [tree,tree,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,tree,tree,],
-                                  [tree,tree,tree,tree,tree,open_,open_,open_,open_,open_,open_,open_,house,open_,house,open_,open_,tree,tree,tree,],
-                                  [tree,tree,key,tree,tree,tree,tree,open_,tree,tree,open_,open_, open_,open_,open_,open_,open_,open_,tree,tree,],
-                                  [tree,nut,open_,scroll,tree,tree,tree,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,tree,tree,tree,],
-                                  [tree,tree,open_,tree,tree,tree,tree,open_,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
+                                  [tree,tree,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,tree,tree,],
+                                  [tree,tree,open_,open_,open_,open_,open_,open_,open_,fountain,open_,open_,open_,open_,open_,tree,tree,tree,tree,tree,],
+                                  [tree,tree,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_, open_,open_,open_,house,tree,house,tree,tree,],
+                                  [tree,tree,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,tree,tree,],
+                                  [tree,tree,open_,open_,open_,open_,open_,open_,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
                                   [tree,tree,open_,open_,open_,open_,open_,open_,tree,tree,tree,tree,snail,tree,tree,tree,tree,tree,tree,tree,],
                                   [tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,]],
 
@@ -720,6 +757,10 @@ var scenes = {
             //🐉🐲🌲🌳🌾🌻🌷🍄🌰🐚🕸🌝🌤🔥🍎🍇🧀🍗🍖🍺🍻🏹🎣🏵🎭🎨🎪⛲️⛰🏔🏞🏝🏰🌈
             //💎⚖💰🕯⚙💣🗡⚔🛡☠️⚰🔮📿⚗🚪🖼🎉🎊📯📜🏳❤️💛💚💙💜❣️♨️🔱⚜🔰💠🌀🌌
             //🏤⛪️🏛⌛️🦆🐥🐣🐯🦁🦎🐒🎲🌈🌹🥀
+
+
+
+
 
 var scene;
 
@@ -741,20 +782,9 @@ function checkHealth(){
   if (player.health < 1){
     player.emoji = '😵';
     playerDie();
-
   } else {
   player.emoji = player.avatar;
-}
-}
-
-var clearScene = function(scene){
-  // for (row in scene){
-  //   for (cell in row){
-  //     if (cell == player || cell == dragon){
-  //       cell = open_;
-  //     }
-  //   }
-  // }
+  }
 }
 
 var playerDie = function(){
@@ -768,21 +798,13 @@ function populateEnemies(){
 function placePlayer(){
 
   scene = scenes[current_scene].map;
-  clearScene(scene);
   scene[player.current[0]][player.current[1]] = player;
 }
-// scene = scenes[current_scene].map;
 
 var scene = null;
 function buildScene(){
-  checkChange('a');
-  clearScene();
-  checkChange('c');
   scene = scenes[current_scene].map;
-  checkChange('d');
   $("tbody tr").remove();
-  checkChange('e');
-
 
   if (scenes[current_scene].dragon){
     populateEnemies();
