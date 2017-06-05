@@ -150,7 +150,7 @@
 </span>
 
 <div style="padding-top:40px;" class="col-md-10">
-<div style="align:center;" class="canvas"><table style="align:center; font-size:6em;" class="grid"><tbody id="scene"></tbody></table>
+<div style="align:center;" class="canvas"><table align="center" style="font-size:3.5em;" class="grid"><tbody id="scene"></tbody></table>
 
 </div>
 </div>
@@ -252,6 +252,11 @@ var castle = {
   emoji: '🏰',
   wall:true,
   exitway:true,
+}
+
+var sunflower = {
+  emoji: '🌻',
+  wall: true,
 }
 
 var flower = {
@@ -430,6 +435,11 @@ var fleur = {
   wall: true,
 }
 
+var bird = {
+  emoji: '🐦',
+  wall: true,
+}
+
 var wine = {
   emoji: '🍷',
   wall:true,
@@ -465,6 +475,11 @@ var building = {
   wall: true,
 }
 
+var tower = {
+  emoji: '🏫',
+  wall: true,
+}
+
 var house = {
   emoji: '🏡',
   wall:true,
@@ -487,6 +502,26 @@ var lock = {
 var flag = {
   emoji: '🇧🇹',
   wall:true,
+}
+
+var rainbow = {
+  emoji: '🌈',
+  wall: true,
+}
+
+var trident = {
+  emoji: '🔱',
+  wall: true,
+}
+
+var mustache = {
+  emoji: '👨🏻',
+  wall: true,
+}
+
+var blonde_girl = {
+  emoji: '👧🏼',
+  wall: true,
 }
 
 var church = {
@@ -559,6 +594,11 @@ var ew_3_2 = {
   wall:true,
 }
 
+var info = {
+  emoji: 'ℹ️',
+  wall: true,
+}
+
 var ew_4_0 = {
   'emoji': '🚪',
   next: 3,
@@ -607,8 +647,15 @@ var ew_6_1 = {
   wall:true,
 }
 
+var ew_town_0 = {
+  emoji: '↔️',
+  wall: true,
+  'entry': [1,18],
+  exitway: true,
+  next: 3,
+}
 
-var current_scene = 0;
+var current_scene = 'town';
 
 var scenes = {
                 0: {map:
@@ -692,9 +739,9 @@ var scenes = {
                           [ [arms,arms,painting,arms,arms,painting,arms,arms,ew_5_1,arms,arms,painting,arms,arms,painting,arms,arms,],
                           [arms,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,arms,],
                             [arms,open_,open_,open_,open_,open_,open_,open_,lady,open_,open_,open_,open_,open_,open_,open_,arms,],
-                            [arms,open_,open_,open_,meat,apple,cheese,beer,grapes,meat,wine,open_,open_,open_,open_,open_,arms,],
-                            [arms,open_,open_,open_,open_,festive,candle,festive,candle,festive,candle,festive,open_,open_,open_,open_,ew_5_0,],
-                            [arms,open_,open_,open_,open_,wine,bread,pan,plate,cheese,meat,pear,open_,open_,open_,open_,arms,],
+                            [arms,open_,open_,open_,meat,apple,cheese,beer,plate,meat,wine,bread,grapes,open_,open_,open_,arms,],
+                            [arms,open_,open_,mustache,plate,festive,candle,festive,candle,festive,candle,festive,plate,open_,open_,open_,ew_5_0,],
+                            [arms,open_,open_,open_,grapes,wine,bread,pan,plate,cheese,meat,pear,beer,open_,open_,open_,arms,],
                             [arms,open_,open_,open_,open_,open_,man,open_,man,open_,open_,open_,open_,open_,open_,open_,arms,],
                             [arms,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,arms,],
                             [arms,arms,painting,arms,arms,painting,arms,arms,arms,arms,arms,painting,arms,arms,painting,arms,arms,]],
@@ -734,16 +781,16 @@ var scenes = {
                               },
 
                               'town':{map:
-                                [ [tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
-                                  [ew_3_0,open_,open_,open_,open_,church,open_,tree,open_,flag,open_,tree,open_,building,open_,open_,open_,open_,open_,ew_3_2,],
-                                  [tree,tree,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,tree,tree,],
-                                  [tree,tree,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,tree,tree,],
-                                  [tree,tree,open_,open_,open_,open_,open_,open_,open_,fountain,open_,open_,open_,open_,open_,tree,tree,tree,tree,tree,],
-                                  [tree,tree,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_, open_,open_,open_,house,tree,house,tree,tree,],
-                                  [tree,tree,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,tree,tree,],
-                                  [tree,tree,open_,open_,open_,open_,open_,open_,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
-                                  [tree,tree,open_,open_,open_,open_,open_,open_,tree,tree,tree,tree,snail,tree,tree,tree,tree,tree,tree,tree,],
-                                  [tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,]],
+                                [ [tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
+                                  [ew_town_0,open_,open_,tree,trident,church,trident,tree,sunflower,flag,sunflower,tree,horn,building,horn,tree,open_,open_,ew_3_2,],
+                                  [tree,tree,open_,tree,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,tree,tree,],
+                                  [tree,open_,open_,tree,open_,open_,open_,open_,open_,bird,open_,open_,open_,open_,open_,open_,open_,open_,tree,],
+                                  [tree,open_,tree,tree,open_,open_,open_,open_,rainbow,fountain,blonde_girl,open_,open_,open_,open_,tree,tree,open_,tree,],
+                                  [tree,open_,tree,tree,tower,open_,open_,open_,open_,open_,open_,open_, open_,open_,open_,house,tree,tree,tree,],
+                                  [tree,open_,tree,tree,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,tree,tree,],
+                                  [tree,open_,open_,tree,tree,tree,tree,tree,open_,open_,open_,tree,tree,tree,tree,tree,tree,tree,tree,],
+                                  [tree,tree,open_,open_,open_,open_,open_,open_,open_,tree,open_,open_,open_,open_,open_,open_,tree,tree,tree,],
+                                  [tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,]],
 
 
                                   dragon:false,
@@ -1000,8 +1047,7 @@ if (modal.style.display == 'block'){
     event.preventDefault();
     var current = player.current[1];
     var next_ = current + 1;
-    const const_val = scene[player.current[0]][next_];
-    var next_square = const_val;
+    var next_square = scene[player.current[0]][next_];
     move(next_square, 1, "+");
     checkSquare(next_square);
     }
