@@ -150,7 +150,7 @@
 </span>
 
 <div style="padding-top:40px;" class="col-md-10">
-<div style="align:center;" class="canvas"><table align="center" style="font-size:3.5em;" class="grid"><tbody id="scene"></tbody></table>
+<div style="align:center;" class="canvas"><table style="font-size:3.5em;" class="grid"><tbody id="scene"></tbody></table>
 
 </div>
 </div>
@@ -435,6 +435,11 @@ var fleur = {
   wall: true,
 }
 
+var study = {
+  emoji: '🔰',
+  wall: true,
+}
+
 var bird = {
   emoji: '🐦',
   wall: true,
@@ -470,6 +475,11 @@ var tent = {
   wall: true,
 }
 
+var court = {
+  emoji: '🏛',
+  wall: true,
+}
+
 var building = {
   emoji: '🏤',
   wall: true,
@@ -478,11 +488,19 @@ var building = {
 var tower = {
   emoji: '🏫',
   wall: true,
+  exitway: true,
+  next: 'school',
+  entry: [7,8],
 }
 
 var house = {
   emoji: '🏡',
   wall:true,
+}
+
+var judge = {
+  emoji: '👨🏻‍⚖️',
+  wall: true,
 }
 
 var lady = {
@@ -521,6 +539,67 @@ var mustache = {
 
 var blonde_girl = {
   emoji: '👧🏼',
+  wall: true,
+}
+
+var books1 = {
+  emoji: '📕',
+  wall: true,
+}
+
+var books2 = {
+  emoji: '📗',
+  wall: true,
+}
+
+var books3 = {
+  emoji: '📘',
+  wall: true,
+}
+
+var books4 = {
+  emoji: '📙',
+  wall: true,
+}
+
+var books5 = {
+  emoji: '📔',
+  wall: true,
+}
+
+var books6 = {
+  emoji: '📓',
+  wall: true,
+}
+
+var beaker = {
+  emoji: '⚗️',
+  wall: true,
+}
+
+var agri = {
+  emoji: '🌾',
+  wall: true,
+}
+
+var world = {
+  emoji: '🌍',
+  wall: true,
+}
+
+var books7 = {
+  emoji: '📖',
+  wall: true,
+}
+
+var books0 = {
+  emoji: '📚',
+  wall: true,
+}
+
+
+var dove = {
+  emoji: '🕊',
   wall: true,
 }
 
@@ -647,12 +726,22 @@ var ew_6_1 = {
   wall:true,
 }
 
+
+
 var ew_town_0 = {
   emoji: '↔️',
   wall: true,
   'entry': [1,18],
   exitway: true,
   next: 3,
+}
+
+ew_school_0 = {
+  emoji: '🚪',
+  wall: true,
+  'entry': [6,5],
+  exitway: true,
+  next: 'town',
 }
 
 var current_scene = 0;
@@ -782,24 +871,39 @@ var scenes = {
 
                               'town':{map:
                                 [ [tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
-                                  [ew_town_0,open_,open_,tree,trident,church,trident,tree,sunflower,flag,sunflower,tree,horn,building,horn,tree,open_,open_,ew_3_2,],
-                                  [tree,tree,open_,tree,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,tree,tree,],
-                                  [tree,open_,open_,tree,open_,open_,open_,open_,open_,bird,open_,open_,open_,open_,open_,open_,open_,open_,tree,],
-                                  [tree,open_,tree,tree,open_,open_,open_,open_,rainbow,fountain,blonde_girl,open_,open_,open_,open_,tree,tree,open_,tree,],
-                                  [tree,open_,tree,tree,tower,open_,open_,open_,open_,open_,open_,open_, open_,open_,open_,house,tree,tree,tree,],
-                                  [tree,open_,tree,tree,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,tree,tree,],
-                                  [tree,open_,open_,tree,tree,tree,tree,tree,open_,open_,open_,tree,tree,tree,tree,tree,tree,tree,tree,],
-                                  [tree,tree,open_,open_,open_,open_,open_,open_,open_,tree,open_,open_,open_,open_,open_,open_,tree,tree,tree,],
+                                  [ew_town_0,open_,open_,tree,tree,trident,tree,tree,sunflower,flag,sunflower,tree,tree,horn,tree,tree,open_,open_,ew_3_2,],
+                                  [tree,tree,open_,tree,trident,church,trident,open_,open_,open_,open_,open_,horn,building,horn,tree,open_,tree,tree,],
+                                  [tree,open_,open_,tree,open_,open_,open_,open_,open_,bird,open_,open_,open_,open_,open_,tree,open_,open_,tree,],
+                                  [tree,open_,tree,tree,tree,study,open_,open_,rainbow,fountain,blonde_girl,open_,open_,dove,open_,tree,tree,open_,tree,],
+                                  [tree,open_,tree,tree,study,tower,study,open_,open_,open_,open_,open_, dove,court,dove,tree,tree,open_,tree,],
+                                  [tree,open_,tree,tree,lady,open_,open_,open_,open_,open_,open_,open_,open_,open_,judge,tree,tree,open_,tree,],
+                                  [tree,open_,open_,tree,tree,tree,tree,tree,open_,open_,open_,tree,tree,tree,tree,tree,open_,open_,tree,],
+                                  [tree,tree,open_,open_,open_,open_,open_,open_,open_,tree,open_,open_,open_,open_,open_,open_,open_,tree,tree,],
                                   [tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,]],
 
 
                                   dragon:false,
 
                                 },
+                                //school
+                                'school':{map:
+                                  [ [study,study,painting,study,study,painting,study,study,study,study,study,painting,study,study,painting,study,study,],
+                                  [study,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,study,],
+                                    [study,dove,books1,books2,books3,books4,open_,open_,lady,open_,open_,books4,books3,books2,books1,beaker,study,],
+                                    [study,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,study,],
+                                    [study,horn,books1,books2,books3,books4,open_,open_,open_,open_,open_,books4,books3,books2,books1,agri,study,],
+                                    [study,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,study,],
+                                    [study,trident,books1,books2,books3,books4,open_,open_,open_,open_,open_,books4,books3,books2,books1,world,study,],
+                                    [study,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,study,],
+                                    [study,study,painting,study,study,painting,study,study,ew_school_0,study,study,painting,study,study,painting,study,study,]],
+
+                                    dragon:false,
+
+                                  },
 
             }
 
-
+            //
             //🃏🤔😏😨👻👋👏🙏👸🏼👑🎒💍🐮🐰🐭🦁🐸🐷🐔🐤🐺🐗🦄🐛🐝🐌🐞🐜🕷🐍🐑🐀🐁🐿
             //🐉🐲🌲🌳🌾🌻🌷🍄🌰🐚🕸🌝🌤🔥🍎🍇🧀🍗🍖🍺🍻🏹🎣🏵🎭🎨🎪⛲️⛰🏔🏞🏝🏰🌈
             //💎⚖💰🕯⚙💣🗡⚔🛡☠️⚰🔮📿⚗🚪🖼🎉🎊📯📜🏳❤️💛💚💙💜❣️♨️🔱⚜🔰💠🌀🌌
