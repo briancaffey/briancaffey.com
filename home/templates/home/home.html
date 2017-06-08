@@ -93,23 +93,23 @@ $(document).ready(function(){
         <div class="col-md-12">
       <h3>my monthly subscriptions</h3>
       {% for instance in subscriptions %}
-{% cycle '<div class="row">' ''  %}
+        {% cycle '<div class="row">' ''  %}
 
-<div style="text-align:center;" class="col-md-6">
-  <a style="display:block; text-decoration:none; font-color:black;" href="{{ instance.service_link }}">
-    <div class="col-md-11.5 well">
-      <p style="font-size:3em; text-align:center;">{{ instance.emoji }}</p>
-      <p style="font-size:2em; text-align:center;">{{ instance.service_name }}</p>
-      <h5 style="font-size:2em; text-align:center;">{{ instance.bucksamonth | floatformat:"0" }}&nbsp;💸📅</h5>
+        <div style="text-align:center;" class="col-md-6">
+          <a style="display:block; text-decoration:none; font-color:black;" href="{{ instance.service_link }}">
+            <div class="col-md-11.5 well">
+              <p style="font-size:3em; text-align:center;">{{ instance.emoji }}</p>
+              <p style="font-size:2em; text-align:center;">{{ instance.service_name }}</p>
+              <h5 style="font-size:2em; text-align:center;">{{ instance.bucksamonth | floatformat:"0" }}&nbsp;💸📅</h5>
 
-      <blockquote>
-        <h4 class="text-muted">{{ instance.service_description }}</h4>
-      </blockquote>
-</div>
-</a>
-</div>
+              <blockquote>
+                <h4 class="text-muted">{{ instance.service_description }}</h4>
+              </blockquote>
+            </div>
+          </a>
+        </div>
 
-{% cycle '' '</div>' %}
+        {% cycle '' '</div>' %}
 
 
       {% endfor %}
