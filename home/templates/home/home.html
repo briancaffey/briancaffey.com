@@ -77,7 +77,7 @@ $(document).ready(function(){
         {{ guest_form | crispy }}
         <input type="submit" id="post-form post-button" class="btn btn-success" value="Add message"><br/> -or- <br/><a class="btn btn-info" href="{% url 'home:gb-submit' %}">Sign using the DRF</a>
       </form>
-
+      <br />
       <span id="guest-book-items">
       {% for note in guest_book %}
 
@@ -88,14 +88,46 @@ $(document).ready(function(){
       {% endfor %}
       </span>
 
-      <h3>View <a href="{% url 'home:gb-list' %}">all <span id="gb-num">{{ guest_book_count }}</span> notes</a> in my guestbook</h3>
+      <p class="pull-right">view <a href="{% url 'home:gb-list' %}">all <span id="gb-num">{{ guest_book_count }}</span> notes</a> in my guestbook</p>
+      <div class="row">
+        <div class="col-md-12">
+      <h3>my monthly subscriptions</h3>
+      {% for instance in subscriptions %}
+{% cycle '<div class="row">' ''  %}
+
+<div style="text-align:center;" class="col-md-6">
+  <a style="display:block; text-decoration:none; font-color:black;" href="{{ instance.service_link }}">
+    <div class="col-md-11.5 well">
+      <p style="font-size:3em; text-align:center;">{{ instance.emoji }}</p>
+      <p style="font-size:2em; text-align:center;">{{ instance.service_name }}</p>
+      <h5 style="font-size:2em; text-align:center;">{{ instance.bucksamonth | floatformat:"0" }}&nbsp;💸📅</h5>
+
+      <blockquote>
+        <h4 class="text-muted">{{ instance.service_description }}</h4>
+      </blockquote>
+</div>
+</a>
+</div>
+
+{% cycle '' '</div>' %}
+
+
+      {% endfor %}
+      <div style="text-align:center;" class="well"><a href="http://www.bucksamonth.com/users/mrbrian">view all {{ sub_count }} of my monthly subscription{{ sub_count | pluralize }} on bucksamonth.com</a></div>
+      <p>accessed through the <a href="http://www.bucksamonth.com/developers/">bucksamonth API</a></p>
     </div>
+  </div>
+</div>
 
     <div class="col-md-4" id="right-side">
         <h3>Join my monthly newsletter! 🗞</h3>
         <form method="POST" action=".">{% csrf_token %}
+            <div class="input-group">
           {{ form_ | crispy }}
+                  <span class="input-group-btn">
         <input class="btn btn-success" type="submit" value="Join"></input>
+        </span>
+              </div>
       </form>
       <hr>
 

@@ -18,13 +18,13 @@
             <li><a href="{% url 'posts:list' %}">Blog 📝</a></li>
             <li><a href="{% url 'projects:projects' %}">Projects 🔬</a></li>
             <li><a href="{% url 'reading-list:list' %}">Reading List 📖</a></li>
-            <li><a href="{% url 'friends:friend-list' %}">People 👥</a></li>
+            <!-- <li><a href="{% url 'friends:friend-list' %}">People 👥</a></li> -->
             <!-- <li><a href="#contact">Contact</a></li> -->
           </ul>
           <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
             <li><a>Welcome, {{ user.username }}</a></li>
-            <li><a href="{% url 'home:home'%}">Profile 👤</a></li>
+            <!-- <li><a href="{% url 'home:home'%}">Profile 👤</a></li> -->
 
             <!-- <li><a href="{% url 'accounts:logout' %}">Logout</a></li> -->
             <li><a type="button" href="#logout" data-toggle="modal" data-target="#myModal-logout">Logout 🔓</a></li>

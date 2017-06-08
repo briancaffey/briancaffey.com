@@ -25,7 +25,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'friends',
     'srgraph',
     'langton',
+    'yawlih',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'

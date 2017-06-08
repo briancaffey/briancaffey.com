@@ -10,7 +10,7 @@
 
 
 <h2>{% if project.emoji %}<span style="font-size:1.5em">{{ project.emoji }}</span><br />{% endif %}<a style="text-decoration:none;" href="{{ project.link }}" target="_blank">{{ project.name }}</a></h2>
-{% for tag in project.tags.all %}<a href="#" class="label label-primary">{{ tag }}</a> {% endfor %}
+{% for tag in project.tags.all %}<div class="label label-primary">{{ tag }}</div> {% endfor %}
 <br /><br />
 <blockquote>
   {{ project.description | safe }}

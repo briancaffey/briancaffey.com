@@ -23,6 +23,7 @@ from srgraph.views import get_subreddits, get_random, api_upvote, api_downvote
 
 
 urlpatterns = [
+    url(r'^yawlih/', include('yawlih.urls', namespace="yawlih")),
     url(r'^api/get_random/', get_random, name='get_random'),
     url(r'^api/get_subreddits/', get_subreddits, name='get_subreddits'),
     url(r'^api/result-up/(?P<id>\d+)/$', api_upvote, name='api_upvote'),
