@@ -280,11 +280,13 @@ $(".flagbtn").each(function(){
           country_name = obj["Government"]["Country name"]["conventional short form"]["text"]
         }
         var area_comparative = obj["Geography"]["Area - comparative"]["text"]
+        var economy = obj["Economy"]["Economy - overview"]["text"]
 
         //$("#country-data-head").text(flag+"  " + country_name + "  " + flag)
         $("#country-data").text(introduction)
         $("#country_name").text(country_name)
         $("#area_comparative").text(area_comparative)
+        $("#economy").text(economy)
         $(this).blur()
       }
     })
