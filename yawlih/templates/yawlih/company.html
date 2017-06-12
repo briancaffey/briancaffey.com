@@ -38,14 +38,13 @@
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
             <li class="active"><a href="{% url 'yawlih:home' %}">Overview <span class="sr-only">(current)</span></a></li>
-            <li><a href="{% url 'yawlih:reports' %}">Reports</a></li>
-            <li><a href="#">Analytics</a></li>
+            <li><a href="{% url 'yawlih:reports' %}">Advanced Search</a></li>
             <li><a href="#">Export</a></li>
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1>{{ company.name_en }} | {{ company.name_cn }}</h1>
-          <small><a href="{{ company.website }}">{{ company.website }}</a></small>
+          <a href="{{ company.website }}">{{ company.website }}</a>
           <hr>
           <div class="row">
           <div class="col-md-6">{{ company.intro_en | linebreaks }}</div>
@@ -55,7 +54,7 @@
 
           <hr>
 
-          <h2 class="sub-header">Fundraising</h2>
+          <h2 class="sub-header">Fundraising ({{ company.investments.count }})</h2>
 
           <div class="table-responsive">
             <table class="table table-striped">
@@ -89,6 +88,31 @@
           <h2 class="sub-header">News ({{ company.total_news }})</h2>
 
 
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Source</th>
+                  <th>Date</th>
+                  <th>Title</th>
+                  <th>Link</th>
+                </tr>
+              </thead>
+              <tbody>
+          {% for item in company.news %}
+
+              <tr>
+                <td>{{ item.news_outlet }}</td>
+                <td>{{ item.publish_date }}</td>
+                <td>{{ item.headline }}</td>
+                <td><a href="{{ item.link }}">Link</a></td>
+              </tr>
+
+
+          {% endfor %}
+              </tbody>
+            </table>
+          </div>
 
           <h2 class="sub-header">Jobs ({{ company.total_jobs }})</h2>
 

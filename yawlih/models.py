@@ -61,6 +61,7 @@ class News(models.Model):
     publish_date = models.DateField()
     news_outlet = models.CharField(max_length=100)
     tags = TaggableManager()
+    link = models.URLField(max_length=1000, default='')
 
     def __str__(self):
         return str(self.headline)
