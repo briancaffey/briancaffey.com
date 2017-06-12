@@ -71,7 +71,21 @@
 
           <!-- <h2 class="sub-header">Section title</h2> -->
           <div class="table-responsive">
-            <table class="table table-striped">
+            <table
+                id="table"
+                class="table table-striped" data-toggle="table"
+                data-toolbar="#toolbar"
+                data-search="true"
+                data-show-refresh="true"
+                data-show-toggle="true"
+                data-show-columns="true"
+                data-show-export="true"
+                data-minimum-count-columns="2"
+                data-show-pagination-switch="true"
+                data-pagination="true"
+                data-id-field="id"
+                data-page-list="[10, 25, 50, 100, ALL]"
+                data-show-footer="false">
               <thead>
                 <tr>
                   <th>Name</th>
@@ -99,6 +113,16 @@
       </div>
 
 
+      <script>
+          var $table = $('#table');
+          $(function () {
+              $('#toolbar').find('select').change(function () {
+                  $table.bootstrapTable('destroy').bootstrapTable({
+                      exportDataType: $(this).val()
+                  });
+              });
+          })
+      </script>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
