@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Company, Investment
+from .models import Company, Investment, News
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib.auth import (
@@ -34,28 +34,37 @@ def reports(request):
 @login_required
 def advanced_search(request):
     print("working")
-    all_companies = Company.objects.all()
-    print(len(all_companies))
+
+
 
     query = request.GET.get('q')
-    print("query is: " + query)
+    print("query is: " + str(query))
 
     if query:
-        print(query)
-        print(all_companies)
+        all_companies = Company.objects.all()
+        all_news = News.objects.all()
+        all_investments = Investment.objects.all()
+
         results = all_companies.filter(
               Q(name_en__icontains=query) |
               Q(intro_en__icontains=query) |
               Q(intro_cn__icontains=query)
               ).distinct()
+        news = all_news.filter(
+            Q(headline__icontains=query) |
+            Q(text__icontains=query)
+            ).distinct()
 
         context = {
             'results': results,
+            'news':news,
+            'query': 'true'
         }
         return render(request, 'yawlih/reports.html', context)
 
     context = {
-        'results':all_companies,
+        'results':[],
+        'query': 'false'
         }
     return render(request, 'yawlih/reports.html', context)
 

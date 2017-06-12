@@ -36,12 +36,13 @@
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
             <li><a href="{% url 'yawlih:home' %}">Overview <span class="sr-only">(current)</span></a></li>
-            <li class="active"><a href="{% url 'yawlih:reports' %}">Advanced Search</a></li>
+            <li class="active"><a href="{% url 'yawlih:advanced_search' %}">Advanced Search</a></li>
             <li><a href="#">Export</a></li>
+            <li><a href="#"><i class="fa fa-weixin footer-icon" aria-hidden="true"></i></a></li>
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Search</h1>
+          <h1 class="page-header">Search {% if query == 'true' %}results for "{{ request.GET.q }}"{% endif %}</h1>
 
 
         <form method="GET" action="." class="row">
@@ -54,12 +55,18 @@
             </div>
           </div>
         </form>
-
-        <p>results here</p>
+        {% if query == 'true' %}
+        <h2>Companies</h2>
         {% for item in results %}
-          <h3><a href="#">{{ item.name_en }} | {{ item.name_cn }}</a></h3>
+          <h3><a href="{{ item.get_absolute_url }}">{{ item.name_en }} | {{ item.name_cn }}</a></h3>
+
         {% endfor %}
 
+        <h2>News</h2>
+        {% for item in news %}
+          <h3><a href="#">{{ item.headline }}</a></h3>
+        {% endfor %}
+        {% endif %}
         </div>
       </div>
     </div>

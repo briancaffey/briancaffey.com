@@ -1,5 +1,6 @@
 from django.db import models
 from taggit.managers import TaggableManager
+from django.core.urlresolvers import reverse
 # Create your models here.
 
 
@@ -36,6 +37,9 @@ class Company(models.Model):
     def investments(self):
         investments = Investment.objects.filter(company=self.id)
         return investments
+
+    def get_absolute_url(self):
+        return reverse('yawlih:company_view', kwargs={'id':self.id})
 
 
 class Job(models.Model):
