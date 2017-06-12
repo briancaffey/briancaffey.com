@@ -93,6 +93,7 @@ $(document).ready(function(){
         <div class="col-md-12">
       <h3>my monthly subscriptions</h3>
       {% for instance in subscriptions %}
+
         {% cycle '<div class="row">' ''  %}
 
         <div style="text-align:center;" class="col-md-6">
@@ -110,7 +111,6 @@ $(document).ready(function(){
         </div>
 
         {% cycle '' '</div>' %}
-
 
       {% endfor %}
       <div style="text-align:center;" class="well"><a href="http://www.bucksamonth.com/users/mrbrian">view all {{ sub_count }} of my monthly subscription{{ sub_count | pluralize }} on bucksamonth.com</a></div>

@@ -39,38 +39,85 @@
           <ul class="nav nav-sidebar">
             <li class="active"><a href="{% url 'yawlih:home' %}">Overview <span class="sr-only">(current)</span></a></li>
             <li><a href="{% url 'yawlih:reports' %}">Reports</a></li>
-            <li><a href="#">Advanced Search</a></li>
+            <li><a href="#">Analytics</a></li>
             <li><a href="#">Export</a></li>
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Competitors</h1>
+          <h1>{{ company.name_en }} | {{ company.name_cn }}</h1>
+          <small><a href="{{ company.website }}">{{ company.website }}</a></small>
+          <hr>
+          <div class="row">
+          <div class="col-md-6">{{ company.intro_en | linebreaks }}</div>
 
-          <!-- <div class="row placeholders">
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-          </div> -->
+          <div class="col-md-6">{{ company.intro_cn | linebreaks }}</div>
+        </div>
 
-          <!-- <h2 class="sub-header">Section title</h2> -->
+          <hr>
+
+          <h2 class="sub-header">Fundraising</h2>
+
           <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Company</th>
+                  <th>Amount (RMB)</th>
+                  <th>Type</th>
+                  <th>Investors</th>
+                  <th>Date</th>
+
+                </tr>
+              </thead>
+              <tbody>
+          {% for investment in company.investments %}
+
+              <tr>
+                <td>{{ investment.company }} | {{ investment.company.name_cn }}</td>
+                <td>{{ investment.amount_rmb }}</td>
+                <td>{{ investment.round_type }}</td>
+                <td>{% for investor in investment.investors.all %}{{ investor }}{% endfor %}</td>
+                <td>{{ investment.publish_date }}</td>
+              </tr>
+
+
+          {% endfor %}
+              </tbody>
+            </table>
+          </div>
+
+          <h2 class="sub-header">News ({{ company.total_news }})</h2>
+
+
+
+          <h2 class="sub-header">Jobs ({{ company.total_jobs }})</h2>
+
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Role</th>
+                  <th>Salary</th>
+                  <th>Location</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+          {% for job in company.jobs %}
+
+              <tr>
+                <td>{{ job.position_en }} | {{ job.position_cn }}</td>
+                <td>{{ job.monthly_salary_rmb }}</td>
+                <td>{{ job.location }}</td>
+                <td>{{ job.post_date }}</td>
+              </tr>
+
+
+          {% endfor %}
+              </tbody>
+            </table>
+
+          <!-- <div class="table-responsive">
             <table class="table table-striped">
               <thead>
                 <tr>
@@ -84,17 +131,19 @@
               <tbody>
                 {% for company in companies %}
                 <tr>
-                  <td><a href="{% url 'yawlih:company_view' id=company.id %}">{{ company.name_en }}</a></td>
+                  <td>{{ company.name_en }}</td>
                   <td>{{ company.name_cn }}</td>
                   <td>{{ company.total_jobs }}</td>
                   <td>{{ company.total_news }}</td>
                   <td>{% for tag in company.tags.all %}<span class="label label-primary">{{ tag }}</span>  {% endfor %}</td>
                 </tr>
-                <!-- <tr id="{{ company.id }}" style="display:none;"><td>{{ company.intro_en }}</td></tr> -->
+                <tr id="{{ company.id }}" style="display:none;"><td>{{ company.intro_en }}</td></tr>
                 {% endfor %}
               </tbody>
             </table>
-          </div>
+          </div> -->
+
+
         </div>
       </div>
     </div>
