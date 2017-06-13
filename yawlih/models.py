@@ -90,6 +90,7 @@ class Investment(models.Model):
     headline = models.CharField(max_length=500, default='')
     text = models.TextField(blank=True, null=True)
     publish_date = models.DateField(blank=True, null=True)
+    link = models.URLField(max_length=500, default='')
 
 
 
