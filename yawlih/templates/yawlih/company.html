@@ -39,13 +39,12 @@
           <ul class="nav nav-sidebar">
             <li class="active"><a href="{% url 'yawlih:home' %}">Overview <span class="sr-only">(current)</span></a></li>
             <li><a href="{% url 'yawlih:advanced_search' %}">Advanced Search</a></li>
-            <li><a href="#">Export</a></li>
             <li><a href="#"><i class="fa fa-weixin footer-icon" aria-hidden="true"></i></a></li>
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1>{{ company.name_en }} | {{ company.name_cn }}</h1>
-          <a href="{{ company.website }}">{{ company.website }}</a>
+          <a href="{{ company.website }}" target="_blank">{{ company.website }}</a>
           <hr>
           <div class="row">
           <div class="col-md-6">{{ company.intro_en | linebreaks }}</div>
@@ -66,6 +65,7 @@
                   <th>Type</th>
                   <th>Investors</th>
                   <th>Date</th>
+                  <th>Link</th>
 
                 </tr>
               </thead>
@@ -78,6 +78,7 @@
                 <td>{{ investment.round_type }}</td>
                 <td>{% for investor in investment.investors.all %}{{ investor }}{% endfor %}</td>
                 <td>{{ investment.publish_date }}</td>
+                <td>{{ investment.link}}
               </tr>
 
 
@@ -106,7 +107,7 @@
                 <td>{{ item.news_outlet }}</td>
                 <td>{{ item.publish_date }}</td>
                 <td>{{ item.headline }}</td>
-                <td><a href="{{ item.link }}">Link</a></td>
+                <td><a href="{{ item.link }}" target="_blank">Link</a></td>
               </tr>
 
 
@@ -136,7 +137,7 @@
                 <td>{{ job.monthly_salary_rmb }}</td>
                 <td>{{ job.location }}</td>
                 <td>{{ job.post_date }}</td>
-                <td>{{ job.link }}</td>
+                <td><a href="{{ job.link }}">Link</a></td>
               </tr>
 
 
