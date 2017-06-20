@@ -137,10 +137,26 @@ $(document).ready(function(){
 
       <hr>
 
-      <h3>Send me bitcoin</h3>
+      <h3>send me <a href="#btc" style="text-color:black;" id="btc-btn">bitcoin</a> <a href="#eth" id="eth-btn">ether</a></h3>
       {% include 'bitcoin.html' %}
-      <div style="text-align:center;" class="well">1HpDgr5j9aagDGPwLjGWfhvFLhR9gcZUrD</div>
+      {% include 'ether.html' %}
+      <div style="text-align:center;" class="well bitcoin_">1HpDgr5j9aagDGPwLjGWfhvFLhR9gcZUrD</div>
+      <div style="text-align:center; display:none;"  class="well ether_ text-primary"><small>0x97D2A754260A79D29CBD54D5B7431e896d798364</small></div>
 
+      <script>
+
+        $('#btc-btn').click( function(){
+          $('.ether_').hide()
+          $('.bitcoin_').show()
+
+        })
+
+        $('#eth-btn').click( function(){
+          $('.bitcoin_').hide()
+          $('.ether_').show()
+        })
+
+      </script>
       <h3>Recent blog posts</h3>
       {% for post in recent_posts %}
       <h4><a href="{% url 'posts:detail' slug=post.slug %}">{{ post.title }}</a></h4>
