@@ -16,11 +16,11 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="{% url 'yawlih:home' %}">曜立 | Yawlih</a>
+      <a class="navbar-brand" href="{% url 'yawlih:home' %}">未名公司 | ABC Company</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="/admin/yawlih/">Admin</a></li>  
+        <li><a href="/admin/yawlih/">Admin</a></li>
         <li><a href="#">{{ request.user.username }}</a></li>
         <li><a href="#">Help</a></li>
         <li><a href="{% url 'yawlih:user_logout' %}">Logout</a></li>
@@ -37,7 +37,6 @@
           <ul class="nav nav-sidebar">
             <li><a href="{% url 'yawlih:home' %}">Overview <span class="sr-only">(current)</span></a></li>
             <li class="active"><a href="{% url 'yawlih:advanced_search' %}">Advanced Search</a></li>
-            <li><a href="#">Export</a></li>
             <li><a href="#"><i class="fa fa-weixin footer-icon" aria-hidden="true"></i></a></li>
           </ul>
         </div>

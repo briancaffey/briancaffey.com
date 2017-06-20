@@ -70,4 +70,4 @@ def advanced_search(request):
 
 def user_logout(request):
     logout(request)
-    return redirect('http://www.yawlih.com.cn/')
+    return redirect('http://www.baidu.com/')
