@@ -137,23 +137,56 @@ $(document).ready(function(){
 
       <hr>
 
-      <h3>send me <a href="#btc" style="text-color:black;" id="btc-btn">bitcoin</a> <a href="#eth" id="eth-btn">ether</a></h3>
+      <style>
+      /* unvisited link */
+      current a:link {
+          color: red;
+      }
+
+      /* visited link */
+      .current a:visited {
+          color: black;
+      }
+
+      /* mouse over link */
+      .current a:hover {
+          color: orange;
+      }
+
+      /* selected link */
+      .current a:active {
+          color: grey;
+      }
+
+      .current a {
+        color: grey;
+      }
+
+      </style>
+
+
+
+      <h3>send me <a href="#btc" class="current" style="text-color:black; text-decoration:none;" id="btc-btn">bitcoin</a> or <a href="#eth" id="eth-btn" style="text-decoration:none;">ether</a></h3>
       {% include 'bitcoin.html' %}
       {% include 'ether.html' %}
-      <div style="text-align:center;" class="well bitcoin_">1HpDgr5j9aagDGPwLjGWfhvFLhR9gcZUrD</div>
-      <div style="text-align:center; display:none;"  class="well ether_ text-primary"><small>0x97D2A754260A79D29CBD54D5B7431e896d798364</small></div>
+      <div style="text-align:center;" class="well bitcoin_"><a href="https://blockchain.info/address/1HpDgr5j9aagDGPwLjGWfhvFLhR9gcZUrD1HpDgr5j9aagDGPwLjGWfhvFLhR9gcZUrD" target="_blank">1HpDgr5j9aagDGPwLjGWfhvFLhR9gcZUrD</a></div>
+      <div style="text-align:center; display:none;" class="well ether_ text-primary"><small><a href="https://etherscan.io/address/0x97D2A754260A79D29CBD54D5B7431e896d798364">0x97D2A754260A79D29CBD54D5B7431e896d798364<a/></small></div>
 
       <script>
 
         $('#btc-btn').click( function(){
           $('.ether_').hide()
           $('.bitcoin_').show()
+          $(this).addclass('current')
+          $('#eth-btn').removeClass('current')
 
         })
 
         $('#eth-btn').click( function(){
           $('.bitcoin_').hide()
           $('.ether_').show()
+          $(this).addclass('current')
+          $('#btc-btn').removeClass('current')
         })
 
       </script>
