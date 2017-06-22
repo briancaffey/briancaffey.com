@@ -9,7 +9,7 @@
 {% for project in projects %}
 
 
-<h2>{% if project.emoji %}<span style="font-size:1.5em">{{ project.emoji }}</span><br />{% endif %}<a style="text-decoration:none;" href="{{ project.link }}" target="_blank">{{ project.name }}</a> {% if project.github %}<a style="color:#913399" href="{{ project.github }}"><i class="fa fa-github fa-5 footer-icon" aria-hidden="true"> </i><a/>{% endif %}</h2>
+<h2>{% if project.emoji %}<span style="font-size:1.5em">{{ project.emoji }}</span><br />{% endif %}<a style="text-decoration:none;" href="{{ project.link }}" target="_blank">{{ project.name }}</a> {% if project.github %}<a style="color:#913399" href="{{ project.github }}"><i class="fa fa-github fa-5 footer-icon" aria-hidden="true"> </i></a>{% endif %}</h2>
 {% for tag in project.tags.all %}<div class="label label-primary">{{ tag }}</div> {% endfor %}
 <br /><br />
 <blockquote>
