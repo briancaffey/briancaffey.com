@@ -12,6 +12,7 @@ class Project(models.Model):
 	slug = models.SlugField(unique=True, default="")
 	emoji = models.CharField(max_length=50, default="")
 	link = models.URLField(null=True, blank=True)
+	github = models.URLField(null=True, blank=True)
 	description = models.CharField(max_length=10000)
 	full_description = models.CharField(max_length=10000, default="")
 	order = models.PositiveIntegerField(default=0)
