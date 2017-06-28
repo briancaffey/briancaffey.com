@@ -21,6 +21,10 @@ def kings(request):
 
 def kings_two(request):
 	return render(request, 'projects/kings_v2.html', {})
+
+
+def level_builder(request):
+	return render(request, 'projects/level_builder.html', {})
 # def bokeh(request):
 # 	plot = figure()
 # 	plot.circle([1,2], [3,4])

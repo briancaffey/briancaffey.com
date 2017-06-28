@@ -1,0 +1,203 @@
+{% load staticfiles %}
+
+
+<!doctype html>
+<html>
+<head>
+  <title>King's Encounter</title>
+
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+
+  <style>
+  /* The Modal (background) */
+  .dialogue-modal {
+      display: none; /* Hidden by default */
+      position: fixed; /* Stay in place */
+      z-index: 1; /* Sit on top */
+      padding-top: 100px; /* Location of the box */
+      left: 0;
+      top: 0;
+      width: 100%; /* Full width */
+      height: 100%; /* Full height */
+      overflow: auto; /* Enable scroll if needed */
+      background-color: rgb(0,0,0); /* Fallback color */
+      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+
+  /* Modal Content */
+  .modal-content {
+      background-color: #fefefe;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+  }
+
+  /* The Close Button */
+  .close {
+      color: #aaaaaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+  }
+  </style>
+
+
+
+</head>
+
+
+
+<body style="padding-top:30px;">
+
+
+      <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'projects:kings' %}">👑&nbsp;&nbsp;King's Encounter ⚔</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+
+              <li style="display:none;" class="stat"><a>❤️ ✖️ <span class="health"></span></a></li>
+              <li style="display:none;" class="stat"><a>💎 ✖️ <span class="diamonds"></span></a></li>
+              <li style="display:none;" class="stat"><a>📜 ✖️ <span class="scrolls"></span></a></li>
+              <li style="display:none;" class="stat"><a>🗝 ✖️ <span class="keys"></span></a></li>
+              <li style="display:none;" class="stat"><a>⏳&nbsp;&nbsp;<span class="clock">0 : 00</span></a></li>
+              <li style="display:none;" class="stat"><a>Scene: <span class="scene"></span></a></li>
+              <li style="display:none;" class="stat"><a>Pos: <span class="pos"></span></a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#music" type="button" data-toggle="modal" data-target="#myModal-music">🔊</a></li>
+              <li><a>Guest</a></li>
+              <li><a href="{% url 'home:home' %}">Exit</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+
+      <div class="modal fade" id="myModal-music" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div style="text-align:center;" class="modal-body">
+              <h1>🎻🎹🎶</h1>
+              <audio loop="loop" autoplay="true" audio="" controls="controls">
+                    <source src="{% static 'music/plirwin.ogg' %}">
+                    <embed type="application/x-shockwave-flash" src="http://www.google.com/reader/ui/3523697345-audio-player.swf" quality="best" flashvars="audioUrl=http://www.contemplator.com/mp3/plirwin.mp3" width="500" height="27">
+                    </audio>
+            </div>
+            <div class="modal-footer">
+              <div class="pull-left">Source: <a href="http://www.contemplator.com/">contemplator.com</a></div>
+              <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+  <div style="background-color:" class="container">
+    <div class="row">
+
+      </div>
+      <span id="welcomeJumbo">
+      <div style="padding-top:40px;" class="row">
+<div style="text-align:center;" class="jumbotron" >
+  <h1>👑⚔🏰🐉❤️<br />Design your very own adventure!</h1>
+  <br />
+  <p>Build your onw world and share with your friends!</p>
+  <br />
+<p>choose your character</p>
+  <!-- <form action="." class="form-contorl input-lg">
+    <select class="choose_avatar" name="choose_avatar">
+      <option value="😃">&nbsp;&nbsp;😃&nbsp;&nbsp;</option>
+      <option value="👦🏼">&nbsp;&nbsp;👦🏼&nbsp;&nbsp;</option>
+      <option value="👨🏻">&nbsp;&nbsp;👨🏻&nbsp;&nbsp;</option>
+      <option value="👩🏻">&nbsp;&nbsp;👩🏻&nbsp;&nbsp;</option>
+      <option value="👩🏽">&nbsp;&nbsp;👩🏽&nbsp;&nbsp;</option>
+    </select>
+    <br /><br />
+  </form> -->
+  <a id="start_btn" class="btn btn-success btn-lg togglePlay" href="#start" class="togglePlay">Get Started!</a>
+</div>
+</div>
+<div style="text-align:center;" class="row">
+<!-- <div class="col-md-4"><h2>⬆️⬅️⬇️➡️<br />Walk with W, A, S and D.</h2><p>You can also use the arrow keys</p></div>
+<div class="col-md-4"><h2>🐲😱😲💀<br />Beware of dragons.</h2><p>Crossing paths with dragons will decrease your health.</p></div>
+<div class="col-md-4"><h2>📜👓💡✅<br />Collect scrolls.</h2><p>Scrolls contain hints and important knowledge.</p></div> -->
+</div>
+
+</span>
+
+<div style="padding-top:40px;" class="col-md-10">
+<div style="align:center;" class="canvas"><table style="font-size:3.5em;" class="grid"><tbody id="scene"></tbody></table>
+
+</div>
+</div>
+</div>
+
+<!-- Dialogue Modal -->
+<div id="myModal" class="dialogue-modal">
+  <!-- Modal Content -->
+  <div   class="modal-content">
+    <span class="close">&times;</span>
+    <p id="dialogue-title" style="text-align:center; font-size:6em"></p>
+    <p id="dialogue-body" style="font-size:3em;"></p>
+  </div>
+</div>
+
+<script>
+$('#start_btn').focus();
+// Get the modal
+var modal = document.getElementById('myModal');
+
+// Get the button that opens the modal
+
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal
+var showModal = function() {
+    modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+
+    modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+
+    }
+}
+</script>
+
+</div>
+</body>
+
+</html>
