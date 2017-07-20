@@ -35,7 +35,7 @@ class Post(models.Model):
 		null=True,
 		blank=True)
 	likes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='post_likes')
-	content = models.TextField()
+	content = models.CharField(max_length=30000)
 	draft = models.BooleanField(default=False)
 	publish = models.DateField(auto_now=False, auto_now_add=False)
 	read_time = models.TimeField(null=True, blank=True)
