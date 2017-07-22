@@ -16,40 +16,17 @@ def projects_home(request):
 	return render(request, 'projects/projects_home.html', context)
 
 
-def kings(request):
-	return render(request, 'projects/kings.html', {})
-
-def kings_two(request):
-	return render(request, 'projects/kings_v2.html', {})
-
-
-def level_builder(request):
-	return render(request, 'projects/level_builder.html', {})
-# def bokeh(request):
-# 	plot = figure()
-# 	plot.circle([1,2], [3,4])
+# def kings(request):
+# 	return render(request, 'projects/kings.html', {})
 #
-# 	script, div = components(plot, CDN)
+# def kings_two(request):
+# 	return render(request, 'projects/kings_v2.html', {})
 #
-# 	return render(request, "projects/bokeh.html", {"the_script":script, "the_div":div})
 #
-
-
-
-def bokeh(request):
-	x= [1,3,5,7,9,11,13]
-	y= [1,2,3,4,5,6,7]
-	title = 'y = f(x)'
-
-	plot = figure(title= title ,
-		x_axis_label= 'X-Axis',
-		y_axis_label= 'Y-Axis',
-		plot_width =400,
-		plot_height =400)
-
-	plot.line(x, y, legend= 'f(x)', line_width = 2)
-	#Store components
-	script, div = components(plot)
-
-	#Feed them to the Django template.
-	return render_to_response( 'projects/bokeh.html', {'script' : script , 'div' : div} )
+# def kings_three(request):
+# 	return render(request, 'projects/kings_v3.html', {})
+#
+#
+#
+# def level_builder(request):
+# 	return render(request, 'projects/level_builder.html', {})

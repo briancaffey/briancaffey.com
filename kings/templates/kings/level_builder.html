@@ -330,9 +330,25 @@ $(".emoji-choice").click(function(){
 
 
 
-$("#save-level").click(function(){
-  alert("Saving");
-})
+// $("#save-level").click(function(){
+//   alert("Saving");
+//   var data = JSON.stringify(scenes)
+//   console.log(data);
+//   $.post('/api/kings/save/', data);
+// })
+//
+
+$("#save-level").click(function(event){
+     $.ajax({
+          type:"POST",
+          url:"/api/kings/save/",
+          data: scenes,
+          success: function(){
+              alert("Saved!");
+          }
+     });
+     return false; //<---- move it here
+});
 
 
 

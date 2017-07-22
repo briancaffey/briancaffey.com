@@ -55,9 +55,16 @@ INSTALLED_APPS = [
     'srgraph',
     'langton',
     'yawlih',
+    'kings',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PARSER_CLASSES': (
+        'rest_framework.parsers.JSONParser',
+    )
+}
 
 
 MIDDLEWARE = [

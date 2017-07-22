@@ -54,9 +54,19 @@ INSTALLED_APPS = [
     'srgraph',
     'langton',
     'yawlih',
+    'kings',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+
+# https://github.com/encode/django-rest-framework/issues/2774
+
+REST_FRAMEWORK = {
+    'DEFAULT_PARSER_CLASSES': (
+        'rest_framework.parsers.JSONParser',
+    )
+}
 
 
 MIDDLEWARE = [
