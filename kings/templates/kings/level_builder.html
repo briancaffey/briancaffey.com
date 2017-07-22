@@ -343,8 +343,8 @@ $("#save-level").click(function(event){
           type:"POST",
           url:"/api/kings/save/",
           data: JSON.stringify({"this":"is a test"}),
-          dataType: 'json',
-          contentType: "application/json; charset=utf-8",
+          // dataType: 'json',
+          // contentType: "application/json; charset=utf-8",
           success: function(){
               alert("Saved! It worked.");
           }
