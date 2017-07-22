@@ -342,7 +342,7 @@ $("#save-level").click(function(event){
      $.ajax({
           type:"POST",
           url:"/api/kings/save/",
-          data: scenes,
+          data: JSON.stringify(scenes),
           success: function(){
               alert("Saved!");
           }
