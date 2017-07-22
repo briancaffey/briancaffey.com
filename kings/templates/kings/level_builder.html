@@ -348,8 +348,8 @@ $("#save-level").click(function(event){
           success: function(){
               alert("Saved! It worked.");
           }
-          error:function(res){
-            alert("Bad thing happend! " + res.statusText);
+          error:function(){
+            alert("It did not work.");
           }
      });
      return false; //<---- move it here
