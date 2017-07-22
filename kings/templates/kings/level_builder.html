@@ -338,13 +338,15 @@ $(".emoji-choice").click(function(){
 // })
 //
 
+//https://stackoverflow.com/questions/6323338/jquery-ajax-posting-json-to-webservice
+
 $("#save-level").click(function(event){
      $.ajax({
           type:"POST",
           url:"/api/kings/save/",
-          data: JSON.stringify({"this":"is a test"}),
-          // dataType: 'json',
-          // contentType: "application/json; charset=utf-8",
+          data: {scene: JSON.stringify(scene)},
+          dataType: 'json',
+          contentType: "application/json; charset=utf-8",
           success: function(){
               alert("Saved! It worked.");
           }
