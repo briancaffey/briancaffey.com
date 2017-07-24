@@ -4,10 +4,11 @@ from ..models import Game
 
 class GameSerializer(ModelSerializer):
 
-    # message = serializers.CharField(allow_blank=False, required=True)
+    id = serializers.ReadOnlyField()
 
     class Meta:
         model = Game
         fields = [
-            'game'
+            'id',
+            'game',
         ]

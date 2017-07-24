@@ -4,4 +4,6 @@ from django.contrib.postgres.fields import JSONField
 
 class Game(models.Model):
     game = JSONField()
-    
+
+    def __str__(self):
+        return str(self.id)

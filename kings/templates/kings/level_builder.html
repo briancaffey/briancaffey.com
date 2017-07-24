@@ -1,13 +1,9 @@
 {% load staticfiles %}
 
-//JSON.parse(myObjJSON)
-
-
 <!doctype html>
 <html>
 <head>
   <title>King's Encounter</title>
-
   <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.js"></script>
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
   <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" />
@@ -15,267 +11,178 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="{% static 'css/base.css' %}">
-
-  <style>
-  /* The Modal (background) */
-  .dialogue-modal {
-      display: none; /* Hidden by default */
-      position: fixed; /* Stay in place */
-      z-index: 1; /* Sit on top */
-      padding-top: 100px; /* Location of the box */
-      left: 0;
-      top: 0;
-      width: 100%; /* Full width */
-      height: 100%; /* Full height */
-      overflow: auto; /* Enable scroll if needed */
-      background-color: rgb(0,0,0); /* Fallback color */
-      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  }
-
-  /* Modal Content */
-  .modal-content {
-      background-color: #fefefe;
-      margin: auto;
-      padding: 20px;
-      border: 1px solid #888;
-      width: 80%;
-  }
-
-  /* The Close Button */
-  .close {
-      color: #aaaaaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-  }
-
-  .close:hover,
-  .close:focus {
-      color: #000;
-      text-decoration: none;
-      cursor: pointer;
-  }
-  </style>
-
-
-
+  <link rel="stylesheet" href="{% static 'css/modal.css' %}">
 </head>
-
-
 
 <body style="padding-top:30px;">
 
-
-      <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="{% url 'kings:kings' %}">👑&nbsp;&nbsp;King's Encounter ⚔</a>
-          </div>
-          <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-
-              <li style="display:none;" class="stat"><a>❤️ ✖️ <span class="health"></span></a></li>
-              <li style="display:none;" class="stat"><a>💎 ✖️ <span class="diamonds"></span></a></li>
-              <li style="display:none;" class="stat"><a>📜 ✖️ <span class="scrolls"></span></a></li>
-              <li style="display:none;" class="stat"><a>🗝 ✖️ <span class="keys"></span></a></li>
-              <li style="display:none;" class="stat"><a>⏳&nbsp;&nbsp;<span class="clock">0 : 00</span></a></li>
-              <li style="display:none;" class="stat"><a>Scene: <span class="scene"></span></a></li>
-              <li style="display:none;" class="stat"><a>Pos: <span class="pos"></span></a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-              <li><a class="btn" id="save-level">Save Level</a></li>
-              <li><a href="#music" type="button" data-toggle="modal" data-target="#myModal-music">🔊</a></li>
-              <li><a>Guest</a></li>
-              <li><a href="{% url 'home:home' %}">Exit</a></li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div>
-      </nav>
-
-      <div class="modal fade" id="myModal-music" role="dialog">
-        <div class="modal-dialog">
-          <!-- Modal content-->
-          <div class="modal-content">
-            <div style="text-align:center;" class="modal-body">
-              <h1>🎻🎹🎶</h1>
-              <audio loop="loop" autoplay="true" audio="" controls="controls">
-                    <source src="{% static 'music/plirwin.ogg' %}">
-                    <embed type="application/x-shockwave-flash" src="http://www.google.com/reader/ui/3523697345-audio-player.swf" quality="best" flashvars="audioUrl=http://www.contemplator.com/mp3/plirwin.mp3" width="500" height="27">
-                    </audio>
-            </div>
-            <div class="modal-footer">
-              <div class="pull-left">Source: <a href="http://www.contemplator.com/">contemplator.com</a></div>
-              <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
+{% include 'kings/kings_nav.html' %}
 
   <div style="background-color:" class="container">
     <div class="row">
-
-      </div>
+    </div>
       <span id="welcomeJumbo">
       <div style="padding-top:40px;" class="row">
-<div style="text-align:center;" class="jumbotron" >
-  <h1>👑⚔🏰🐉❤️<br />Design your very own adventure!</h1>
-  <br />
-  <p>Build your onw world and share with your friends!</p>
-  <br />
-  <!-- <form action="." class="form-contorl input-lg">
-    <select class="choose_avatar" name="choose_avatar">
-      <option value="😃">&nbsp;&nbsp;😃&nbsp;&nbsp;</option>
-      <option value="👦🏼">&nbsp;&nbsp;👦🏼&nbsp;&nbsp;</option>
-      <option value="👨🏻">&nbsp;&nbsp;👨🏻&nbsp;&nbsp;</option>
-      <option value="👩🏻">&nbsp;&nbsp;👩🏻&nbsp;&nbsp;</option>
-      <option value="👩🏽">&nbsp;&nbsp;👩🏽&nbsp;&nbsp;</option>
-    </select>
-    <br /><br />
-  </form> -->
 
-    <a id="start_btn" class="btn btn-success btn-lg togglePlay" href="#start" class="togglePlay">Get Started!</a>
+        <div style="text-align:center;" class="jumbotron" >
+          <h1>👑⚔🏰🐉❤️<br />Design your very own adventure!</h1>
+          <br />
+          <p>Build your onw world and share with your friends!</p>
+          <br />
+          <a id="start_btn" class="btn btn-success btn-lg togglePlay" href="#start" class="togglePlay">Get Started!</a>
+        </div>
+      </div>
+      <div style="text-align:center;" class="row">
+        <div class="col-md-4"><h2>⬆️⬅️⬇️➡️<br />Move the red square with W, A, S and D.</h2><p>You can also use the arrow keys</p></div>
+        <div class="col-md-4"><h2>  Spacebar<br />.</h2><p>Crossing paths with dragons will decrease your health.</p></div>
+        <div class="col-md-4"><h2>📜👓💡✅<br />Collect scrolls.</h2><p>Scrolls contain hints and important knowledge.</p></div>
+      </div>
+    </span>
+    <div style="padding-top:40px;" class="col-md-10">
+      <div style="align:center;" class="canvas"><table style="font-size:3.5em;" class="grid"><tbody id="scene"></tbody></table>
+      </div>
+    </div>
+  </div>
 
+  <div id="blockInfoModal" class="dialogue-modal">
+    <div class="modal-content">
+      <span id="blockInfoclose" class="close">&times;</span>
+      <p id="dialogue-title" style="text-align:center; font-size:6em">Choose an emoji 👉 <span id="current_emoji"></span></p>
+      <p id="blockInfo" style="font-size:3em;"></p>
+    </div>
+  </div>
 
-</div>
-</div>
-<div style="text-align:center;" class="row">
-<!-- <div class="col-md-4"><h2>⬆️⬅️⬇️➡️<br />Walk with W, A, S and D.</h2><p>You can also use the arrow keys</p></div>
-<div class="col-md-4"><h2>🐲😱😲💀<br />Beware of dragons.</h2><p>Crossing paths with dragons will decrease your health.</p></div>
-<div class="col-md-4"><h2>📜👓💡✅<br />Collect scrolls.</h2><p>Scrolls contain hints and important knowledge.</p></div> -->
-</div>
-
-</span>
-
-<div style="padding-top:40px;" class="col-md-10">
-<div style="align:center;" class="canvas"><table style="font-size:3.5em;" class="grid"><tbody id="scene"></tbody></table>
-
-</div>
-</div>
-</div>
-
-<!-- Dialogue Modal -->
 <div id="myModal" class="dialogue-modal">
-  <!-- Modal Content -->
   <div   class="modal-content">
-    <span class="close">&times;</span>
-    <p id="dialogue-title" style="text-align:center; font-size:6em">Choose an emoji (<span id="current_emoji"></span>)</p>
+    <span id="myModalclose" class="close">&times;</span>
+    <p id="dialogue-title" style="text-align:center; font-size:6em">Choose an emoji 👉 <span id="current_emoji"></span></p>
     <p id="emojis" style="font-size:3em;"></p>
   </div>
 </div>
 
+<script src="{% static 'js/items.js' %}" type="text/javascript" ></script>
+
 <script>
 
-
-var things = {
-  'player': {
-    'emoji': '👱🏼',
-    'wall': true,
-    'name':"player",
-  },
-  'tent': {
-    'emoji': '🎪',
-    'wall': true,
-    'name':'tent',
-  },
-
-  'tree': {
-  'emoji': '🌳',
-  'wall': true,
-  'name':'tree',
-  }
-}
-
 $('.togglePlay').click(function(){
-  //var avatar = $(".choose_avatar").val();
-  //player.avatar = avatar;
-  //start();
-  //startClock();
-  //$(this).text('Stop');
   $('#welcomeJumbo').hide();
-  //$('.stat').show();
   buildScene();
-
 })
 
 var selected = things.tent
-
 $("#current_emoji").text(selected.emoji);
+var current_scene = "first"
+var new_scene = function(){}
 
-var current_scene = 0
 
 var scenes = {
-                0: {'map':
-                  [[things.tree, things.tree],
-                   [things.tree, things.tree]],
-//                    [ [things.tree,thing.tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
-//                      [tree,open_,open_,open_,tree,tree,tree,open_,heart,tree,tree,open_,open_,open_,tree,tree,],
-//                      [tree,tree,open_,tree,tree,tree,tree,open_,tree,tree,diamond,open_,tree,open_,open_,tree,],
-//                      [tree,tree,open_,open_,open_,open_,open_,open_,tree,tree,tree,open_,open_,tree,open_,tree,],
-//                      [tree,tree,tree,tree,tree,tree,tree,open_,tree,tree,open_,open_,tree,open_,open_,tree,],
-//                      [tree,tree,tree,tree,tree,tree,tree,open_,tree,tree,open_,tree,tree,open_,tree,tree,],
-//                      [tree,heart,open_,diamond,tree,tree,tree,open_,open_,open_,open_,tree,tree,open_,tree,tree,],
-//                      [tree,tree,open_,tree,tree,tree,tree,open_,tree,tree,tree,tree,open_,open_,heart,tree,],
-//                      [tree,tree,open_,open_,open_,open_,open_,open_,tree,tree,scroll,open_,open_,tree,open_,ew_0_0,],
-//                      [tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,]],
-
-                    dragon:true,
-
+                'title':null,
+                'user':null,
+                'current_scene':'first',
+                'scenes':{
+                  'first':
+                    {'grid':
+                      {0:[things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree,things.tree,things.tree,things.tree,things.tree,],
+                       1:[things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree,things.tree,things.tree,things.tree,things.tree,],
+                       2:[things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree,things.tree,things.tree,things.tree,things.tree,],
+                       3:[things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree,things.tree,things.tree,things.tree,things.tree,],
+                       4:[things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree,things.tree,things.tree,things.tree,things.tree,],
+                       5:[things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree,things.tree,things.tree,things.tree,things.tree,],
+                       6:[things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree,things.tree,things.tree,things.tree,things.tree,],
+                       7:[things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree,things.tree,things.tree,things.tree,things.tree,],
+                       8:[things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree,things.tree,things.tree,things.tree,things.tree,],
+                       9:[things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree,things.tree,things.tree,things.tree,things.tree,]
                   },
-
                 }
-
+              }
+            }
 
 var pointer = {
      current: [0,0],
   }
 
+var emoji_pointer = {
+  current: [0,0],
+}
+
+function buildEmojiMenu(){
+    $('#emojis tr').remove();
+    for (row in emoji_map){
+      var current = $('#emojis').append("<tr row="+row+"></tr>")
+      for (square in emoji_map[row]){
+        if (row == emoji_pointer.current[0] && square == emoji_pointer.current[1]){
+          $('tr[row='+ row +']').append("<td class='emoji-choice' style='background-color: #ffb2b2' col="+square+">"+emoji_map[row][square].emoji+"</td>")
+            } else {
+          $('tr[row='+ row +']').append("<td class='emoji-choice' col="+square+">"+emoji_map[row][square].emoji+"</td>")
+        }
+      }
+    }
+};
+
 var scene = null;
 function buildScene(){
-  scene = scenes[current_scene].map;
+  scene = scenes['scenes'][current_scene].grid;
   $("tbody tr").remove();
-
-  // if (scenes[current_scene].dragon){
-  //   populateEnemies();
-  // };
-  // placePlayer();
   for (row in scene){
-
-    var current = $('.grid tbody').append("<tr row="+row+"></tr>")
-
+    var current = $('.grid tbody').append("<tr class='emoji_row' row="+row+"></tr>")
     for (square in scene[row]){
       if (row == pointer.current[0] && square == pointer.current[1]){
-        $('tr[row='+ row +']').append("<td style='background-color: #ffb2b2' col="+square+">"+scene[row][square].emoji+"</td>")
+        $('tr[row='+ row +'].emoji_row').append("<td class='emojiblock'  name='" + scene[row][square].name + "' style='background-color: #ffb2b2' row=" + row + " col="+square+">"+scene[row][square].emoji+"</td>")
           } else {
-        $('tr[row='+ row +']').append("<td col="+square+">"+scene[row][square].emoji+"</td>")
+        $('tr[row='+ row +'].emoji_row').append("<td class='emojiblock' name='" + scene[row][square].name + "' row=" + row + " col="+square+">"+scene[row][square].emoji+"</td>")
       }
     }
   }
 };
 
-
-
-
 function updateSquare(){
   var map_x = pointer.current[0]
   var map_y = pointer.current[1]
-  scenes[current_scene].map[map_x][map_y] = selected
+  scenes['scenes'][current_scene].grid[map_x][map_y] = selected
 }
+
+function showBlockInfo(block){
+  $("#blockInfo tr").remove();
+  showBlockInfoModal();
+  $("#blockInfo").append("<p>This emoji is " + block.emoji + ".</p>")
+}
+
+$(".grid tbody").on("click", "tr td", function() {
+  var row = $(this).attr('row')
+  var col = $(this).attr('col')
+  showBlockInfo(scene[row][col]);
+  $("#dialogue-title").text(scene[row][col].emoji)
+
+});
 
 var pushKeys = window.addEventListener("keydown", function(event) {
  if (modal.style.display == 'block'){
+   if (event.keyCode == 40 || event.keyCode == 83){
+     event.preventDefault();
+     emoji_pointer.current[0]++
+     updateEmojiMenu()
+     }
+   if (event.keyCode == 38 || event.keyCode == 87){
+     event.preventDefault();
+     emoji_pointer.current[0]--
+     updateEmojiMenu()
+     }
+   if (event.keyCode == 37 || event.keyCode == 65){
+     event.preventDefault();
+     emoji_pointer.current[1]--
+     updateEmojiMenu()
+     }
+   if (event.keyCode == 39 || event.keyCode == 68){
+     event.preventDefault();
+     emoji_pointer.current[1]++
+     updateEmojiMenu()
+     }
    // console.log('close modal');
    if (event.keyCode == 32){
      event.preventDefault();
      modal.style.display = 'none';
    }
+   buildEmojiMenu();
  }else {
    if (event.keyCode == 40 || event.keyCode == 83){
      event.preventDefault();
@@ -296,31 +203,28 @@ var pushKeys = window.addEventListener("keydown", function(event) {
    if (event.keyCode == 77){
      event.preventDefault();
      updateSquare()
+  }
+    if (event.keyCode == 32){
+      event.preventDefault();
+       showModal();
+       buildEmojiMenu();
+    }
+  }
+  buildScene();
+});
+
+function updateEmojiMenu(){
+  selected = emoji_map[emoji_pointer.current[0]][emoji_pointer.current[1]]
+  $("#current_emoji").text(selected.emoji);
 }
-   if (event.keyCode == 32){
-     event.preventDefault();
-     showModal();
 
-   }
- }
-
-   buildScene();
- });
+  var showBlockInfoModal = function() {
+      blockInfoModal.style.display = "block";
+  }
 
  var showModal = function() {
      modal.style.display = "block";
  }
-
-function populateEmojiSelections (){
-  for (var thing in things) {
-  if (true) {
-    console.log(things[thing].emoji);
-    $("#emojis").append("<p class='emoji-choice' id="+ things[thing].name +">" + things[thing].emoji + "</p>")
-    }
-  }
-}
-
-populateEmojiSelections();
 
 $(".emoji-choice").click(function(){
   var id = $(this).attr('id')
@@ -328,65 +232,114 @@ $(".emoji-choice").click(function(){
   $("#current_emoji").text(selected.emoji);
 })
 
-
-
-// $("#save-level").click(function(){
-//   alert("Saving");
-//   var data = JSON.stringify(scenes)
-//   console.log(data);
-//   $.post('/api/kings/save/', data);
-// })
-//
-
-//https://stackoverflow.com/questions/6323338/jquery-ajax-posting-json-to-webservice
-
 $("#save-level").click(function(event){
-     $.ajax({
-          type:"POST",
-          url:"/api/kings/save/",
-          data: {scene: JSON.stringify(scene)},
-          dataType: 'json',
-          contentType: "application/json; charset=utf-8",
-          success: function(){
-              alert("Saved! It worked.");
-          }
+  event.preventDefault();
 
-     });
-     return false; //<---- move it here
+  $.ajaxSetup({
+       beforeSend: function(xhr, settings) {
+           function getCookie(name) {
+               var cookieValue = null;
+               if (document.cookie && document.cookie != '') {
+                   var cookies = document.cookie.split(';');
+                   for (var i = 0; i < cookies.length; i++) {
+                       var cookie = jQuery.trim(cookies[i]);
+                       // Does this cookie string begin with the name we want?
+                       if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                           cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                           break;
+                       }
+                   }
+               }
+               return cookieValue;
+           }
+           if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+               // Only send the token to relative URLs i.e. locally.
+               xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+           }
+       }
+  });
+
+  if (window.game_id == null){
+  // POST to create new game if it has not yet been saved
+  $.ajax({
+    type : "POST",
+    url : "/api/kings/save/",
+    csrfmiddlewaretoken: "{{ csrf_token }}",
+    data : JSON.stringify({game:scenes, id:false}),
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    success: function(data){
+        console.log(data["id"])
+        window.game_id = data["id"]
+        window.APIUpdateURL = "/api/kings/"+String(window.game_id)+"/update/"
+        console.log(data)
+        alert("Saved! It worked.");
+    },
+    error: function(XMLHttpRequest, textStatus, errorThrown) {
+      alert("some error " + String(errorThrown) + String(textStatus) + String(XMLHttpRequest.responseText));
+    }
+  });
+
+} else {
+
+  $.ajax({
+    type : "PUT",
+    url : window.APIUpdateURL,
+    csrfmiddlewaretoken: "{{ csrf_token }}",
+    data : JSON.stringify({game:scenes, id:window.game_id}),
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    success: function(data){
+        // console.log(data["id"])
+        // window.game_id = data["id"]
+        // console.log(data)
+        alert("Updated! It worked.");
+    },
+    error: function(XMLHttpRequest, textStatus, errorThrown) {
+      alert("some error " + String(errorThrown) + String(textStatus) + String(XMLHttpRequest.responseText));
+      }
+    });
+  }
+
 });
 
-
-
-
-
 $('#start_btn').focus();
-// Get the modal
+var blockInfoModal = document.getElementById('blockInfoModal');
+var blockInfospan = document.getElementById("blockInfoclose");
+
 var modal = document.getElementById('myModal');
+var span = document.getElementById("myModalclose");
 
-// Get the button that opens the modal
+var showBlockInfoModal = function() {
+    blockInfoModal.style.display = "block";
+}
+span.onclick = function() {
+    blockInfoModal.style.display = "none";
+}
+window.onclick = function(event) {
+    if (event.target == blockInfoModal) {
+        blockInfoModal.style.display = "none";
+    }
+}
 
 
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
 
-// When the user clicks the button, open the modal
 var showModal = function() {
     modal.style.display = "block";
 }
-
-// When the user clicks on <span> (x), close the modal
 span.onclick = function() {
-
     modal.style.display = "none";
 }
-
-// When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
-
     }
 }
+
 </script>
 
 </div>

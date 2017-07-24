@@ -15,6 +15,7 @@ $(document).ready(function(){
     $.ajax({
       url: gb_endpoint,
       type: "POST",
+      dataType: "application/json",
       data: { message : $("#post-text").val(),
               csrfmiddlewaretoken: '{{ csrf_token }}',
               city: "some city",
@@ -34,6 +35,9 @@ $(document).ready(function(){
         }
       },
 
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+         alert("some error " + String(errorThrown) + String(textStatus) + String(XMLHttpRequest.responseText));
+       }
     })
   })
 })
