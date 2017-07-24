@@ -32,7 +32,8 @@ urlpatterns = [
     url(r'^ig/', include('igpics.urls', namespace="igpics")),
     url(r'^admin/', admin.site.urls),
     url(r'^blog/', include('posts.urls', namespace="posts")),
-    url(r'^api/kings/', include('kings.urls', namespace='kings')),
+    url(r'^kings/', include('kings.urls', namespace='kings')),
+    url(r'^api/kings/', include('kings.urls', namespace='kings_api')),
     url(r'^api/blog/', include('posts.api.urls', namespace="posts")),
     url(r'^api/blog/(?P<slug>.+)/comment/$', CommentCreateAPIView.as_view(), name="api-add-comment"),
     url(r'^projects/', include('projects.urls', namespace='projects')),
@@ -40,7 +41,6 @@ urlpatterns = [
     url(r'^accounts/', include('accounts.urls', namespace='accounts')),
     url(r'^readinglist/', include('readinglist.urls', namespace='reading-list')),
     url(r'^ant/', include('langton.urls', namespace='langton')),
-    url(r'^kings/', include('kings.urls', namespace='kings')),
     url(r'^', include('home.urls', namespace="home" )),
 ]
 
