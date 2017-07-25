@@ -200,9 +200,7 @@ var current_scene = null;
 function placePlayer(){
     console.log("place player")
     console.log(scene)
-    scene = scenes[current_scene].grid;
-    console.log(scene)
-    scene[player.current[0]][player.current[1]] = player;
+    scenes[current_scene].grid[player.current[0]][player.current[1]] = player;
    }
 
 function buildScene(){
