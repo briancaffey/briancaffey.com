@@ -204,9 +204,9 @@ function placePlayer(){
 function buildScene(){
   $("tbody tr").remove();
   placePlayer();
-  for (row in scene){
+  for (var row in scene){
     var current = $('.grid tbody').append("<tr row="+row+"></tr>")
-    for (square in scene[row]){
+    for (var square in scene[row]){
       $('tr[row='+ row +']').append("<td col="+square+">"+scene[row][square].emoji+"</td>")
     }
   }
@@ -264,8 +264,10 @@ function checkSquare(square){
   }
   if (square.exitway){
     var entry_point = [square.entry[0],square.entry[1]];
-    player.current = entry_point;
+
     current_scene = square.next;
+    buildScene();
+    player.current = entry_point;
     buildScene();
   }
 }
