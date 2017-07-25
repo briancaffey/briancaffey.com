@@ -275,7 +275,7 @@ function checkSquare(square){
     console.log("current_scene");
     scenes[_current_scene].grid[square.next[0]][square.next[1]] = player;
     console.log(scenes["current_scene"])
-    //scenes[current_scene] = square.next;
+    current_scene = square.next;
     console.log(scenes["current_scene"]);
     buildScene();
   }
