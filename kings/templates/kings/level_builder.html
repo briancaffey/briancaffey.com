@@ -57,8 +57,9 @@
           <p>You your game is available here: <a id="new_game_link" href="">link</a></p>
 
           <br /><br />
-          <p>create an account to manage and share your games</p>
-          <button class="btn btn-success" href="">Create account</button>
+          <p>the game you just made will be saved to your profile if you create an account with the button below</p>
+          <p>if you don't make an account, anyone with the link will be able to edit this game</p>
+          <button class="btn btn-success" href="">create account</button>
         </div>
 
 
@@ -343,19 +344,19 @@ $("#save-level").click(function(event){
       'Content-Type': 'application/json'
     },
     success: function(data){
-        console.log(data["id"])
         window.game_id = data["id"]
         window.APIUpdateURL = "/api/kings/"+String(window.game_id)+"/update/"
-        console.log(data)
         var pathArray = location.href.split( '/' );
         var protocol = pathArray[0];
         var host = pathArray[2];
         var url = protocol + '//' + host;
-        $('#myModal-saved').attr('href',url);
-        $('#myModal-saved').text(url);
-        $('#myModal-saved').toggle();
+        var game_url = "/kings/game/"+String(game_id)+"/"
+        var full_url = url + game_url
+        $('#myModal-saved').attr('href',full_url);
+        $('#myModal-saved').text(full_url);
+        $('#myModal-saved').modal("show");
 
-        history.pushState(scenes, "", "/kings/game/"+String(game_id)+"/");
+        history.pushState(scenes, "", game_url);
     },
     error: function(XMLHttpRequest, textStatus, errorThrown) {
 
@@ -375,10 +376,17 @@ $("#save-level").click(function(event){
       'Content-Type': 'application/json'
     },
     success: function(data){
-        // console.log(data["id"])
-        // window.game_id = data["id"]
-        // console.log(data)
-        alert("Updated! It worked.");
+        window.game_id = data["id"]
+        window.APIUpdateURL = "/api/kings/"+String(window.game_id)+"/update/"
+        var pathArray = location.href.split( '/' );
+        var protocol = pathArray[0];
+        var host = pathArray[2];
+        var url = protocol + '//' + host;
+        var game_url = "/kings/game/"+String(game_id)+"/"
+        var full_url = url + game_url
+        $('#myModal-saved').attr('href',full_url);
+        $('#myModal-saved').text(full_url);
+        $('#myModal-saved').modal("show");
     },
     error: function(XMLHttpRequest, textStatus, errorThrown) {
       alert("some error " + String(errorThrown) + String(textStatus) + String(XMLHttpRequest.responseText));
