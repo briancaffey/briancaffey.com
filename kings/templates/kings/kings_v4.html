@@ -225,7 +225,7 @@ function checkSquare(square){
   if (square == things.nut){
     player.nut = true;
   }
-  if (square == things.key){
+  if (square == things.key){5
     player.keys += 1;
   }
   if (square == things.owl){
@@ -264,10 +264,8 @@ function checkSquare(square){
   }
   if (square.exitway){
     var entry_point = [square.entry[0],square.entry[1]];
-
-    current_scene = square.next;
-    buildScene();
     player.current = entry_point;
+    current_scene = square.next;
     buildScene();
   }
 }
