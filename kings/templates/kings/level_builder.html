@@ -44,9 +44,6 @@
     </div>
   </div>
 
-  <!-- if (event.keyCode == 81){
-    $('#myModal-q').modal('toggle');
-  } -->
 
   <div class="modal fade" id="myModal-saved" role="dialog">
     <div class="modal-dialog">
@@ -70,9 +67,6 @@
   </div>
 
 
-
-
-
   <div class="modal fade" id="myModal-q" role="dialog">
     <div class="modal-dialog">
       <!-- Modal content-->
@@ -83,6 +77,7 @@
           <h4>Press <b>M</b> to toggle emoji selector menu</h4>
           <h4>Press <b>P</b> to add properties to the selected square</h4>
           <h4>Press <b>W, A, S and D</b> to move the pointers</h4>
+
         </div>
 
 
@@ -93,20 +88,49 @@
   </div>
 
 
+  <div class="modal fade" id="scene-modal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div style="text-align:center;" class="modal-content">
+        <h1>Scenes</h1>
+        <button class="btn btn-success" id="add-scene">Add New Scene</button>
+        <div style="text-align:center;" id="scene-list" class="modal-body">
+
+          <a name="first">Scene #0</a>
+        </div>
+
+
+          <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+
+      </div>
+    </div>
+  </div>
 
 
   <div id="blockInfoModal" class="dialogue-modal">
     <div class="modal-content">
       <span id="blockInfoclose" class="close">&times;</span>
-      <p id="dialogue-title" style="text-align:center; font-size:6em">Choose an emoji 👉 <span id="current_emoji"></span></p>
+      <p id="dialogue-title" style="text-align:center; font-size:6em"><span id="current_emoji"></span></p>
       <p id="blockInfo" style="font-size:3em;"></p>
+      <hr>
+      <h3>Scene transition</h3>
+      <div class="row">
+        <div class="col-md-3">Transfer to scene: <select style="width:200px" class="form-control" id="portal-select"></select></div>
+        <div class="col-md-3">Vertical: <select style="width:200px" class="form-control" id="vertical-select"></select></div>
+        <div class="col-md-3">Horizontal: <select style="width:200px" class="form-control" id="horizontal-select"></select></div>
+        <div class="col-md-3"><br /><button id="set-portal-button" class="btn btn-success">Set</button></div>
+      </div>
+      <hr>
+      <h3>Some other property</h3>
+      <hr>
+      <h3>Last property</h3>
     </div>
   </div>
 
 <div id="myModal" class="dialogue-modal">
-  <div   class="modal-content">
+  <div class="modal-content">
     <span id="myModalclose" class="close">&times;</span>
-    <p id="dialogue-title" style="text-align:center; font-size:6em">Choose an emoji 👉 <span id="current_emoji"></span></p>
+    <p id="dialogue-title" style="text-align:center; font-size:6em">Choose an emoji 👉 <span id="current_emoji_menu"></span></p>
     <p id="emojis" style="font-size:3em;"></p>
   </div>
 </div>
@@ -114,23 +138,6 @@
 <script src="{% static 'js/items.js' %}" type="text/javascript" ></script>
 
 <script>
-
-function isConsoleOpen() {
-  var startTime = new Date();
-  debugger;
-  var endTime = new Date();
-
-  return endTime - startTime > 100;
-}
-
-$(function() {
-  $(window).resize(function() {
-    if(isConsoleOpen()) {
-        alert("You're one sneaky dude, aren't you ?")
-    }
-  });
-});
-
 
 
 $('.togglePlay').click(function(){
@@ -140,16 +147,40 @@ $('.togglePlay').click(function(){
 
 var selected = things.tent
 $("#current_emoji").text(selected.emoji);
-var current_scene = "first"
+var current_scene = "0"
 var new_scene = function(){}
 
+
+function get_scene_names(data){
+  var arr = [];
+
+  for (var prop in data) {
+    var propName = prop;
+    arr.push(propName)
+  }
+  return arr
+}
+
+var blank_scene =   {'grid':
+                      {0:[things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree,things.tree,things.tree,things.tree,things.tree,],
+                       1:[things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree,things.tree,things.tree,things.tree,things.tree,],
+                       2:[things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree,things.tree,things.tree,things.tree,things.tree,],
+                       3:[things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree,things.tree,things.tree,things.tree,things.tree,],
+                       4:[things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree,things.tree,things.tree,things.tree,things.tree,],
+                       5:[things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree,things.tree,things.tree,things.tree,things.tree,],
+                       6:[things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree,things.tree,things.tree,things.tree,things.tree,],
+                       7:[things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree,things.tree,things.tree,things.tree,things.tree,],
+                       8:[things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree,things.tree,things.tree,things.tree,things.tree,],
+                       9:[things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree,things.tree,things.tree,things.tree,things.tree,]
+                    },
+                  }
 
 var scenes = {
                 'title':null,
                 'user':null,
-                'current_scene':'first',
+                'current_scene':'0',
                 'scenes':{
-                  'first':
+                  '0':
                     {'grid':
                       {0:[things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree,things.tree,things.tree,things.tree,things.tree,],
                        1:[things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree, things.tree,things.tree,things.tree,things.tree,things.tree,things.tree,],
@@ -165,6 +196,26 @@ var scenes = {
                 }
               }
             }
+
+
+$("#add-scene").click(function(){
+  var next = Object.keys(scenes.scenes).length
+  console.log(blank_scene);
+  var blank_scene_copy = $.extend(true, {}, blank_scene);
+  scenes.scenes[String(next)] = blank_scene_copy
+  $("#scene-list").empty();
+  var scene_names = get_scene_names(scenes.scenes);
+  for (var s in scene_names){
+    $("#scene-list").append("<a style='cursor:pointer;' id='"+s+"' class='scene-menu-choice'>Scene #" + s +"</a><br />")
+  }
+})
+
+$("#scene-list").on("click","a", function(){
+  var clicked_scene_id = $(this).attr("id")
+  scenes.current_scene = clicked_scene_id
+  window.current_scene = String(clicked_scene_id)
+  buildScene();
+})
 
 var pointer = {
      current: [0,0],
@@ -196,9 +247,9 @@ function buildScene(){
     var current = $('.grid tbody').append("<tr class='emoji_row' row="+row+"></tr>")
     for (square in scene[row]){
       if (row == pointer.current[0] && square == pointer.current[1]){
-        $('tr[row='+ row +'].emoji_row').append("<td class='emojiblock'  name='" + scene[row][square].name + "' style='background-color: #ffb2b2' row=" + row + " col="+square+">"+scene[row][square].emoji+"</td>")
+        $('tr[row='+ row +'].emoji_row').append("<td class='emojiblock'  name='" + scene[row][square].name + "' style='background-color: #ffb2b2; cursor: pointer;' row=" + row + " col="+square+">"+scene[row][square].emoji+"</td>")
           } else {
-        $('tr[row='+ row +'].emoji_row').append("<td class='emojiblock' name='" + scene[row][square].name + "' row=" + row + " col="+square+">"+scene[row][square].emoji+"</td>")
+        $('tr[row='+ row +'].emoji_row').append("<td class='emojiblock' name='" + scene[row][square].name + "'  style='cursor: pointer;' row=" + row + " col="+square+">"+scene[row][square].emoji+"</td>")
       }
     }
   }
@@ -211,16 +262,40 @@ function updateSquare(){
 }
 
 function showBlockInfo(block){
-  $("#blockInfo tr").remove();
+  $("#blockInfo p").empty();
+  $("#vertical-select").empty();
+  $("#portal-select").empty();
+  $("#horizontal-select").empty();
+  $("#current_emoji").text(block.emoji)
+  var scene_names = get_scene_names(scenes.scenes);
+  for (var s in scene_names){
+    $("#portal-select").append("<option value='"+s+"'>Scene #"+s+"</option>")
+  }
+  for (var v in scenes.scenes[current_scene].grid){
+    $("#vertical-select").append("<option value='"+v+"'>"+v+"</option>")
+  }
+
+  for (var h in scenes.scenes[current_scene].grid[0]){
+    $("#horizontal-select").append("<option value='"+h+"'>"+h+"</option>")
+  }
+
+  $("#set-portal-button").click(function(){
+    block.exitway = true
+    var _next = $("#portal-select").val();
+    block.next = _next
+    var _v = $("#vertical-select").val();
+    var _h = $("#horizontal-select").val();
+    block.entry = [_v, _h]
+    console.log(block.entry);
+  })
   showBlockInfoModal();
-  $("#blockInfo").append("<p>This emoji is " + block.emoji + ".</p>")
 }
 
 $(".grid tbody").on("click", "tr td", function() {
   var row = $(this).attr('row')
   var col = $(this).attr('col')
   showBlockInfo(scene[row][col]);
-  $("#dialogue-title").text(scene[row][col].emoji)
+  //$("#dialogue-title").text(scene[row][col].emoji)
 
 });
 
@@ -256,6 +331,16 @@ var pushKeys = window.addEventListener("keydown", function(event) {
    }
    buildEmojiMenu();
  }else {
+
+   if (event.keyCode == 80){
+     if (blockInfoModal.style.display == 'block'){
+       blockInfoModal.style.display = "none";
+     } else {
+       blockInfoModal.style.display = 'block'
+       var s = scenes["scenes"][current_scene].grid[pointer.current[0]][pointer.current[1]]
+       showBlockInfo(s);
+     }
+   }
    if (event.keyCode == 40 || event.keyCode == 83){
      event.preventDefault();
      pointer.current[0]++
@@ -287,12 +372,17 @@ var pushKeys = window.addEventListener("keydown", function(event) {
 
 function updateEmojiMenu(){
   selected = emoji_map[emoji_pointer.current[0]][emoji_pointer.current[1]]
-  $("#current_emoji").text(selected.emoji);
+  $("#current_emoji_menu").text(selected.emoji);
+
 }
 
   var showBlockInfoModal = function() {
-      blockInfoModal.style.display = "block";
+      if (blockInfoModal.style.display == "block"){
+        blockInfoModal.style.display == "none"
+      } else {
+        blockInfoModal.style.display == "block";
   }
+}
 
  var showModal = function() {
      modal.style.display = "block";
@@ -404,16 +494,21 @@ var modal = document.getElementById('myModal');
 var span = document.getElementById("myModalclose");
 
 var showBlockInfoModal = function() {
+  if (blockInfoModal.style.display == "block"){
+    blockInfoModal.style.display == "none"
+  }else{
     blockInfoModal.style.display = "block";
+  }
 }
-span.onclick = function() {
+
+blockInfospan.onclick = function() {
     blockInfoModal.style.display = "none";
 }
-window.onclick = function(event) {
-    if (event.target == blockInfoModal) {
-        blockInfoModal.style.display = "none";
-    }
-}
+// window.onclick = function(event) {
+//     if (event.target == blockInfoModal) {
+//         blockInfoModal.style.display = "none";
+//     }
+// }
 
 
 
@@ -424,14 +519,13 @@ span.onclick = function() {
     modal.style.display = "none";
 }
 window.onclick = function(event) {
-    if (event.target == modal) {
+    if (event.target == modal || event.target == blockInfoModal) {
         modal.style.display = "none";
     }
 }
 
 </script>
 
-</div>
 </body>
 
 </html>
