@@ -199,7 +199,7 @@ var current_scene = null;
 
 function placePlayer(){
      scene = scenes[current_scene].grid;
-     scene[player.current[0]][player.current[1]] = player;
+     scene[String(player.current[0])][String(player.current[1])] = player;
    }
 
 function buildScene(){
@@ -265,8 +265,8 @@ function checkSquare(square){
     box(things.sword.emoji, 'Press SPACE to use you sword!')
   }
   if (square.exitway){
-    var entry_point = [square.entry[0],square.entry[1]];
-    player.current = entry_point;
+    //var entry_point = [square.entry[0],square.entry[1]];
+    player.current = square.entry;
     current_scene = square.next;
     buildScene();
   }
@@ -301,7 +301,6 @@ var pushKeys = window.addEventListener("keydown", function(event) {
     $('#myModal-q').modal('toggle');
   }
 if (modal.style.display == 'block'){
-  // console.log('close modal');
   if (event.keyCode == 32){
     event.preventDefault();
     modal.style.display = 'none';
@@ -311,7 +310,7 @@ if (modal.style.display == 'block'){
     event.preventDefault();
     var current = player.current[0];
     var next_ = current + 1;
-    var next_square = scene[next_][player.current[1]];
+    var next_square = scene[next_][player.current["1"]];
     move(next_square, 0, "+");
     checkSquare(next_square);
     }
@@ -319,9 +318,10 @@ if (modal.style.display == 'block'){
     event.preventDefault();
     var current = player.current[0];
     var next_ = current - 1;
-    var next_square = scene[next_][player.current[1]];
+    var next_square = scene[next_][player.current["1"]];
     move(next_square, 0, "-");
     checkSquare(next_square);
+
     }
   if (event.keyCode == 37 || event.keyCode == 65){
     event.preventDefault();
