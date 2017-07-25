@@ -198,8 +198,11 @@ var scene = null;
 var current_scene = null;
 
 function placePlayer(){
-     scene = scenes[current_scene].grid;
-     scene[String(player.current[0])][String(player.current[1])] = player;
+    console.log("place player")
+    console.log(scene)
+    scene = scenes[current_scene].grid;
+    console.log(scene)
+    scene[String(player.current[0])][String(player.current[1])] = player;
    }
 
 function buildScene(){
@@ -215,6 +218,7 @@ function buildScene(){
 };
 
 function checkSquare(square){
+  console.log("checking square")
   if (square == things.heart){
     player.health += 1;
   }
@@ -265,9 +269,17 @@ function checkSquare(square){
     box(things.sword.emoji, 'Press SPACE to use you sword!')
   }
   if (square.exitway){
+    console.log("on exitway")
     //var entry_point = [square.entry[0],square.entry[1]];
+    console.log("the square entry", square.entry)
     player.current = square.entry;
+    console.log(player.current);
+    current_scene = square.next;
+    console.log("current_scene");
     scenes["current_scene"] = square.next;
+    console.log(scenes["current_scene"])
+    scenes[current_scene] = square.next;
+    console.log(scenes["current_scene"]);
     buildScene();
   }
 }
@@ -312,37 +324,37 @@ if (modal.style.display == 'block'){
   } else {
   if (event.keyCode == 40 || event.keyCode == 83){
     event.preventDefault();
-    var current = player.current["0"];
+    var current = player.current[0];
     console.log(current);
     var next_ = current + 1;
     console.log(next_);
-    var next_square = scene[next_][player.current["1"]];
+    var next_square = scene[next_][player.current[1]];
     console.log(next_square)
     move(next_square, 0, "+");
     checkSquare(next_square);
     }
   if (event.keyCode == 38 || event.keyCode == 87){
     event.preventDefault();
-    var current = player.current["0"];
+    var current = player.current[0];
     var next_ = current - 1;
-    var next_square = scene[next_][player.current["1"]];
+    var next_square = scene[next_][player.current[1]];
     move(next_square, 0, "-");
     checkSquare(next_square);
 
     }
   if (event.keyCode == 37 || event.keyCode == 65){
     event.preventDefault();
-    var current = player.current["1"];
+    var current = player.current[1];
     var next_ = current - 1;
-    var next_square = scene[player.current["0"]][next_];
+    var next_square = scene[player.current[0]][next_];
     move(next_square, 1, "-");
     checkSquare(next_square);
     }
   if (event.keyCode == 39 || event.keyCode == 68){
     event.preventDefault();
-    var current = player.current["1"];
+    var current = player.current[1];
     var next_ = current + 1;
-    var next_square = scene[player.current["0"]][next_];
+    var next_square = scene[player.current[0]][next_];
     move(next_square, 1, "+");
     checkSquare(next_square);
     }
