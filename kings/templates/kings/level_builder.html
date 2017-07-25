@@ -352,8 +352,8 @@ $("#save-level").click(function(event){
         var url = protocol + '//' + host;
         var game_url = "/kings/game/"+String(game_id)+"/"
         var full_url = url + game_url
-        $('#myModal-saved').attr('href',full_url);
-        $('#myModal-saved').text(full_url);
+        $('#new_game_link').attr('href',full_url);
+        $('#new_game_link').text(full_url);
         $('#myModal-saved').modal("show");
 
         history.pushState(scenes, "", game_url);
@@ -384,8 +384,8 @@ $("#save-level").click(function(event){
         var url = protocol + '//' + host;
         var game_url = "/kings/game/"+String(game_id)+"/"
         var full_url = url + game_url
-        $('#myModal-saved').attr('href',full_url);
-        $('#myModal-saved').text(full_url);
+        $('#new_game_link').attr('href',full_url);
+        $('#new_game_link').text(full_url);
         $('#myModal-saved').modal("show");
     },
     error: function(XMLHttpRequest, textStatus, errorThrown) {
