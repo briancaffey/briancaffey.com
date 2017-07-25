@@ -267,7 +267,7 @@ function checkSquare(square){
   if (square.exitway){
     //var entry_point = [square.entry[0],square.entry[1]];
     player.current = square.entry;
-    current_scene = square.next;
+    scenes["current_scene"] = square.next;
     buildScene();
   }
 }
@@ -278,8 +278,10 @@ function move(the_next_square, axis, operation){
   if (the_next_square.exitway){
     console.log(scene)
     scene[player.current[0]][player.current[1]] = things.blank;
+    console.log("exitway triggered")
     return
   }
+  console.log("this code is executing")
   if (!the_next_square.wall && !the_next_square.exitway){
     scene[player.current[0]][player.current[1]] = things.blank;
     if (operation == "+"){
