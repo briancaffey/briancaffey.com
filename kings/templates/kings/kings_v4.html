@@ -203,6 +203,7 @@ function placePlayer(){
 
 function buildScene(){
   $("tbody tr").remove();
+  scene = scenes[current_scene].grid;
   placePlayer();
   for (var row in scene){
     var current = $('.grid tbody').append("<tr row="+row+"></tr>")
