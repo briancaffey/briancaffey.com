@@ -202,7 +202,7 @@ function placePlayer(){
     console.log(scene)
     scene = scenes[current_scene].grid;
     console.log(scene)
-    scene[String(player.current[0])][String(player.current[1])] = player;
+    scene[player.current[0]][player.current[1]] = player;
    }
 
 function buildScene(){
