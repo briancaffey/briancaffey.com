@@ -276,7 +276,9 @@ var start = function(){
 
 function move(the_next_square, axis, operation){
   if (the_next_square.exitway){
+    console.log(scene)
     scene[player.current[0]][player.current[1]] = things.blank;
+    return
   }
   if (!the_next_square.wall && !the_next_square.exitway){
     scene[player.current[0]][player.current[1]] = things.blank;
