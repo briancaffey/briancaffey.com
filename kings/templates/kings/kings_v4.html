@@ -69,6 +69,30 @@
       </div>
 
 
+      <!-- if (event.keyCode == 81){
+        $('#myModal-q').modal('toggle');
+      } -->
+
+      <div class="modal fade" id="myModal-q" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div style="text-align:center;" class="modal-body">
+              <h1>Controls</h1>
+              <h4>Press <b>Q</b> to toggle controls</h4>
+              <p>Controls go here</p>
+            </div>
+            <div class="modal-footer">
+
+              <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
 
   <div style="background-color:" class="container">
     <div class="row">
@@ -270,6 +294,9 @@ function move(the_next_square, axis, operation){
 }
 
 var pushKeys = window.addEventListener("keydown", function(event) {
+  if (event.keyCode == 81){
+    $('#myModal-q').modal('toggle');
+  }
 if (modal.style.display == 'block'){
   // console.log('close modal');
   if (event.keyCode == 32){
