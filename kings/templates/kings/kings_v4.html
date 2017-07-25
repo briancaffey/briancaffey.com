@@ -198,6 +198,7 @@ var scene = null;
 var current_scene = null;
 
 function placePlayer(){
+     scene = scenes[current_scene].grid;
      scene[player.current[0]][player.current[1]] = player;
    }
 
