@@ -198,8 +198,7 @@ var scene = null;
 var current_scene = null;
 
 function placePlayer(){
-    console.log("place player")
-    console.log(scene)
+
     scenes[current_scene].grid[player.current[0]][player.current[1]] = player;
    }
 
@@ -272,11 +271,11 @@ function checkSquare(square){
     console.log("the square entry", square.entry)
     player.current = square.entry;
     console.log(player.current);
-    current_scene = square.next;
+    var _current_scene = square.next;
     console.log("current_scene");
-    scenes["current_scene"] = square.next;
+    scenes[_current_scene].grid[square.next[0]][square.next[1]] = player;
     console.log(scenes["current_scene"])
-    scenes[current_scene] = square.next;
+    //scenes[current_scene] = square.next;
     console.log(scenes["current_scene"]);
     buildScene();
   }
