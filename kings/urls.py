@@ -2,11 +2,11 @@ from django.conf.urls import url, include
 from kings import views
 from kings.api.views import GameCreateAPIView, GameListAPIView, GameDetailAPIView, GameUpdateAPIView
 urlpatterns = [
-		url(r'^start/$', views.level_builder, name='level_builder'),
+		url(r'^create/$', views.level_builder, name='level_builder'),
 		url(r'^kingsencounter/v2/$', views.kings_two, name='pilot'),
 		url(r'^kingsencounter/v3/$', views.kings_three, name='kings3'),
 		url(r'^new/$', views.kings_four, name='demo'),
-		url(r'^kingsencounter/(?P<id>\d+)$', views.game_id, name='kings4'),
+		url(r'^game/(?P<id>\d+)/$', views.game_id, name='kings4'),
 		url(r'^kingsencounter/$', views.kings_two, name='kings'),
 		url(r'^kingsencounter/json/$', views.sample_json, name="sample_json"),
 
