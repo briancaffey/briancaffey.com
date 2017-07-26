@@ -296,15 +296,15 @@ function move(the_next_square, axis, operation){
     scenes[current_scene].grid[player.current[0]][player.current[1]] = things.blank;
     if (operation == "+"){
       if (axis == 0){
-        player.current[0] += 1;
+        player.current[0] = parseInt(player.current[0]) + 1;
       } else{
-        player.current[1] += 1;
+        player.current[1] = parseInt(player.current[1]) + 1;
       }
     } else {
       if (axis == 0){
-        player.current[0] -= 1;
+        player.current[0] = parseInt(player.current[0]) - 1;
       } else {
-        player.current[1] -= 1;
+        player.current[1] = parseInt(player.current[1]) - 1;
       }
     }
   }
