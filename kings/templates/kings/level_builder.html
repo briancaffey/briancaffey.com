@@ -118,7 +118,7 @@
         <div class="col-md-3">Transfer to scene: <select style="width:200px" class="form-control" id="portal-select"></select></div>
         <div class="col-md-3">Vertical: <select style="width:200px" class="form-control" id="vertical-select"></select></div>
         <div class="col-md-3">Horizontal: <select style="width:200px" class="form-control" id="horizontal-select"></select></div>
-        <div class="col-md-3"><br /><button id="set-portal-button" class="btn btn-success">Set</button></div>
+        <div class="col-md-3"><b><span id="block-transition-saved"><br /></span></b><button id="set-portal-button" class="btn btn-success">Set</button></div>
       </div>
       <hr>
       <h3>Some other property</h3>
@@ -153,7 +153,6 @@ var new_scene = function(){}
 
 function get_scene_names(data){
   var arr = [];
-
   for (var prop in data) {
     var propName = prop;
     arr.push(propName)
@@ -286,7 +285,7 @@ function showBlockInfo(block){
     var _v = $("#vertical-select").val();
     var _h = $("#horizontal-select").val();
     block.entry = [_v, _h]
-    console.log(block.entry);
+    $("#block-transition-saved").html("<p style='color:green;'>Set!</p>")
   })
   showBlockInfoModal();
 }
@@ -294,8 +293,9 @@ function showBlockInfo(block){
 $(".grid tbody").on("click", "tr td", function() {
   var row = $(this).attr('row')
   var col = $(this).attr('col')
+  var cloned_item = $.extend(true, {}, things[scene[row][col].name]);
+  scene[row][col] = cloned_item
   showBlockInfo(scene[row][col]);
-  //$("#dialogue-title").text(scene[row][col].emoji)
 
 });
 
