@@ -277,14 +277,14 @@ function checkSquare(square){
     console.log(scenes["current_scene"])
     current_scene = square.next;
     console.log(scenes["current_scene"]);
-    buildScene();
+    //buildScene();
   }
 }
 
 var start = function(){
 
 function move(the_next_square, axis, operation){
-  if (the_next_square.exitway){
+  if (the_next_square.hasOwnProperty("exitway")){
     console.log(scene)
     scene[player.current[0]][player.current[1]] = things.blank;
     console.log("exitway triggered")
