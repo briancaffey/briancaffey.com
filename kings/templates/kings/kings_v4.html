@@ -398,9 +398,9 @@ $("#start_btn").click(function(e){
         window.scene = game_data["game"]["game"].scenes[current_scene].grid
 
       } catch (err) {
-        window.current_scene = game_data["game"]["game"]["current_scene"]
-        window.scenes = game_data["game"]["game"].scenes
-        window.scene = game_data["game"]["game"].scenes[current_scene].grid
+        window.current_scene = game_data["game"]["current_scene"]
+        window.scenes = game_data["game"].scenes
+        window.scene = game_data["game"].scenes[current_scene].grid
       }
       buildScene();
       start();
