@@ -286,16 +286,14 @@ var start = function(){
 
 function move(the_next_square, axis, operation){
   if (the_next_square.hasOwnProperty("exitway")){
-    console.log(scene)
-    scene = scenes[current_scene].grid
-    scene[player.current[0]][player.current[1]] = things.blank;
+    scenes[current_scene].grid[player.current[0]][player.current[1]] = things.blank;
     console.log("exitway triggered")
     return
   }
   console.log("this code is executing")
   if (!the_next_square.wall && !the_next_square.exitway){
-    scene = scenes[current_scene].grid
-    scene[player.current[0]][player.current[1]] = things.blank;
+    //scene = scenes[current_scene].grid
+    scenes[current_scene].grid[player.current[0]][player.current[1]] = things.blank;
     if (operation == "+"){
       if (axis == 0){
         player.current[0] += 1;
