@@ -3,7 +3,7 @@
 <!doctype html>
 <html>
 <head>
-  <title>King's Encounter</title>
+  <title>PlayQuest</title>
   <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.js"></script>
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
   <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" />
@@ -18,26 +18,29 @@
 
 {% include 'kings/kings_nav.html' %}
 
-  <div style="background-color:" class="container">
+  <div style="background-color:white" class="container">
     <div class="row">
     </div>
       <span id="welcomeJumbo">
       <div style="padding-top:40px;" class="row">
 
         <div style="text-align:center;" class="jumbotron" >
-          <h1>👑⚔🏰🐉❤️<br />Design your very own adventure!</h1>
-          <br />
-          <p>Build your onw world and share with your friends!</p>
+          <h1>👑⚔🏰🐉❤️<br />Create your own PlayQuest</h1>
           <br />
           <a id="start_btn" class="btn btn-success btn-lg togglePlay" href="#start" class="togglePlay">Get Started!</a>
         </div>
       </div>
+      <style>
+      .highlightme { background-color:#ffb2b2; }
+
+      </style>
       <div style="text-align:center;" class="row">
-        <div class="col-md-4"><h2>⬆️⬅️⬇️➡️<br />Move the red square with W, A, S and D.</h2><p>You can also use the arrow keys</p></div>
-        <div class="col-md-4"><h2>  Spacebar<br />.</h2><p>Crossing paths with dragons will decrease your health.</p></div>
-        <div class="col-md-4"><h2>📜👓💡✅<br />Collect scrolls.</h2><p>Scrolls contain hints and important knowledge.</p></div>
+        <div class="col-md-4"><h2>⌨️🕹🖱<br />Controls</h2><p>Move the <span class="highlightme">red</span> square with <b>W</b>, <b>A</b>, <b>S</b> and <b>D</b>.<br />Press <b>SPACE</b> to place emoji<br />Press <b>E</b> to select different emoji<br />Press <b>R</b> to edit an emoji's properties.</p></div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4"><h2>👨‍🎨💾📤🤗<br />Create, save and share your game</h2><p>Scrolls contain hints and important knowledge.</p></div>
       </div>
     </span>
+
     <div style="padding-top:40px;" class="col-md-10">
       <div style="align:center;" class="canvas"><table style="font-size:3.5em;" class="grid"><tbody id="scene"></tbody></table>
       </div>
@@ -50,17 +53,18 @@
       <!-- Modal content-->
       <div class="modal-content">
         <div style="text-align:center;" class="modal-body">
-          <h1>Your game has been saved!</h1>
-          <p>You your game is available here: <b><a id="new_game_link" href="" target="_blank">link</a></b></p>
-
-          <br /><br />
+          <h1>Your game has been saved! 💾✅👌</h1>
+          <p>Here's the link to play this game: <b><a id="new_game_link" href="" target="_blank">link</a></b></p>
+          <p>Here's the link to edit this game: <b><a id="edit_game_link" href="" target="_blank">https://playquest.io/game/44/edit</a></p>
+          <br />
+          <a class="btn btn btn-success" href="">play</a><br />
           <p>the game you just made will be saved to your profile if you create an account with the button below</p>
-          <p>if you don't make an account, anyone with the link will be able to edit this game</p>
+          <p>if you don't make an account, anyone with the edit link will be able to edit this game</p>
           <button class="btn btn-success" href="">create account</button>
         </div>
 
-
-          <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+          <p>you can keep working on this game if you want, just remember to save your progress!</p>
+          <button type="button" class="btn btn-default" data-dismiss="modal">keep going</button>
 
       </div>
     </div>
@@ -77,10 +81,7 @@
           <h4>Press <b>M</b> to toggle emoji selector menu</h4>
           <h4>Press <b>P</b> to add properties to the selected square</h4>
           <h4>Press <b>W, A, S and D</b> to move the pointers</h4>
-
         </div>
-
-
           <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
 
       </div>
