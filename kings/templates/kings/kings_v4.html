@@ -324,7 +324,7 @@ if (modal.style.display == 'block'){
     event.preventDefault();
     var current = player.current[0];
     console.log(current);
-    var next_ = String(parseInt(current) + 1);
+    var next_ = current + 1;
     console.log(next_);
     var next_square = scene[next_][player.current[1]];
     console.log(next_square)
