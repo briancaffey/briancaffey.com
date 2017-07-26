@@ -143,12 +143,12 @@
 
 $('.togglePlay').click(function(){
   $('#welcomeJumbo').hide();
-  buildScene();
+  buildScene("starting_scene");
 })
 
 var selected = things.tent
 $("#current_emoji").text(selected.emoji);
-var current_scene = "0"
+//var current_scene = "0"
 var new_scene = function(){}
 
 
@@ -176,6 +176,7 @@ var blank_scene =   {'grid':
                   }
 
 var scenes = {
+                'starting_scene':'0',
                 'title':null,
                 'user':null,
                 'current_scene':'0',
@@ -212,8 +213,8 @@ $("#add-scene").click(function(){
 
 $("#scene-list").on("click","a", function(){
   var clicked_scene_id = $(this).attr("id")
-  scenes.current_scene = clicked_scene_id
-  window.current_scene = String(clicked_scene_id)
+  scenes.current_scene = String(clicked_scene_id)
+  //window.current_scene = String(clicked_scene_id)
   buildScene();
 })
 
@@ -240,16 +241,21 @@ function buildEmojiMenu(){
 };
 
 var scene = null;
-function buildScene(){
-  scene = scenes['scenes'][current_scene].grid;
+function buildScene(init){
+  if (init){
+    var building_scene = scenes.scenes[scenes[init]].grid;
+  } else {
+  var building_scene = scenes.scenes[scenes["current_scene"]].grid;
+  }
   $("tbody tr").remove();
-  for (row in scene){
+
+  for (row in building_scene){
     var current = $('.grid tbody').append("<tr class='emoji_row' row="+row+"></tr>")
-    for (square in scene[row]){
+    for (square in building_scene[row]){
       if (row == pointer.current[0] && square == pointer.current[1]){
-        $('tr[row='+ row +'].emoji_row').append("<td class='emojiblock'  name='" + scene[row][square].name + "' style='background-color: #ffb2b2; cursor: pointer;' row=" + row + " col="+square+">"+scene[row][square].emoji+"</td>")
+        $('tr[row='+ row +'].emoji_row').append("<td class='emojiblock'  name='" + building_scene[row][square].name + "' style='background-color: #ffb2b2; cursor: pointer;' row=" + row + " col="+square+">"+building_scene[row][square].emoji+"</td>")
           } else {
-        $('tr[row='+ row +'].emoji_row').append("<td class='emojiblock' name='" + scene[row][square].name + "'  style='cursor: pointer;' row=" + row + " col="+square+">"+scene[row][square].emoji+"</td>")
+        $('tr[row='+ row +'].emoji_row').append("<td class='emojiblock' name='" + building_scene[row][square].name + "'  style='cursor: pointer;' row=" + row + " col="+square+">"+building_scene[row][square].emoji+"</td>")
       }
     }
   }
@@ -258,7 +264,7 @@ function buildScene(){
 function updateSquare(){
   var map_x = pointer.current[0]
   var map_y = pointer.current[1]
-  scenes['scenes'][current_scene].grid[map_x][map_y] = selected
+  scenes.scenes[scenes["current_scene"]].grid[map_x][map_y] = selected
 }
 
 function showBlockInfo(block){
@@ -271,11 +277,11 @@ function showBlockInfo(block){
   for (var s in scene_names){
     $("#portal-select").append("<option value='"+s+"'>Scene #"+s+"</option>")
   }
-  for (var v in scenes.scenes[current_scene].grid){
+  for (var v in scenes.scenes[scenes["current_scene"]].grid){
     $("#vertical-select").append("<option value='"+v+"'>"+v+"</option>")
   }
 
-  for (var h in scenes.scenes[current_scene].grid[0]){
+  for (var h in scenes.scenes[scenes["current_scene"]].grid[0]){
     $("#horizontal-select").append("<option value='"+h+"'>"+h+"</option>")
   }
 
@@ -294,9 +300,9 @@ function showBlockInfo(block){
 $(".grid tbody").on("click", "tr td", function() {
   var row = $(this).attr('row')
   var col = $(this).attr('col')
-  var cloned_item = $.extend(true, {}, things[scene[row][col].name]);
-  scene[row][col] = cloned_item
-  showBlockInfo(scene[row][col]);
+  var cloned_item = $.extend(true, {}, things[scenes.scenes[scenes["current_scene"]].grid[row][col].name]);
+  scenes.scenes[scenes["current_scene"]].grid[row][col] = cloned_item
+  showBlockInfo(scenes.scenes[scenes["current_scene"]].grid[row][col]);
 
 });
 
@@ -338,7 +344,7 @@ var pushKeys = window.addEventListener("keydown", function(event) {
        blockInfoModal.style.display = "none";
      } else {
        blockInfoModal.style.display = 'block'
-       var s = scenes["scenes"][current_scene].grid[pointer.current[0]][pointer.current[1]]
+       var s = scenes.scenes[scenes["current_scene"]].grid[pointer.current[0]][pointer.current[1]]
        showBlockInfo(s);
      }
    }
@@ -374,7 +380,6 @@ var pushKeys = window.addEventListener("keydown", function(event) {
 function updateEmojiMenu(){
   selected = emoji_map[emoji_pointer.current[0]][emoji_pointer.current[1]]
   $("#current_emoji_menu").text(selected.emoji);
-
 }
 
   var showBlockInfoModal = function() {
