@@ -323,7 +323,7 @@ if (modal.style.display == 'block'){
     event.preventDefault();
     var current = player.current[0];
     console.log(current);
-    var next_ = current + 1;
+    var next_ = String(parseInt(current) + 1);
     console.log(next_);
     var next_square = scene[next_][player.current[1]];
     console.log(next_square)
@@ -333,7 +333,7 @@ if (modal.style.display == 'block'){
   if (event.keyCode == 38 || event.keyCode == 87){
     event.preventDefault();
     var current = player.current[0];
-    var next_ = current - 1;
+    var next_ = String(parseInt(current) - 1);
     var next_square = scene[next_][player.current[1]];
     move(next_square, 0, "-");
     checkSquare(next_square);
@@ -342,7 +342,7 @@ if (modal.style.display == 'block'){
   if (event.keyCode == 37 || event.keyCode == 65){
     event.preventDefault();
     var current = player.current[1];
-    var next_ = current - 1;
+    var next_ = String(parseInt(current) - 1);
     var next_square = scene[player.current[0]][next_];
     move(next_square, 1, "-");
     checkSquare(next_square);
@@ -350,7 +350,7 @@ if (modal.style.display == 'block'){
   if (event.keyCode == 39 || event.keyCode == 68){
     event.preventDefault();
     var current = player.current[1];
-    var next_ = current + 1;
+    var next_ = String(parseInt(current) + 1);
     var next_square = scene[player.current[0]][next_];
     move(next_square, 1, "+");
     checkSquare(next_square);
