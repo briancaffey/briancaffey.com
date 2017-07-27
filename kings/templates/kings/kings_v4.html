@@ -388,7 +388,6 @@ $("#start_btn").click(function(e){
   $('#welcomeJumbo').hide();
   $('.stat').show();
   $.ajax({
-    //url:  {% if not id %}'/kings/json/',{% else %}'/api/kings/{{ game_id }}/',{% endif %}
     url: '/api/kings/{{ game_id }}/',
     method: "GET",
     data: {},
