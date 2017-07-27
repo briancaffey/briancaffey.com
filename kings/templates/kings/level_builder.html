@@ -12,6 +12,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="{% static 'css/base.css' %}">
   <link rel="stylesheet" href="{% static 'css/modal.css' %}">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 </head>
 
 <body style="padding-top:30px;">
@@ -146,7 +147,8 @@ $('.togglePlay').click(function(){
   buildScene("starting_scene");
 })
 
-var selected = things.tent
+window.cloned_emoji = null;
+var selected = things.blank
 $("#current_emoji").text(selected.emoji);
 //var current_scene = "0"
 var new_scene = function(){}
@@ -211,6 +213,8 @@ $("#add-scene").click(function(){
   }
 })
 
+console.log(scenes.scenes[scenes["current_scene"]].grid[1][3].entry)
+
 $("#scene-list").on("click","a", function(){
   var clicked_scene_id = $(this).attr("id")
   scenes.current_scene = String(clicked_scene_id)
@@ -268,12 +272,12 @@ function updateSquare(){
   scenes.scenes[scenes["current_scene"]].grid[map_x][map_y] = selected
 }
 
-function showBlockInfo(block){
+function showBlockInfo(){
   $("#blockInfo p").empty();
   $("#vertical-select").empty();
   $("#portal-select").empty();
   $("#horizontal-select").empty();
-  $("#current_emoji").text(block.emoji)
+  $("#current_emoji").text(cloned_item.emoji)
   var scene_names = get_scene_names(scenes.scenes);
   for (var s in scene_names){
     $("#portal-select").append("<option value='"+s+"'>Scene #"+s+"</option>")
@@ -286,38 +290,47 @@ function showBlockInfo(block){
     $("#horizontal-select").append("<option value='"+h+"'>"+h+"</option>")
   }
 
-  // $("#set-portal-button").click(function(){
-  //   block.exitway = true
-  //   var _next = $("#portal-select").val();
-  //   block.next = _next
-  //   var _v = $("#vertical-select").val();
-  //   var _h = $("#horizontal-select").val();
-  //   block.entry = [_v, _h]
-  //   $("#block-transition-saved").html("<p style='color:green;'>Set!</p>")
-  // })
+  $("#set-portal-button").click(function(){
+    console.log(cloned_item)
+    window.cloned_item.exitway = true
+    console.log(cloned_item)
+    var _next = $("#portal-select").val();
+    window.cloned_item.next = _next
+    console.log(cloned_item)
+    var _v = $("#vertical-select").val();
+    var _h = $("#horizontal-select").val();
+    window.cloned_item.entry = [_v, _h]
+    console.log(cloned_item)
+    scenes.scenes[scenes["current_scene"]].grid[pointer.current[0]][pointer.current[1]] = window.cloned_item
+
+    console.log(scenes.scenes[scenes["current_scene"]].grid[pointer.current[0]][pointer.current[1]], cloned_item)
+    $("#block-transition-saved").html("<p style='color:green;'>Set!</p>")
+  })
   showBlockInfoModal();
 }
 
 
-$("#set-portal-button").click(function(){
-  var block = scenes.scenes[scenes["current_scene"]].grid[pointer.current[0]][pointer.current[1]]
-  block.exitway = true
-  var _next = $("#portal-select").val();
-  block.next = _next
-  var _v = $("#vertical-select").val();
-  var _h = $("#horizontal-select").val();
-  block.entry = [_v, _h]
-  $("#block-transition-saved").html("<p style='color:green;'>Set!</p>")
-})
+// $("#set-portal-button").click(function(){
+//   var
+//   var block = scenes.scenes[scenes["current_scene"]].grid[pointer.current[0]][pointer.current[1]]
+//   block.exitway = true
+//   var _next = $("#portal-select").val();
+//   block.next = _next
+//   var _v = $("#vertical-select").val();
+//   var _h = $("#horizontal-select").val();
+//   block.entry = [_v, _h]
+//   $("#block-transition-saved").html("<p style='color:green;'>Set!</p>")
+// })
 
-$(".grid tbody").on("click", "tr td", function() {
-  var row = $(this).attr('row')
-  var col = $(this).attr('col')
-  var cloned_item = $.extend(true, {}, things[scenes.scenes[scenes["current_scene"]].grid[row][col].name]);
-  scenes.scenes[scenes["current_scene"]].grid[row][col] = cloned_item
-  showBlockInfo(scenes.scenes[scenes["current_scene"]].grid[row][col]);
+// $(".grid tbody").on("click", "tr td", function() {
+//   var row = $(this).attr('row')
+//   var col = $(this).attr('col')
+//   var cloned_item = _.clone(things[scenes.scenes[scenes["current_scene"]].grid[row][col].name]);  //$.extend(true, {}, things[scenes.scenes[scenes["current_scene"]].grid[row][col].name]);
+//   scenes.scenes[scenes["current_scene"]].grid[row][col] = cloned_item
+//   //scenes.scenes[scenes["current_scene"]].grid[row][col] = cloned_item
+//   showBlockInfo(cloned_item)//scenes.scenes[scenes["current_scene"]].grid[row][col]);
 
-});
+// });
 
 var pushKeys = window.addEventListener("keydown", function(event) {
   if (event.keyCode == 81){
@@ -363,7 +376,10 @@ var pushKeys = window.addEventListener("keydown", function(event) {
      } else {
        blockInfoModal.style.display = 'block'
       //  scenes.scenes[scenes["current_scene"]].grid[pointer.current[0]][pointer.current[1]]
-       showBlockInfo(scenes.scenes[scenes["current_scene"]].grid[pointer.current[0]][pointer.current[1]]);
+       window.cloned_item = _.clone(JSON.parse(JSON.stringify(scenes.scenes[scenes["current_scene"]].grid[pointer.current[0]][pointer.current[1]])));
+       //showBlockInfo(scenes.scenes[scenes["current_scene"]].grid[pointer.current[0]][pointer.current[1]]);
+      //  console.log("cloned")
+       showBlockInfo()
      }
    }
    if (event.keyCode == 40 || event.keyCode == 83){

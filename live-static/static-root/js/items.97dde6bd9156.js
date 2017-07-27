@@ -1,4 +1,5 @@
 var things = {
+  'player': {
 
     'blank':{
       'emoji': ' ',
@@ -33,7 +34,7 @@ var things = {
    },
 
 
-  'player': {
+
     'emoji': '👱🏼',
     'wall': true,
     'name':'player',
@@ -493,13 +494,18 @@ var things = {
 
 emoji_map =  [
   [
+{
+    'emoji': '👱🏼',
+    'wall': true,
+    'name':'player',
+    'current':[1,2],
+  },
 
-    {
-        'emoji': ' ',
-        'wall':false,
-        'name':'blank',
-      },
-
+{
+    'emoji': '🎪',
+    'wall': true,
+    'name':'tent',
+  },
 
 {
   'emoji': '🌳',
@@ -507,19 +513,11 @@ emoji_map =  [
   'name':'tree',
   },
 
-  {
-     'emoji': '🚪',
-     'name':'door',
-
-   },
-
-
-  {
-      'emoji': '🎪',
-      'wall': true,
-      'name':'tent',
-    },
-
+{
+    'emoji': ' ',
+    'wall':false,
+    'name':'blank',
+  },
 
 
 {
@@ -534,26 +532,18 @@ emoji_map =  [
     'name':'diamond',
   },
 
-  {
-      'emoji': '🔮',
-      'name':'orb',
-    },
-
-
 {
     'emoji': '📜',
     'wall': false,
     'name': 'scroll',
   },
 
-  {
-      'emoji': '👱🏼',
-      'wall': true,
-      'name':'player',
-      'current':[1,2],
-    },
 
 
+{
+    'emoji': '🔮',
+    'name':'orb',
+  },
 
  {
     'emoji': '🏰',
@@ -578,6 +568,12 @@ emoji_map =  [
     'emoji': '🐿',
     'wall': true,
     'name':'squirrle',
+  },
+
+ {
+    'emoji': '🦉',
+    'wall':true,
+    'name':'owl',
   },
 
  {
@@ -639,11 +635,11 @@ emoji_map =  [
     'name':'guard',
   },
 
-  {
-     'emoji': '🦉',
-     'wall':true,
-     'name':'owl',
-   },
+ {
+    'emoji': '🚪',
+    'name':'door',
+
+  },
 
  {
     'emoji': '🖼',

@@ -508,13 +508,6 @@ emoji_map =  [
   },
 
   {
-     'emoji': '🚪',
-     'name':'door',
-
-   },
-
-
-  {
       'emoji': '🎪',
       'wall': true,
       'name':'tent',
@@ -581,6 +574,12 @@ emoji_map =  [
   },
 
  {
+    'emoji': '🦉',
+    'wall':true,
+    'name':'owl',
+  },
+
+ {
     'emoji': '🛡',
     'wall':true,
     'name':'arms',
@@ -639,11 +638,11 @@ emoji_map =  [
     'name':'guard',
   },
 
-  {
-     'emoji': '🦉',
-     'wall':true,
-     'name':'owl',
-   },
+ {
+    'emoji': '🚪',
+    'name':'door',
+
+  },
 
  {
     'emoji': '🖼',
