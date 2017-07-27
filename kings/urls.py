@@ -8,7 +8,7 @@ urlpatterns = [
 		url(r'^new/$', views.kings_four, name='demo'),
 		url(r'^game/(?P<id>\d+)/$', views.game_id, name='kings4'),
 		url(r'^kingsencounter/$', views.kings_two, name='kings'),
-		url(r'^kingsencounter/json/$', views.sample_json, name="sample_json"),
+		url(r'^json/$', views.sample_json, name="sample_json"),
 
 		# API CRU[D] endpoints coming from /api/kings/ (in main urls.py)
 		url(r'^(?P<pk>\d+)/update/$', GameUpdateAPIView.as_view(), name="update-game"),

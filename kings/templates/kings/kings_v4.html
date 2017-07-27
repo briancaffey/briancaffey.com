@@ -206,6 +206,8 @@ function placePlayer(){
 function buildScene(){
   $("tbody tr").remove();
   scene = scenes[current_scene].grid;
+  console.log("now printing scene");
+  console.log(scene);
   placePlayer();
   for (var row in scene){
     var current = $('.grid tbody').append("<tr row="+row+"></tr>")
@@ -386,13 +388,13 @@ $("#start_btn").click(function(e){
   $('#welcomeJumbo').hide();
   $('.stat').show();
   $.ajax({
-    url:  '/api/kings/{{ game_id }}/',
+    url:  {% if not id %}'/kings/json/',{% else %}'/api/kings/{{ game_id }}/',{% endif %}
     method: "GET",
     data: {},
     success: function(data){
       window.player = things.player
       console.log(player);
-      window.game_data = data
+      window.game_data = JSON.parse(data)
       try {
         window.current_scene = game_data["game"]["game"]["current_scene"]
         window.scenes = game_data["game"]["game"].scenes
@@ -409,7 +411,7 @@ $("#start_btn").click(function(e){
     }
   });
 
-  $("tbody").append("<tr><h3>Loading game...</h3></tr>");
+
 
 });
 

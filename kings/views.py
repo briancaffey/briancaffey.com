@@ -15,11 +15,14 @@ def kings_three(request):
 
 
 def game_id(request, id):
-	game = Game.objects.get(id=id)
-	context = {
-		'game':game,
-		'game_id': id,
-		}
+	game = Game.objects.filter(id=id)
+	if len(game) == 1:
+		context = {
+			'game':game,
+			'game_id': id,
+			}
+	else:
+		context = {}
 	return render(request, 'kings/kings_v4.html', context)
 
 def kings_four(request):
