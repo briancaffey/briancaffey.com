@@ -71,14 +71,30 @@
     </div>
   </div>
 
-
-  <div class="modal fade" id="myModal-q" role="dialog">
+  <div class="modal fade" id="help-modal" role="dialog">
     <div class="modal-dialog">
       <!-- Modal content-->
       <div class="modal-content">
         <div style="text-align:center;" class="modal-body">
           <h1>Controls</h1>
-          <h4>Press <b>Q</b> to toggle controls</h4>
+          <h4>Press <b>H</b> to toggle Help Menu</h4>
+          <p>Controls go here</p>
+        </div>
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="help-modal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div style="text-align:center;" class="modal-body">
+          <h1>Controls</h1>
+          <h4>Press <b>H</b> to toggle the Help Menu</h4>
           <h4>Press <b>M</b> to toggle emoji selector menu</h4>
           <h4>Press <b>P</b> to add properties to the selected square</h4>
           <h4>Press <b>W, A, S and D</b> to move the pointers</h4>
@@ -315,7 +331,7 @@ function showBlockInfo(){
 // });
 var pushKeys = window.addEventListener("keydown", function(event) {
   if (event.keyCode == 81){
-    $('#myModal-q').modal('toggle');
+    $('#help-modal').modal('toggle');
   }
  if (modal.style.display == 'block'){
 

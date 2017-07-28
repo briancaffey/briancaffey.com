@@ -3,7 +3,7 @@
 <!doctype html>
 <html>
 <head>
-  <title>King's Encounter</title>
+  <title>PlayQuest</title>
 
   <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.js"></script>
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
@@ -36,7 +36,7 @@
               <li style="display:none;" class="stat"><a>💎 ✖️ <span class="diamonds"></span></a></li>
               <li style="display:none;" class="stat"><a>📜 ✖️ <span class="scrolls"></span></a></li>
               <li style="display:none;" class="stat"><a>🗝 ✖️ <span class="keys"></span></a></li> -->
-              <!-- <li style="display:none;" class="stat"><a>⏳&nbsp;&nbsp;<span class="clock">0 : 00</span></a></li> -->
+              <li style="display:none;" class="stat"><a>⏳&nbsp;&nbsp;<span class="clock">0 : 00</span></a></li>
               <!-- <li style="display:none;" class="stat"><a>Scene: <span class="scene"></span></a></li> -->
               <!-- <li style="display:none;" class="stat"><a>Pos: <span class="pos"></span></a></li> -->
             </ul>
@@ -74,7 +74,7 @@
         $('#myModal-q').modal('toggle');
       } -->
 
-      <div class="modal fade" id="myModal-q" role="dialog">
+      <div class="modal fade" id="help-modal" role="dialog">
         <div class="modal-dialog">
           <!-- Modal content-->
           <div class="modal-content">
@@ -91,6 +91,30 @@
         </div>
       </div>
 
+      <div class="modal fade" id="branch-modal" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div style="text-align:center;" class="modal-body">
+              <h1>Branch this game 🌿</h1>
+              <h4>Branching allows you to edit your own copy of this game</h4>
+              {% if request.user.is_authenticated %}
+              <button class="btn btn-success" href="">Branch</button>
+              {% else %}
+              <div class="alert alert-warning alert-dismissible">You need to be logged in to branch this game.</div>
+              <button class="btn btn-success">Login</button>
+              <br /><br />
+              <button class="btn btn-primary">Create a new account</button><br /><br />
+              <p>it's free! 😊</p>
+              {% endif %}
+            </div>
+            <!-- <div class="modal-footer">
+
+              <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+            </div> -->
+          </div>
+        </div>
+      </div>
 
 
 
@@ -164,6 +188,7 @@ window.onclick = function(event) {
 
 <script>
 
+
 var player = null;
 
 // var player = {
@@ -193,19 +218,16 @@ function placePlayer(){
 function buildScene(){
   $("tbody tr").remove();
   scene = scenes[current_scene].grid;
-  console.log("now printing scene");
-  console.log(scene);
   placePlayer();
   for (var row in scene){
-    var current = $('.grid tbody').append("<tr row="+row+"></tr>")
-    for (var square in scene[row]){
+    $('.grid tbody').append("<tr row='"+row+"'></tr>")
+    for (var square=0; square<scene[row].length; square++){
       $('tr[row='+ row +']').append("<td col="+square+">"+scene[row][square].emoji+"</td>")
     }
   }
 };
 
 function checkSquare(square){
-  console.log("checking square")
   if (square == things.heart){
     player.health += 1;
   }
@@ -256,19 +278,13 @@ function checkSquare(square){
     box(things.sword.emoji, 'Press SPACE to use you sword!')
   }
   if (square.exitway){
-    console.log("on exitway")
-    //var entry_point = [square.entry[0],square.entry[1]];
-    console.log("the square entry", square.entry)
-    player.current = square.entry;
-    console.log(player.current);
+    var entry_point = [square.entry[0],square.entry[1]];
+    player.current = entry_point;
     var _current_scene = square.next;
-    console.log("current_scene");
     scenes[_current_scene].grid[square.next[0]][square.next[1]] = player;
-    console.log(scenes["current_scene"])
-    console.log(scenes[_current_scene].grid[square.next[0]][square.next[1]])
     current_scene = square.next;
-    console.log(scenes["current_scene"]);
-    //buildScene();
+    buildScene();
+
   }
 }
 
@@ -277,24 +293,26 @@ var start = function(){
 function move(the_next_square, axis, operation){
   if (the_next_square.hasOwnProperty("exitway")){
     scenes[current_scene].grid[player.current[0]][player.current[1]] = things.blank;
-    console.log("exitway triggered")
-    return
+
   }
-  console.log("this code is executing")
   if (!the_next_square.wall && !the_next_square.exitway){
     //scene = scenes[current_scene].grid
+
+
+
     scenes[current_scene].grid[player.current[0]][player.current[1]] = things.blank;
+
     if (operation == "+"){
       if (axis == 0){
-        player.current[0] = parseInt(player.current[0]) + 1;
+        player.current[0] = String(parseInt(player.current["0"]) + 1);
       } else{
-        player.current[1] = parseInt(player.current[1]) + 1;
+        player.current[1] = String(parseInt(player.current["1"]) + 1);
       }
     } else {
       if (axis == 0){
-        player.current[0] = parseInt(player.current[0]) - 1;
+        player.current[0] = String(parseInt(player.current["0"]) - 1);
       } else {
-        player.current[1] = parseInt(player.current[1]) - 1;
+        player.current[1] = String(parseInt(player.current["1"]) - 1);
       }
     }
   }
@@ -302,7 +320,7 @@ function move(the_next_square, axis, operation){
 
 var pushKeys = window.addEventListener("keydown", function(event) {
   if (event.keyCode == 81){
-    $('#myModal-q').modal('toggle');
+    $('#help-modal').modal('toggle');
   }
 if (modal.style.display == 'block'){
   if (event.keyCode == 32){
@@ -313,11 +331,8 @@ if (modal.style.display == 'block'){
   if (event.keyCode == 40 || event.keyCode == 83){
     event.preventDefault();
     var current = player.current[0];
-    console.log(current);
     var next_ = parseInt(current) + 1;
-    console.log(next_);
     var next_square = scene[next_][player.current[1]];
-    console.log(next_square)
     move(next_square, 0, "+");
     checkSquare(next_square);
     }
@@ -368,6 +383,21 @@ buildScene();
 });
 
 }
+
+var total_seconds = 0;
+var startClock = function(){setInterval(function updateClock(){
+  total_seconds += 1;
+  var pad_zero;
+  if (total_seconds % 60 < 10) {
+    pad_zero = '0';
+  } else {
+    pad_zero = '';
+  }
+  var time = (Math.ceil(total_seconds/60 - 1)) +' : ' + pad_zero + (total_seconds % 60);
+  $(".clock").text(time)
+}, 1000);
+};
+
 $("#start_btn").click(function(e){
   e.preventDefault()
 
@@ -380,11 +410,10 @@ $("#start_btn").click(function(e){
     method: "GET",
     data: {},
     success: function(data){
-      console.log(JSON.parse(data));
+
       window.game_data = JSON.parse(data)
       window.player = things.player
-      console.log(player);
-      //window.game_data = data;
+
       try {
         window.current_scene = game_data["game"]["game"]["current_scene"]
         window.scenes = game_data["game"]["game"].scenes
@@ -396,13 +425,10 @@ $("#start_btn").click(function(e){
         window.scene = game_data["game"].scenes[current_scene].grid
       };
       buildScene();
+      startClock();
       start();
-
     }
   });
-
-
-
 });
 
 </script>
