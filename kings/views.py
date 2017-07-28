@@ -2,17 +2,11 @@ from django.shortcuts import render
 from .models import Game
 
 
-# Create your views here.
-def kings(request):
-	return render(request, 'kings/kings.html', {})
+def kings_home(request):
+	return render(request, 'kings/kings_home.html', {})
 
-def kings_two(request):
-	return render(request, 'kings/kings_v2.html', {})
-
-
-def kings_three(request):
-	return render(request, 'kings/kings_v3.html', {})
-
+def demo(request):
+	return render(request, 'kings/demo.html', {})
 
 def game_id(request, id):
 	game = Game.objects.filter(id=id)
@@ -23,14 +17,10 @@ def game_id(request, id):
 			}
 	else:
 		context = {}
-	return render(request, 'kings/kings_v4.html', context)
+	return render(request, 'kings/game.html', context)
 
-def kings_four(request):
-
-	return render(request, 'kings/kings_v4.html', {})
+def create(request):
+	return render(request, 'kings/create.html', {})
 
 def sample_json(request):
 	return render(request, 'kings/sample.json', {})
-
-def level_builder(request):
-	return render(request, 'kings/level_builder.html', {})

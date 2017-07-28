@@ -1,0 +1,125 @@
+{% load staticfiles %}
+
+<!doctype html>
+<html>
+<head>
+  <title>King's Encounter</title>
+
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  <link rel="stylesheet" href="{% static 'css/modal.css' %}">
+
+</head>
+
+<body style="padding-top:30px;">
+
+      <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">👑&nbsp;&nbsp;King's Encounter 4 ⚔</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a class="btn" id="branch-menu" type="button" data-toggle="modal" data-target="#branch-modal">Branch 🌿</a></li>
+              <li><a href="#music" type="button" data-toggle="modal" data-target="#myModal-music">🔊</a></li>
+              <li><a>Guest</a></li>
+              <li><a href="{% url 'home:home' %}">Exit</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+
+      <div class="modal fade" id="myModal-music" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div style="text-align:center;" class="modal-body">
+              <h1>🎻🎹🎶</h1>
+              <audio loop="loop" autoplay="true" audio="" controls="controls">
+                    <source src="{% static 'music/plirwin.ogg' %}">
+                    <embed type="application/x-shockwave-flash" src="http://www.google.com/reader/ui/3523697345-audio-player.swf" quality="best" flashvars="audioUrl=http://www.contemplator.com/mp3/plirwin.mp3" width="500" height="27">
+                    </audio>
+            </div>
+            <div class="modal-footer">
+              <div class="pull-left">Source: <a href="http://www.contemplator.com/">contemplator.com</a></div>
+              <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="myModal-q" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div style="text-align:center;" class="modal-body">
+              <h1>Controls</h1>
+              <h4>Press <b>Q</b> to toggle controls</h4>
+              <p>Controls go here</p>
+            </div>
+            <div class="modal-footer">
+
+              <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+  <div style="background-color:" class="container">
+    <div class="row">
+
+      </div>
+      <span id="welcomeJumbo">
+      <div style="padding-top:40px;" class="row">
+<div style="text-align:center;" class="jumbotron" >
+  <h1>👑⚔🏰🐉❤️<br />Welcome to King's Encounter!</h1>
+  <br />
+  <p>A journey awaits...</p>
+  <br />
+  <a class="btn btn-success btn-lg" id="start_btn" href="{% url 'kings:demo' %}">Play the tutorial</a>
+
+
+<br /><br />
+
+<a class="btn btn-info btn-lg" href="{% url 'kings:create'%}">Build Your Own Level</a>
+</div>
+</div>
+<div style="text-align:center;" class="row">
+<div class="col-md-4"><h2>⬆️⬅️⬇️➡️<br />Walk with W, A, S and D.</h2><p>You can also use the arrow keys</p></div>
+<div class="col-md-4"><h2>🐲😱😲💀<br />Beware of dragons.</h2><p>Crossing paths with dragons will decrease your health.</p></div>
+<div class="col-md-4"><h2>📜👓💡✅<br />Collect scrolls.</h2><p>Scrolls contain hints and important knowledge.</p></div>
+</div>
+
+</span>
+
+<div style="padding-top:40px;" class="col-md-10">
+<div style="align:center;" class="canvas"><table style="font-size:3.5em;" class="grid"><tbody id="scene"></tbody></table>
+
+</div>
+</div>
+</div>
+
+<div id="myModal" class="dialogue-modal">
+  <div   class="modal-content">
+    <span class="close">&times;</span>
+    <p id="dialogue-title" style="text-align:center; font-size:6em"></p>
+    <p id="dialogue-body" style="font-size:3em;"></p>
+  </div>
+</div>
+
+</div>
+</body>
+
+</html>

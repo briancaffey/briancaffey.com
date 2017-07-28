@@ -27,7 +27,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">👑&nbsp;&nbsp;King's Encounter 4 ⚔</a>
+            <a class="navbar-brand" href="#">👑&nbsp;&nbsp;PlayQuest ⚔</a>
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -103,26 +103,13 @@
       <div style="padding-top:40px;" class="row">
 <div style="text-align:center;" class="jumbotron" >
   <h1>👑⚔🏰🐉❤️<br />Welcome to King's Encounter!</h1>
-  <br />
+
   <p>Prepare yourself! A journey awaits...</p>
-  <br />
-<p>choose your character</p>
-  <form action="." class="form-contorl input-lg">
-    <select class="choose_avatar" name="choose_avatar">
-      <option value="😃">&nbsp;&nbsp;😃&nbsp;&nbsp;</option>
-      <option value="👦🏼">&nbsp;&nbsp;👦🏼&nbsp;&nbsp;</option>
-      <option value="👨🏻">&nbsp;&nbsp;👨🏻&nbsp;&nbsp;</option>
-      <option value="👩🏻">&nbsp;&nbsp;👩🏻&nbsp;&nbsp;</option>
-      <option value="👩🏽">&nbsp;&nbsp;👩🏽&nbsp;&nbsp;</option>
-    </select>
-    <br /><br />
-  </form>
-  <a class="btn btn-success btn-lg" id="start_btn" href="#">wiPlay the tutorial</a>
+  <a class="btn btn-success btn-lg" id="start_btn" href="#">Play Game {{ game_id }}</a>
+<br />
+<br />
 
-
-<br /><br />
-
-<a class="btn btn-info btn-lg" href="{% url 'kings:create' %}">Build Your Own Level</a>
+<a class="btn btn-info btn-lg" href="{% url 'kings:create'%}">Build Your Own Level</a>
 </div>
 </div>
 <div style="text-align:center;" class="row">
