@@ -17,7 +17,7 @@ def game_id(request, id):
 			}
 	else:
 		context = {}
-	return render(request, 'kings/game.html', context)
+	return render(request, 'kings/game_v2.html', context)
 
 def create(request):
 	return render(request, 'kings/create.html', {})

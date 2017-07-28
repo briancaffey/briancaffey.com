@@ -6,7 +6,7 @@ urlpatterns = [
 		url(r'^demo/$', views.demo, name='demo'),
 		url(r'^$', views.kings_home, name="home"),
 		url(r'^game/(?P<id>\d+)/$', views.game_id, name='game_id'),
-		# url(r'^json/$', views.sample_json, name="sample_json"),
+		url(r'^json/$', views.sample_json, name="sample_json"),
 		## To Do
 		# url(r'^game/(?P<id>\id+)/edit/$', views.edit_game, name="edit")
 
