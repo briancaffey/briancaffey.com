@@ -20,7 +20,10 @@ def game_id(request, id):
 	return render(request, 'kings/game_v2.html', context)
 
 def create(request):
-	return render(request, 'kings/create.html', {})
+	return render(request, 'kings/create_v2.html', {})
+
+def edit_game(request, id):
+	return render(request, 'kings/edit.html', {})
 
 def sample_json(request):
 	return render(request, 'kings/sample.json', {})
