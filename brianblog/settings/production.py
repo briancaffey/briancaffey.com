@@ -55,10 +55,16 @@ INSTALLED_APPS = [
     'langton',
     'yawlih',
     'kings',
+    'playquest',
+    'hashtest',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
+HASHID_FIELD_SALT = os.environ['HASHID_SALT']
+
+
+##"a long and secure salt value that is not the same as SECRET_KEY"
 
 # https://github.com/encode/django-rest-framework/issues/2774
 

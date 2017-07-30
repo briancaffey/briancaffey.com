@@ -1,0 +1,48 @@
+{% load staticfiles %}
+      <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="">👑&nbsp;&nbsp;PlayQuest ⚔</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li class="stat"><a>Scene: <span id="scene-name"></span></a></li>
+              <li class="stat"><a>Position: <span id="pointer-pos"></span></a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a class="btn" id="scene-menu" type="button" data-toggle="modal" data-target="#settings-modal">Settin<b>g</b>s ⚙️</a></li>
+              <li><a class="btn" id="help-menu" type="button" data-toggle="modal" data-target="#help-modal"><b>H</b>elp 🔰</a></li>
+              <li><a class="btn" id="scene-menu" type="button" data-toggle="modal" data-target="#scene-modal">S<b>c</b>enes 🎞</a></li>
+              <li><a class="btn" id="save-level">Sa<b>v</b>e 💾</a></li>
+              <li><a href="#music" type="button" data-toggle="modal" data-target="#myModal-music"><b>M</b>usic 🔊</a></li>
+              <li><a href="#login">Login 🔏</a></li>
+              <!-- <li><a href="{% url 'home:home' %}">Exit</a></li> -->
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+
+      <div class="modal fade" id="myModal-music" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div style="text-align:center;" class="modal-body">
+              <h1>🎻🎹🎶</h1>
+              <audio loop="loop" autoplay="true" audio="" controls="controls">
+                    <source src="{% static 'music/plirwin.ogg' %}">
+                    <embed type="application/x-shockwave-flash" src="http://www.google.com/reader/ui/3523697345-audio-player.swf" quality="best" flashvars="audioUrl=http://www.contemplator.com/mp3/plirwin.mp3" width="500" height="27">
+                    </audio>
+            </div>
+            <div class="modal-footer">
+              <div class="pull-left">Source: <a href="http://www.contemplator.com/">contemplator.com</a></div>
+              <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+            </div>
+          </div>
+        </div>
+      </div>

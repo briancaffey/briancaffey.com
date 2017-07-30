@@ -1,0 +1,1257 @@
+{% load staticfiles %}
+
+
+<!doctype html>
+<html>
+<head>
+  <title>King's Encounter</title>
+
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+
+  <style>
+  /* The Modal (background) */
+  .dialogue-modal {
+      display: none; /* Hidden by default */
+      position: fixed; /* Stay in place */
+      z-index: 1; /* Sit on top */
+      padding-top: 100px; /* Location of the box */
+      left: 0;
+      top: 0;
+      width: 100%; /* Full width */
+      height: 100%; /* Full height */
+      overflow: auto; /* Enable scroll if needed */
+      background-color: rgb(0,0,0); /* Fallback color */
+      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+
+  /* Modal Content */
+  .modal-content {
+      background-color: #fefefe;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+  }
+
+  /* The Close Button */
+  .close {
+      color: #aaaaaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+  }
+  </style>
+
+
+
+</head>
+
+
+
+<body style="padding-top:30px;">
+
+
+      <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="">👑&nbsp;&nbsp;King's Encounter ⚔</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+
+              <li style="display:none;" class="stat"><a>❤️ ✖️ <span class="health"></span></a></li>
+              <li style="display:none;" class="stat"><a>💎 ✖️ <span class="diamonds"></span></a></li>
+              <li style="display:none;" class="stat"><a>📜 ✖️ <span class="scrolls"></span></a></li>
+              <li style="display:none;" class="stat"><a>🗝 ✖️ <span class="keys"></span></a></li>
+              <li style="display:none;" class="stat"><a>⏳&nbsp;&nbsp;<span class="clock">0 : 00</span></a></li>
+              <li style="display:none;" class="stat"><a>Scene: <span class="scene"></span></a></li>
+              <li style="display:none;" class="stat"><a>Pos: <span class="pos"></span></a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#music" type="button" data-toggle="modal" data-target="#myModal-music">🔊</a></li>
+              <li><a>Guest</a></li>
+              <li><a href="{% url 'home:home' %}">Exit</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+
+      <div class="modal fade" id="myModal-music" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div style="text-align:center;" class="modal-body">
+              <h1>🎻🎹🎶</h1>
+              <audio loop="loop" autoplay="true" audio="" controls="controls">
+                    <source src="{% static 'music/plirwin.ogg' %}">
+                    <embed type="application/x-shockwave-flash" src="http://www.google.com/reader/ui/3523697345-audio-player.swf" quality="best" flashvars="audioUrl=http://www.contemplator.com/mp3/plirwin.mp3" width="500" height="27">
+                    </audio>
+            </div>
+            <div class="modal-footer">
+              <div class="pull-left">Source: <a href="http://www.contemplator.com/">contemplator.com</a></div>
+              <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+  <div style="background-color:" class="container">
+    <div class="row">
+
+      </div>
+      <span id="welcomeJumbo">
+      <div style="padding-top:40px;" class="row">
+<div style="text-align:center;" class="jumbotron" >
+  <h1>👑⚔🏰🐉❤️<br />Welcome to King's Encounter!</h1>
+  <p>A journey awaits...</p>
+<p>Choose your character</p>
+
+    <select class="choose_avatar" name="choose_avatar">
+      <option value="😃">&nbsp;&nbsp;😃&nbsp;&nbsp;</option>
+      <option value="👦🏼">&nbsp;&nbsp;👦🏼&nbsp;&nbsp;</option>
+      <option value="👨🏻">&nbsp;&nbsp;👨🏻&nbsp;&nbsp;</option>
+      <option value="👩🏻">&nbsp;&nbsp;👩🏻&nbsp;&nbsp;</option>
+      <option value="👩🏽">&nbsp;&nbsp;👩🏽&nbsp;&nbsp;</option>
+    </select>
+    <br /><br />
+  <a id="start_btn" class="btn btn-success btn-lg togglePlay" href="#start" class="togglePlay">Begin!</a>
+</div>
+</div>
+<div style="text-align:center;" class="row">
+<div class="col-md-4"><h2>⬆️⬅️⬇️➡️<br />Walk with W, A, S and D.</h2><p>You can also use the arrow keys</p></div>
+<div class="col-md-4"><h2>🐲😱😲💀<br />Beware of dragons.</h2><p>Crossing paths with dragons will decrease your health.</p></div>
+<div class="col-md-4"><h2>📜👓💡✅<br />Collect scrolls.</h2><p>Scrolls contain hints and important knowledge.</p></div>
+</div>
+
+</span>
+
+<div style="padding-top:40px;" class="col-md-10">
+<div style="align:center;" class="canvas"><table style="font-size:3.5em;" class="grid"><tbody id="scene"></tbody></table>
+
+</div>
+</div>
+</div>
+
+<!-- Dialogue Modal -->
+<div id="myModal" class="dialogue-modal">
+  <!-- Modal Content -->
+  <div   class="modal-content">
+    <span class="close">&times;</span>
+    <p id="dialogue-title" style="text-align:center; font-size:6em"></p>
+    <p id="dialogue-body" style="font-size:3em;"></p>
+  </div>
+</div>
+
+<script>
+$('#start_btn').focus();
+// Get the modal
+var modal = document.getElementById('myModal');
+
+// Get the button that opens the modal
+
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal
+var showModal = function() {
+    modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+
+    modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+
+    }
+}
+</script>
+
+</div>
+</body>
+
+</html>
+
+<script>
+// theme emoji
+//🃏🤔😏😨👻👋👏🙏👸🏼👑🎒💍🐮🐰🐭🦁🐸🐷🐔🐤🐺🐗🦄🐛🐝🐌🐞🐜🕷🐍🐑🐀🐁🐿
+//🐉🐲🌲🌳🌾🌻🌷🍄🌰🐚🕸🌝🌤🔥🍎🍇🧀🍗🍖🍺🍻🏹🎣🏵🎭🎨🎪⛲️⛰🏔🏞🏝🏰🌈
+//💎⚖💰🕯⚙💣🗡⚔🛡☠️⚰🔮📿⚗🚪🖼🎉🎊📯📜🏳❤️💛💚💙💜❣️♨️🔱⚜🔰💠🌀🌌
+//🏤⛪️🏛⌛️🦆🐥🐣🐯🦁🦎🐒🎲🌈🌹🥀
+
+
+
+var dragon = {emoji:'🐉',
+              current: [5,7],
+              wall: true,
+              health: 3,
+}
+
+var tree = {
+  emoji: '🌳',
+  wall: true,
+}
+
+var open_ = {
+  emoji: '',
+  wall: false,
+}
+
+var heart = {
+  emoji: '❤️',
+  wall: false,
+}
+
+var diamond = {
+  emoji: '💎',
+  wall: false,
+}
+
+var scroll = {
+  emoji: '📜',
+  wall: false,
+}
+
+
+
+var orb = {
+  emoji: '🔮',
+}
+
+var castle = {
+  emoji: '🏰',
+  wall:true,
+  exitway:true,
+}
+
+var sunflower = {
+  emoji: '🌻',
+  wall: true,
+}
+
+var flower = {
+  emoji: '🌷',
+  wall:true,
+}
+
+var squirrle = {
+  emoji: '🐿',
+  wall: true,
+}
+
+var owl = {
+  emoji: '🦉',
+  wall:true,
+}
+
+var arms = {
+  emoji: '🛡',
+  wall:true,
+}
+
+var candle = {
+  emoji: '🕯',
+  wall:true,
+}
+
+var square_diamond = {
+  emoji: '💠',
+  wall: true,
+}
+
+var spd = {
+  emoji: '🔹'
+}
+
+var clb = {
+  emoji: '🔶'
+}
+
+
+var dmnd = {
+  emoji: '🔸'
+}
+
+var hrt = {
+  emoji: '🔷'
+}
+
+var crown = {
+  emoji: '🤴🏻',
+  wall: true,
+}
+
+var horn = {
+  emoji: '📯',
+  wall: true,
+}
+
+var guard = {
+  emoji: '💂🏻',
+  wall:true,
+}
+
+var door = {
+  emoji: '🚪',
+  exitway:true,
+
+}
+
+var painting = {
+  emoji: '🖼',
+  wall: true,
+}
+
+var festive = {
+  emoji: '🏵',
+  wall:true,
+}
+
+var cheese = {
+  emoji: '🧀',
+  wall: true,
+}
+
+var fountain = {
+  emoji: '⛲',
+  wall: true,
+};
+
+var key = {
+  emoji:'🗝',
+}
+
+var woman = {
+  emoji: '👸🏼',
+  wall: true,
+}
+
+var sword = {
+  emoji: '🗡',
+
+}
+
+var card = {
+  emoji: '🃏',
+}
+
+var snail = {
+  emoji: '🐌',
+}
+
+var mouse = {
+  emoji: '🐭',
+  wall: true,
+}
+
+var swords = {
+  emoji: '⚔️',
+  wall: true,
+}
+
+var nut = {
+  emoji: '🌰',
+}
+
+var beer = {
+  emoji: '🍺',
+  wall: true,
+}
+
+var grapes = {
+  emoji: '🍇',
+  wall: true,
+
+}
+
+var meat = {
+  emoji: '🍗',
+  wall: true,
+}
+
+var apple = {
+  emoji: '🍎',
+  wall: true,
+}
+
+var clown = {
+  emoji: '🤡',
+  wall: true,
+}
+
+var bread = {
+  emoji: '🥖',
+  wall: true,
+}
+
+var pan = {
+  emoji: '🥘',
+  wall: true,
+}
+
+var jester = {
+  emoji: '🤹‍',
+  wall:true,
+
+}
+
+var mother = {
+  emoji: '🤶🏻',
+  wall: true,
+}
+
+var fleur = {
+  emoji: '⚜️',
+  wall: true,
+}
+
+var study = {
+  emoji: '🔰',
+  wall: true,
+}
+
+var bird = {
+  emoji: '🐦',
+  wall: true,
+}
+
+var wine = {
+  emoji: '🍷',
+  wall:true,
+}
+
+var pear = {
+  emoji: '🍐',
+  wall: true,
+}
+
+var orange = {
+  emoji: '🍊',
+}
+
+var plate = {
+  emoji: '🍽',
+  wall: true,
+}
+
+
+var man = {
+  emoji: '👱🏼',
+  wall: true,
+}
+
+var tent = {
+  emoji: '🎪',
+  wall: true,
+}
+
+var court = {
+  emoji: '🏛',
+  wall: true,
+}
+
+var building = {
+  emoji: '🏤',
+  wall: true,
+}
+
+var tower = {
+  emoji: '🏫',
+  wall: true,
+  exitway: true,
+  next: 'school',
+  entry: [7,8],
+}
+
+var house = {
+  emoji: '🏡',
+  wall:true,
+}
+
+var judge = {
+  emoji: '👨🏻‍⚖️',
+  wall: true,
+}
+
+var lady = {
+  emoji: '👩🏼',
+  wall: true,
+}
+var up_down = {
+  emoji: '↕️',
+  exitway: true,
+}
+
+var lock = {
+  emoji: '🔒',
+  wall: true,
+}
+
+var flag = {
+  emoji: '🇧🇹',
+  wall:true,
+}
+
+var rainbow = {
+  emoji: '🌈',
+  wall: true,
+}
+
+var trident = {
+  emoji: '🔱',
+  wall: true,
+}
+
+var mustache = {
+  emoji: '👨🏻',
+  wall: true,
+}
+
+var blonde_girl = {
+  emoji: '👧🏼',
+  wall: true,
+}
+
+var books1 = {
+  emoji: '📕',
+  wall: true,
+}
+
+var books2 = {
+  emoji: '📗',
+  wall: true,
+}
+
+var books3 = {
+  emoji: '📘',
+  wall: true,
+}
+
+var books4 = {
+  emoji: '📙',
+  wall: true,
+}
+
+var books5 = {
+  emoji: '📔',
+  wall: true,
+}
+
+var books6 = {
+  emoji: '📓',
+  wall: true,
+}
+
+var beaker = {
+  emoji: '⚗️',
+  wall: true,
+}
+
+var agri = {
+  emoji: '🌾',
+  wall: true,
+}
+
+var world = {
+  emoji: '🌍',
+  wall: true,
+}
+
+var books7 = {
+  emoji: '📖',
+  wall: true,
+}
+
+var books0 = {
+  emoji: '📚',
+  wall: true,
+}
+
+
+var dove = {
+  emoji: '🕊',
+  wall: true,
+}
+
+var church = {
+  emoji: '⛪️',
+  wall: true,
+}
+
+var ew_0_0 = {
+  'emoji': '↔️',
+  next: 1,
+  exitway:true,
+  'entry': [1,1],
+  wall:true,
+}
+
+
+var ew_1_0 = {
+  'emoji': '↔️',
+  next: 0,
+  'entry': [8,14],
+  exitway:true,
+  wall:true,
+}
+
+var ew_1_1 = {
+  'emoji': '↔️',
+  next: 2,
+  'entry': [1,1],
+  exitway:true,
+  wall:true,
+}
+
+var ew_2_0 = {
+  'emoji': '↔️',
+  next: 1,
+  'entry': [1,18],
+  exitway:true,
+  wall:true,
+}
+
+var ew_2_1 = {
+  'emoji': '↔️',
+  next: 3,
+  'entry': [1,1],
+  exitway:true,
+  wall:true,
+}
+
+var ew_3_0 = {
+  'emoji': '↔️',
+  next: 2,
+  'entry': [6,18],
+  exitway:true,
+  wall:true,
+}
+
+var ew_3_1 = {
+  'emoji': '🏰',
+  next: 4,
+  'entry': [7,8],
+  exitway:true,
+  wall:true,
+}
+
+var ew_3_2 = {
+  'emoji': '↔️',
+  next: 'town',
+  'entry': [1,1],
+  exitway:true,
+  wall:true,
+}
+
+var info = {
+  emoji: 'ℹ️',
+  wall: true,
+}
+
+var ew_4_0 = {
+  'emoji': '🚪',
+  next: 3,
+  'entry': [3,11],
+  exitway:true,
+  wall:true,
+}
+
+var ew_4_1 = {
+  'emoji': '🚪',
+  next: 5,
+  'entry': [4,15],
+  exitway:true,
+  wall:true,
+}
+
+var ew_5_0 = {
+  'emoji': '🚪',
+  next: 4,
+  'entry': [4,1],
+  exitway:true,
+  wall:true,
+}
+
+var ew_5_1 = {
+  'emoji': '🚪',
+  next: 6,
+  'entry': [7,8],
+  exitway:true,
+  wall:true,
+}
+
+var ew_6_0 = {
+  'emoji': '🚪',
+  next: 5,
+  'entry': [1,8],
+  exitway:true,
+  wall:true,
+}
+
+var ew_6_1 = {
+  'emoji': '🚪',
+  next: 7,
+  'entry': [7,8],
+  exitway:true,
+  wall:true,
+}
+
+
+
+var ew_town_0 = {
+  emoji: '↔️',
+  wall: true,
+  'entry': [1,18],
+  exitway: true,
+  next: 3,
+}
+
+ew_school_0 = {
+  emoji: '🚪',
+  wall: true,
+  'entry': [6,5],
+  exitway: true,
+  next: 'town',
+}
+
+var current_scene = 0;
+
+var scenes = {
+                0: {map:
+                  [ [tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
+                    [tree,open_,open_,open_,tree,tree,tree,open_,heart,tree,tree,open_,open_,open_,tree,tree,],
+                    [tree,tree,open_,tree,tree,tree,tree,open_,tree,tree,diamond,open_,tree,open_,open_,tree,],
+                    [tree,tree,open_,open_,open_,open_,open_,open_,tree,tree,tree,open_,open_,tree,open_,tree,],
+                    [tree,tree,tree,tree,tree,tree,tree,open_,tree,tree,open_,open_,tree,open_,open_,tree,],
+                    [tree,tree,tree,tree,tree,tree,tree,open_,tree,tree,open_,tree,tree,open_,tree,tree,],
+                    [tree,heart,open_,diamond,tree,tree,tree,open_,open_,open_,open_,tree,tree,open_,tree,tree,],
+                    [tree,tree,open_,tree,tree,tree,tree,open_,tree,tree,tree,tree,open_,open_,heart,tree,],
+                    [tree,tree,open_,open_,open_,open_,open_,open_,tree,tree,scroll,open_,open_,tree,open_,ew_0_0,],
+                    [tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,]],
+                    dragon:true,
+
+                  },
+
+                2:{map:
+                  [ [tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
+                    [ew_2_0,open_,open_,open_,open_,open_,tree,open_,open_,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
+                    [tree,tree,open_,tree,tree,tree,tree,open_,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
+                    [tree,tree,open_,open_,open_,open_,open_,open_,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
+                    [tree,tree,tree,tree,tree,tree,tree,open_,tree,tree,tree,fountain,tree,tree,tree,tree,tree,tree,tree,tree,],
+                    [tree,tree,tree,tree,tree,tree,tree,open_,tree,tree,tree,woman,tree,tree,tree,tree,owl,tree,tree,tree,],
+                    [tree,scroll,open_,scroll,tree,tree,tree,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,ew_2_1,],
+                    [tree,tree,open_,tree,tree,tree,tree,open_,tree,tree,tree,sword,tree,tree,tree,tree,tree,tree,tree,tree,],
+                    [tree,tree,open_,open_,open_,open_,open_,open_,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
+                    [tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,]],
+                    dragon: true,
+
+                  },
+
+                  1:{map:
+                    [ [tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
+                      [ew_1_0,open_,open_,open_,open_,open_,tree,open_,open_,tree,tree,tree,tree,tree,tree,tree,tree,open_,open_,ew_1_1,],
+                      [tree,tree,open_,tree,tree,tree,tree,open_,tree,tree,tree,tree,tree,tree,tree,diamond,diamond,diamond,tree,tree,],
+                      [tree,tree,open_,open_,open_,open_,open_,open_,tree,tree,tree,tree,tree,tree,open_,open_,tree,tree,tree,tree,],
+                      [tree,tree,tree,tree,tree,tree,tree,open_,tree,tree,tree,fountain,tree,tree,tree,open_,open_,tree,tree,tree,],
+                      [tree,tree,key,tree,tree,tree,tree,open_,tree,tree,heart,open_,heart,tree,tree,tree,open_,tree,tree,tree,],
+                      [tree,scroll,open_,scroll,tree,tree,tree,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,tree,tree,tree,],
+                      [tree,tree,open_,tree,tree,tree,tree,open_,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
+                      [tree,tree,open_,open_,open_,open_,open_,open_,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
+                      [tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,]],
+
+                      dragon:true,
+
+                    },
+
+                    3:{map:
+                      [ [tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
+                        [ew_3_0,open_,open_,open_,open_,open_,tree,open_,open_,tree,tree,tree,tree,tree,tree,tree,tree,open_,open_,ew_3_2,],
+                        [tree,tree,open_,tree,tree,tree,tree,open_,tree,tree,tree,ew_3_1,tree,tree,tree,open_,open_,open_,squirrle,tree,],
+                        [tree,tree,open_,open_,open_,open_,open_,open_,tree,tree,flower,open_,flower,tree,open_,open_,tree,tree,tree,tree,],
+                        [tree,tree,tree,tree,tree,tree,tree,open_,tree,tree,flower,open_,flower,tree,tree,open_,open_,tree,tree,tree,],
+                        [tree,tree,key,tree,tree,tree,tree,open_,tree,tree,flower,open_,flower,tree,tree,tree,open_,tree,tree,tree,],
+                        [tree,nut,open_,scroll,tree,tree,tree,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,tree,tree,tree,],
+                        [tree,tree,open_,tree,tree,tree,tree,open_,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
+                        [tree,tree,open_,open_,open_,open_,open_,open_,tree,tree,tree,tree,snail,tree,tree,tree,tree,tree,tree,tree,],
+                        [tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,]],
+
+                        dragon:false,
+
+                      },
+
+                      4:{map:
+                        [ [arms,arms,painting,arms,arms,painting,arms,arms,door,arms,arms,painting,arms,arms,painting,arms,arms,],
+                          [arms,cheese,open_,open_,open_,open_,open_,swords,lock,swords,open_,open_,open_,open_,open_,open_,arms,],
+                          [square_diamond,open_,open_,open_,open_,open_,festive,open_,open_,open_,festive,open_,open_,open_,open_,mother,square_diamond,],
+                          [arms,open_,open_,open_,open_,festive,candle,open_,open_,open_,candle,festive,open_,open_,open_,open_,arms,],
+                          [ew_4_1,open_,open_,open_,open_,open_,open_,open_,fountain,open_,open_,open_,open_,open_,open_,lock,door,],
+                          [arms,open_,open_,open_,open_,festive,candle,open_,open_,open_,candle,festive,open_,open_,open_,open_,arms,],
+                          [square_diamond,open_,open_,open_,open_,open_,festive,open_,open_,open_,festive,open_,open_,open_,open_,open_,square_diamond,],
+                          [arms,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,mouse,arms,],
+                          [arms,arms,painting,arms,arms,painting,arms,arms,ew_4_0,arms,arms,painting,arms,arms,painting,arms,arms,]],
+
+                          dragon:false,
+
+                        },
+                        //banquet
+                        5:{map:
+                          [ [arms,arms,painting,arms,arms,painting,arms,arms,ew_5_1,arms,arms,painting,arms,arms,painting,arms,arms,],
+                          [arms,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,arms,],
+                            [arms,open_,open_,open_,open_,open_,open_,open_,lady,open_,open_,open_,open_,open_,open_,open_,arms,],
+                            [arms,open_,open_,open_,meat,apple,cheese,beer,plate,meat,wine,bread,grapes,open_,open_,open_,arms,],
+                            [arms,open_,open_,mustache,plate,festive,candle,festive,candle,festive,candle,festive,plate,open_,open_,open_,ew_5_0,],
+                            [arms,open_,open_,open_,grapes,wine,bread,pan,plate,cheese,meat,pear,beer,open_,open_,open_,arms,],
+                            [arms,open_,open_,open_,open_,open_,man,open_,man,open_,open_,open_,open_,open_,open_,open_,arms,],
+                            [arms,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,arms,],
+                            [arms,arms,painting,arms,arms,painting,arms,arms,arms,arms,arms,painting,arms,arms,painting,arms,arms,]],
+
+                            dragon:false,
+
+                          },
+
+                          6:{map:
+                            [ [arms,arms,painting,arms,arms,painting,arms,fleur,fleur,fleur,arms,painting,arms,arms,painting,arms,arms,],
+                            [arms,open_,open_,open_,open_,open_,open_,open_,crown,open_,open_,open_,open_,open_,open_,open_,arms,],
+                              [arms,open_,open_,open_,open_,open_,man,open_,open_,open_,man,open_,open_,open_,open_,open_,arms,],
+                              [arms,open_,open_,open_,open_,open_,horn,open_,open_,open_,horn,open_,open_,open_,open_,open_,arms,],
+                              [arms,open_,open_,open_,open_,open_,guard,open_,open_,open_,guard,open_,open_,open_,open_,open_,arms,],
+                              [arms,open_,open_,open_,open_,open_,swords,open_,open_,open_,swords,open_,open_,open_,open_,open_,arms,],
+                              [arms,open_,open_,open_,open_,open_,guard,open_,open_,open_,guard,open_,open_,open_,open_,open_,arms,],
+                              [arms,open_,open_,open_,open_,open_,swords,open_,open_,open_,swords,open_,open_,open_,open_,open_,arms,],
+                              [arms,arms,painting,arms,arms,painting,arms,arms,ew_6_0,arms,arms,painting,arms,arms,painting,arms,arms,]],
+
+                              dragon:false,
+
+                            },
+
+                            6:{map:
+                              [ [arms,arms,painting,arms,arms,painting,arms,fleur,fleur,fleur,arms,painting,arms,arms,painting,arms,arms,],
+                              [arms,open_,open_,open_,open_,open_,open_,open_,crown,open_,open_,open_,open_,open_,open_,open_,arms,],
+                                [arms,open_,open_,open_,open_,open_,man,open_,open_,open_,man,open_,open_,open_,open_,open_,arms,],
+                                [arms,open_,open_,open_,open_,open_,horn,open_,open_,open_,horn,open_,open_,open_,open_,open_,arms,],
+                                [arms,open_,open_,open_,open_,open_,guard,open_,open_,open_,guard,open_,open_,open_,open_,open_,arms,],
+                                [arms,open_,open_,open_,open_,open_,swords,open_,open_,open_,swords,open_,open_,open_,open_,open_,arms,],
+                                [arms,open_,open_,open_,open_,open_,guard,open_,open_,open_,guard,open_,open_,open_,open_,open_,arms,],
+                                [arms,open_,open_,open_,open_,open_,swords,open_,open_,open_,swords,open_,open_,open_,open_,open_,arms,],
+                                [arms,arms,painting,arms,arms,painting,arms,arms,ew_6_0,arms,arms,painting,arms,arms,painting,arms,arms,]],
+
+                                dragon:false,
+
+                              },
+
+                              'town':{map:
+                                [ [tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,],
+                                  [ew_town_0,open_,open_,tree,tree,trident,tree,tree,sunflower,flag,sunflower,tree,tree,horn,tree,tree,open_,open_,ew_3_2,],
+                                  [tree,tree,open_,tree,trident,church,trident,open_,open_,open_,open_,open_,horn,building,horn,tree,open_,tree,tree,],
+                                  [tree,open_,open_,tree,open_,open_,open_,open_,open_,bird,open_,open_,open_,open_,open_,tree,open_,open_,tree,],
+                                  [tree,open_,tree,tree,tree,study,open_,open_,rainbow,fountain,blonde_girl,open_,open_,dove,open_,tree,tree,open_,tree,],
+                                  [tree,open_,tree,tree,study,tower,study,open_,open_,open_,open_,open_, dove,court,dove,tree,tree,open_,tree,],
+                                  [tree,open_,tree,tree,lady,open_,open_,open_,open_,open_,open_,open_,open_,open_,judge,tree,tree,open_,tree,],
+                                  [tree,open_,open_,tree,tree,tree,tree,tree,open_,open_,open_,tree,tree,tree,tree,tree,open_,open_,tree,],
+                                  [tree,tree,open_,open_,open_,open_,open_,open_,open_,tree,open_,open_,open_,open_,open_,open_,open_,tree,tree,],
+                                  [tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,tree,]],
+
+
+                                  dragon:false,
+
+                                },
+                                //school
+                                'school':{map:
+                                  [ [study,study,painting,study,study,painting,study,study,study,study,study,painting,study,study,painting,study,study,],
+                                  [study,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,study,],
+                                    [study,dove,books1,books2,books3,books4,open_,open_,lady,open_,open_,books4,books3,books2,books1,beaker,study,],
+                                    [study,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,study,],
+                                    [study,horn,books1,books2,books3,books4,open_,open_,open_,open_,open_,books4,books3,books2,books1,agri,study,],
+                                    [study,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,study,],
+                                    [study,trident,books1,books2,books3,books4,open_,open_,open_,open_,open_,books4,books3,books2,books1,world,study,],
+                                    [study,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,open_,study,],
+                                    [study,study,painting,study,study,painting,study,study,ew_school_0,study,study,painting,study,study,painting,study,study,]],
+
+                                    dragon:false,
+
+                                  },
+
+            }
+
+            //
+            //🃏🤔😏😨👻👋👏🙏👸🏼👑🎒💍🐮🐰🐭🦁🐸🐷🐔🐤🐺🐗🦄🐛🐝🐌🐞🐜🕷🐍🐑🐀🐁🐿
+            //🐉🐲🌲🌳🌾🌻🌷🍄🌰🐚🕸🌝🌤🔥🍎🍇🧀🍗🍖🍺🍻🏹🎣🏵🎭🎨🎪⛲️⛰🏔🏞🏝🏰🌈
+            //💎⚖💰🕯⚙💣🗡⚔🛡☠️⚰🔮📿⚗🚪🖼🎉🎊📯📜🏳❤️💛💚💙💜❣️♨️🔱⚜🔰💠🌀🌌
+            //🏤⛪️🏛⌛️🦆🐥🐣🐯🦁🦎🐒🎲🌈🌹🥀
+
+
+
+
+
+var scene;
+
+var player = {
+ avatar: null,
+ current: [1,2],
+ health: 1,
+ diamonds: 0,
+ scrolls: 0,
+ keys: 0,
+ emoji: '😀',
+ sword: false,
+ orb: false,
+ card: false,
+ nut: false,
+};
+
+function checkHealth(){
+  if (player.health < 1){
+    player.emoji = '😵';
+    playerDie();
+  } else {
+  player.emoji = player.avatar;
+  }
+}
+
+var playerDie = function(){
+
+}
+
+function populateEnemies(){
+  scenes[current_scene].map[dragon.current[0]][dragon.current[1]] = dragon;
+};
+
+function placePlayer(){
+
+  scene = scenes[current_scene].map;
+  scene[player.current[0]][player.current[1]] = player;
+}
+
+var scene = null;
+function buildScene(){
+  scene = scenes[current_scene].map;
+  $("tbody tr").remove();
+
+  if (scenes[current_scene].dragon){
+    populateEnemies();
+  };
+  placePlayer();
+  for (row in scene){
+
+    var current = $('.grid tbody').append("<tr row="+row+"></tr>")
+
+    for (square in scene[row]){
+      $('tr[row='+ row +']').append("<td col="+square+">"+scene[row][square].emoji+"</td>")
+    }
+  }
+};
+
+function checkSquare(square){
+
+  if (square == heart){
+    player.health += 1;
+  }
+
+  if (square == diamond){
+    player.diamonds += 1;
+  }
+  if (square == scroll){
+    player.scrolls += 1;
+  }
+
+  if (square == nut){
+    player.nut = true;
+  }
+
+  if (square == key){
+    player.keys += 1;
+  }
+
+  if (square == owl){
+    box(owl.emoji, "HOO! HOO!");
+  }
+
+  if (square == crown){
+    box(crown.emoji + ' 💌', "I have already heard about the great deed you did for my sister and the royal family. News travels quickly in our kingdom. I would like to invite you to a royal banquet this evening, please take this envelope and come back to the castle this evening. You may want to go explore the village before the banquet starts, you are sure to meet some interesting folk there. It's just beyond the castle. Thank you again.")
+  }
+
+
+
+  if (square == orb){
+    player.orb = true;
+  }
+
+  if (square == squirrle){
+    if (!player.nut){
+      box(squirrle.emoji, "I love nuts! If you see any nuts would you mind bringing them to me! If you do I might be able to do you a small favor...");
+    } else {
+      box(nut.emoji + "  " + squirrle.emoji + "  🎗", "Wow!! Thank you soo much! Chestnuts are my favorite! I want you to have this ribbon, I think it belongs to a wealthy family just outside of the village. They would be very grateful to have it.")
+    }
+  }
+
+  if (square == woman){
+    if (player.orb){
+      if (!player.card){
+      box(woman.emoji + " " + card.emoji, 'Oh my goodness!! The sacred orb! What a brave young man! For your bravery and courage I would like to give you something... here is a pass to the royal castle 🃏');
+      player.card = true;
+    } else {
+      box(woman.emoji, 'Hurry along to the castle, it is just beyong the village up ahead. I will stay here and enjoy this fountain for now.');
+    }
+
+    } else {
+    box(woman.emoji, 'Oh would you take this sword and slay that beastly dragon! He has stolen the regal orb! I need it!!! Thank you!');
+    }
+  }
+
+  if (square == sword){
+    player.sword = true;
+    square = open_;
+    box(sword.emoji, 'Press SPACE to use you sword!')
+  }
+
+  if (square.exitway){
+    var entry_point = [square.entry[0],square.entry[1]];
+    player.current = entry_point;
+    current_scene = square.next;
+    buildScene();
+  }
+
+
+
+
+
+
+  // if (square.exitway == true){
+  //   var next_entry = square.entry;
+  //   clearScene(scenes[current_scene].map);
+  //   current_scene = square.next;
+  //
+  //   player.current = next_entry;
+  //   square.entry = next_entry;
+  //   // scenes[current_scene].map[player.current[0]][player.current[1]] = player;
+  //   clearScene(scenes[current_scene].map);
+  //   buildScene();
+  //
+  // }
+}
+
+function checkChange(step){
+  console.log(scenes[3].map[2][11].entry, step)
+}
+
+var box = function(header, text){
+  $("#dialogue-title").text(header)
+  $("#dialogue-body").text(text)
+  showModal();
+}
+
+
+function updateStats(){
+  $(".health").text(player.health)
+  $(".diamonds").text(player.diamonds)
+  $(".scrolls").text(player.scrolls)
+  $(".keys").text(player.keys)
+  $(".scene").text(current_scene)
+  $(".pos").text(player.current)
+}
+
+updateStats();
+
+function start(){
+
+function move(the_next_square, axis, operation){
+  if (the_next_square.exitway){
+    scenes[current_scene].map[player.current[0]][player.current[1]] = open_;
+  }
+  if (!the_next_square.wall && !the_next_square.exitway){
+    scene[player.current[0]][player.current[1]] = open_;
+    if (operation == "+"){
+      if (axis == 0){
+        player.current[0] += 1;
+      } else{
+        player.current[1] += 1;
+      }
+    } else {
+      if (axis == 0){
+        player.current[0] -= 1;
+      } else {
+        player.current[1] -= 1;
+      }
+    }
+  }
+}
+
+
+
+var pushKeys = window.addEventListener("keydown", function(event) {
+if (modal.style.display == 'block'){
+  // console.log('close modal');
+  if (event.keyCode == 32){
+    event.preventDefault();
+    modal.style.display = 'none';
+  }
+}else {
+  if (event.keyCode == 40 || event.keyCode == 83){
+    event.preventDefault();
+    var current = player.current[0];
+    var next_ = current + 1;
+    var next_square = scene[next_][player.current[1]];
+    move(next_square, 0, "+");
+
+    checkSquare(next_square);
+
+
+    }
+
+  if (event.keyCode == 38 || event.keyCode == 87){
+    event.preventDefault();
+    var current = player.current[0];
+    var next_ = current - 1;
+    var next_square = scene[next_][player.current[1]];
+    move(next_square, 0, "-");
+    checkSquare(next_square);
+    }
+
+  if (event.keyCode == 37 || event.keyCode == 65){
+
+    event.preventDefault();
+    var current = player.current[1];
+    var next_ = current - 1;
+    var next_square = scene[player.current[0]][next_];
+    move(next_square, 1, "-");
+    checkSquare(next_square);
+    }
+
+  if (event.keyCode == 39 || event.keyCode == 68){
+    event.preventDefault();
+    var current = player.current[1];
+    var next_ = current + 1;
+    var next_square = scene[player.current[0]][next_];
+    move(next_square, 1, "+");
+    checkSquare(next_square);
+    }
+
+  if (event.keyCode == 32){
+    event.preventDefault();
+    if (player.sword){
+      var current = player.current;
+      var attack_squares = [scene[current[0]+1][current[1]],
+                            scene[current[0]-1][current[1]],
+                            scene[current[0]][current[1]+1],
+                            scene[current[0]][current[1]-1]]
+      for (square in attack_squares){
+        if (attack_squares[square] == dragon){
+          dragon.health -= 1;
+          checkDragonHealth();
+        }
+      }
+    }
+  }
+}
+
+  buildScene();
+  checkHealth();
+  updateStats();
+
+});
+//dragon direction
+var direction = -1;
+
+function checkDragonHealth(){
+  if (dragon.health < 0){
+    scene[dragon.current[0]][dragon.current[1]] = orb;
+    scenes[current_scene].dragon = false;
+
+    buildScene();
+
+  }
+}
+
+var dragonMove = function(){
+  if (scenes[current_scene].dragon == true){
+    var dragon_pos = dragon.current;
+    var current_ = dragon.current[1];
+    var next_ = current_ + 1;
+    var next_dragon = scene[next_][player.current[1]];
+    scene[dragon.current[0]][dragon.current[1]] = open_;
+    if (dragon.current[0] == 1){
+      direction = 1;
+    } else if (dragon.current[0] == 7){
+      direction = -1;
+    };
+
+    dragon.current[0] += direction;
+
+    if (dragon.current[0] == player.current[0] && dragon.current[1] == player.current[1]){
+      player.health -= 1;
+      updateStats();
+    }
+    buildScene();
+  }
+}
+
+var enemy1 = function(){ setInterval(dragonMove, 350);};
+enemy1();
+buildScene();
+
+};
+
+
+function updateScene(){
+  map_ = scene_data.map;
+}
+
+var total_seconds = 0;
+var startClock = function(){setInterval(function updateClock(){
+  total_seconds += 1;
+  var pad_zero;
+  if (total_seconds % 60 < 10) {
+    pad_zero = '0';
+  } else {
+    pad_zero = '';
+  }
+  var time = (Math.ceil(total_seconds/60 - 1)) +' : ' + pad_zero + (total_seconds % 60);
+  $(".clock").text(time)
+}, 1000);
+};
+
+$('.togglePlay').click(function(){
+  var avatar = $(".choose_avatar").val();
+  player.avatar = avatar;
+  start();
+  startClock();
+  $(this).text('Stop');
+  $('#welcomeJumbo').hide();
+  $('.stat').show();
+
+})
+
+$(".choose_avatar").change(function (){
+    player.emoji = $(this).val();
+});
+
+
+
+</script>

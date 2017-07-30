@@ -1,0 +1,434 @@
+{% load staticfiles %}
+
+<!doctype html>
+<html>
+<head>
+  <title>PlayQuest</title>
+
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  <link rel="stylesheet" href="{% static 'css/modal.css' %}">
+
+</head>
+
+<body style="padding-top:30px;">
+
+      <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">👑&nbsp;&nbsp;PlayQuest ⚔</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+<!--
+              <li style="display:none;" class="stat"><a>❤️ ✖️ <span class="health"></span></a></li>
+              <li style="display:none;" class="stat"><a>💎 ✖️ <span class="diamonds"></span></a></li>
+              <li style="display:none;" class="stat"><a>📜 ✖️ <span class="scrolls"></span></a></li>
+              <li style="display:none;" class="stat"><a>🗝 ✖️ <span class="keys"></span></a></li> -->
+              <li style="display:none;" class="stat"><a>⏳&nbsp;&nbsp;<span class="clock">0 : 00</span></a></li>
+              <!-- <li style="display:none;" class="stat"><a>Scene: <span class="scene"></span></a></li> -->
+              <!-- <li style="display:none;" class="stat"><a>Pos: <span class="pos"></span></a></li> -->
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a class="btn" id="branch-menu" type="button" data-toggle="modal" data-target="#branch-modal">Branch 🌿</a></li>
+              <li><a href="#music" type="button" data-toggle="modal" data-target="#myModal-music">🔊</a></li>
+              <li><a>Guest</a></li>
+              <li><a href="{% url 'home:home' %}">Exit</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+
+      <div class="modal fade" id="myModal-music" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div style="text-align:center;" class="modal-body">
+              <h1>🎻🎹🎶</h1>
+              <audio loop="loop" autoplay="true" audio="" controls="controls">
+                    <source src="{% static 'music/plirwin.ogg' %}">
+                    <embed type="application/x-shockwave-flash" src="http://www.google.com/reader/ui/3523697345-audio-player.swf" quality="best" flashvars="audioUrl=http://www.contemplator.com/mp3/plirwin.mp3" width="500" height="27">
+                    </audio>
+            </div>
+            <div class="modal-footer">
+              <div class="pull-left">Source: <a href="http://www.contemplator.com/">contemplator.com</a></div>
+              <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- if (event.keyCode == 81){
+        $('#myModal-q').modal('toggle');
+      } -->
+
+      <div class="modal fade" id="help-modal" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div style="text-align:center;" class="modal-body">
+              <h1>Controls</h1>
+              <h4>Press <b>Q</b> to toggle controls</h4>
+              <p>Controls go here</p>
+            </div>
+            <div class="modal-footer">
+
+              <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="branch-modal" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div style="text-align:center;" class="modal-body">
+              <h1>Branch this game 🌿</h1>
+              <h4>Branching allows you to edit your own copy of this game</h4>
+              {% if request.user.is_authenticated %}
+              <button class="btn btn-success" href="">Branch</button>
+              {% else %}
+              <div class="alert alert-warning alert-dismissible">You need to be logged in to branch this game.</div>
+              <button class="btn btn-success">Login</button>
+              <br /><br />
+              <button class="btn btn-primary">Create a new account</button><br /><br />
+              <p>it's free! 😊</p>
+              {% endif %}
+            </div>
+            <!-- <div class="modal-footer">
+
+              <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+            </div> -->
+          </div>
+        </div>
+      </div>
+
+
+
+
+  <div style="background-color:" class="container">
+    <div class="row">
+
+      </div>
+      <span id="welcomeJumbo">
+      <div style="padding-top:40px;" class="row">
+<div style="text-align:center;" class="jumbotron" >
+  <h1>👑⚔🏰🐉❤️<br />Welcome to King's Encounter!</h1>
+
+  <p>Prepare yourself! A journey awaits...</p>
+  <a class="btn btn-success btn-lg" id="start_btn" href="#">Play Game {{ game_id }}</a>
+<br />
+<br />
+
+<a class="btn btn-info btn-lg" href="{% url 'kings:create'%}">Build Your Own Level</a>
+</div>
+</div>
+<div style="text-align:center;" class="row">
+<div class="col-md-4"><h2>⬆️⬅️⬇️➡️<br />Walk with W, A, S and D.</h2><p>You can also use the arrow keys</p></div>
+<div class="col-md-4"><h2>🐲😱😲💀<br />Beware of dragons.</h2><p>Crossing paths with dragons will decrease your health.</p></div>
+<div class="col-md-4"><h2>📜👓💡✅<br />Collect scrolls.</h2><p>Scrolls contain hints and important knowledge.</p></div>
+</div>
+
+</span>
+
+<div style="padding-top:40px;" class="col-md-10">
+<div style="align:center;" class="canvas"><table style="font-size:3.5em;" class="grid"><tbody id="scene"></tbody></table>
+
+</div>
+</div>
+</div>
+
+<div id="myModal" class="dialogue-modal">
+  <div   class="modal-content">
+    <span class="close">&times;</span>
+    <p id="dialogue-title" style="text-align:center; font-size:6em"></p>
+    <p id="dialogue-body" style="font-size:3em;"></p>
+  </div>
+</div>
+
+<script>
+
+
+$('#start_btn').focus();
+var modal = document.getElementById('myModal');
+var span = document.getElementsByClassName("close")[0];
+var showModal = function() {
+    modal.style.display = "block";
+}
+
+span.onclick = function() {
+    modal.style.display = "none";
+}
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>
+
+</div>
+</body>
+
+</html>
+
+<script src="{% static 'js/items.js' %}" type="text/javascript" ></script>
+
+<script>
+
+
+var player = null;
+
+// var player = {
+// 'avatar': null,
+// 'current': [1,2],
+// 'health': 1,
+// 'diamonds': 0,
+// 'scrolls': 0,
+// 'keys': 0,
+// 'emoji': '😀',
+// 'sword': false,
+// 'orb': false,
+// 'card': false,
+// 'nut': false,
+// };
+
+// window.scene = null
+
+var scene = null;
+var current_scene = null;
+
+function placePlayer(){
+
+    scenes[current_scene].grid[player.current[0]][player.current[1]] = player;
+   }
+
+function buildScene(){
+  $("tbody tr").remove();
+  scene = scenes[current_scene].grid;
+  placePlayer();
+  for (var row in scene){
+    $('.grid tbody').append("<tr row='"+row+"'></tr>")
+    for (var square=0; square<scene[row].length; square++){
+      $('tr[row='+ row +']').append("<td col="+square+">"+scene[row][square].emoji+"</td>")
+    }
+  }
+};
+
+function checkSquare(square){
+  if (square == things.heart){
+    player.health += 1;
+  }
+  if (square == things.diamond){
+    player.diamonds += 1;
+  }
+  if (square == things.scroll){
+    player.scrolls += 1;
+  }
+  if (square == things.nut){
+    player.nut = true;
+  }
+  if (square == things.key){5
+    player.keys += 1;
+  }
+  if (square == things.owl){
+    box(things.owl.emoji, "HOO! HOO!");
+  }
+  if (square == things.crown){
+    box(things.crown.emoji + ' 💌', "I have already heard about the great deed you did for my sister and the royal family. News travels quickly in our kingdom. I would like to invite you to a royal banquet this evening, please take this envelope and come back to the castle this evening. You may want to go explore the village before the banquet starts, you are sure to meet some interesting folk there. It's just beyond the castle. Thank you again.")
+  }
+  if (square == things.orb){
+    player.orb = true;
+  }
+  if (square == things.squirrle){
+    if (!player.nut){
+      box(things.squirrle.emoji, "I love nuts! If you see any nuts would you mind bringing them to me! If you do I might be able to do you a small favor...");
+    } else {
+      box(things.nut.emoji + "  " + things.squirrle.emoji + "  🎗", "Wow!! Thank you soo much! Chestnuts are my favorite! I want you to have this ribbon, I think it belongs to a wealthy family just outside of the village. They would be very grateful to have it.")
+    }
+  }
+  if (square == things.woman){
+    if (player.orb){
+      if (!player.card){
+      box(things.woman.emoji + " " + things.card.emoji, 'Oh my goodness!! The sacred orb! What a brave young man! For your bravery and courage I would like to give you something... here is a pass to the royal castle 🃏');
+      player.card = true;
+    } else {
+      box(things.woman.emoji, 'Hurry along to the castle, it is just beyong the village up ahead. I will stay here and enjoy this fountain for now.');
+    }
+
+    } else {
+    box(things.woman.emoji, 'Oh would you take this sword and slay that beastly dragon! He has stolen the regal orb! I need it!!! Thank you!');
+    }
+  }
+  if (square == things.sword){
+    player.sword = true;
+    square = things.blank;
+    box(things.sword.emoji, 'Press SPACE to use you sword!')
+  }
+  if (square.exitway){
+    var entry_point = [square.entry[0],square.entry[1]];
+    player.current = entry_point;
+    var _current_scene = square.next;
+    scenes[_current_scene].grid[square.next[0]][square.next[1]] = player;
+    current_scene = square.next;
+    buildScene();
+
+  }
+}
+
+var start = function(){
+
+function move(the_next_square, axis, operation){
+  if (the_next_square.hasOwnProperty("exitway")){
+    scenes[current_scene].grid[player.current[0]][player.current[1]] = things.blank;
+
+  }
+  if (!the_next_square.wall && !the_next_square.exitway){
+    //scene = scenes[current_scene].grid
+
+
+
+    scenes[current_scene].grid[player.current[0]][player.current[1]] = things.blank;
+
+    if (operation == "+"){
+      if (axis == 0){
+        player.current[0] = String(parseInt(player.current["0"]) + 1);
+      } else{
+        player.current[1] = String(parseInt(player.current["1"]) + 1);
+      }
+    } else {
+      if (axis == 0){
+        player.current[0] = String(parseInt(player.current["0"]) - 1);
+      } else {
+        player.current[1] = String(parseInt(player.current["1"]) - 1);
+      }
+    }
+  }
+}
+
+var pushKeys = window.addEventListener("keydown", function(event) {
+  if (event.keyCode == 81){
+    $('#help-modal').modal('toggle');
+  }
+if (modal.style.display == 'block'){
+  if (event.keyCode == 32){
+    event.preventDefault();
+    modal.style.display = 'none';
+    }
+  } else {
+  if (event.keyCode == 40 || event.keyCode == 83){
+    event.preventDefault();
+    var current = player.current[0];
+    var next_ = parseInt(current) + 1;
+    var next_square = scene[next_][player.current[1]];
+    move(next_square, 0, "+");
+    checkSquare(next_square);
+    }
+  if (event.keyCode == 38 || event.keyCode == 87){
+    event.preventDefault();
+    var current = player.current[0];
+    var next_ = parseInt(current) - 1;
+    var next_square = scene[next_][player.current[1]];
+    move(next_square, 0, "-");
+    checkSquare(next_square);
+
+    }
+  if (event.keyCode == 37 || event.keyCode == 65){
+    event.preventDefault();
+    var current = player.current[1];
+    var next_ = parseInt(current) - 1;
+    var next_square = scene[player.current[0]][next_];
+    move(next_square, 1, "-");
+    checkSquare(next_square);
+    }
+  if (event.keyCode == 39 || event.keyCode == 68){
+    event.preventDefault();
+    var current = player.current[1];
+    var next_ = parseInt(current) +1;
+    var next_square = scene[player.current[0]][next_];
+    move(next_square, 1, "+");
+    checkSquare(next_square);
+    }
+  // if (event.keyCode == 32){
+  //   event.preventDefault();
+  //   if (player.sword){
+  //     var current = player.current;
+  //     var attack_squares = [scene[current[0]+1][current[1]],
+  //                           scene[current[0]-1][current[1]],
+  //                           scene[current[0]][current[1]+1],
+  //                           scene[current[0]][current[1]-1]]
+  //     for (square in attack_squares){
+  //       if (attack_squares[square] == dragon){
+  //         dragon.health -= 1;
+  //         checkDragonHealth();
+  //       }
+  //     }
+  //   }
+  // }
+}
+
+buildScene();
+});
+
+}
+
+var total_seconds = 0;
+var startClock = function(){setInterval(function updateClock(){
+  total_seconds += 1;
+  var pad_zero;
+  if (total_seconds % 60 < 10) {
+    pad_zero = '0';
+  } else {
+    pad_zero = '';
+  }
+  var time = (Math.ceil(total_seconds/60 - 1)) +' : ' + pad_zero + (total_seconds % 60);
+  $(".clock").text(time)
+}, 1000);
+};
+
+$("#start_btn").click(function(e){
+  e.preventDefault()
+
+  $(this).text('Stop');
+  $('#welcomeJumbo').hide();
+  $('.stat').show();
+  $.ajax({
+    //url: '/kings/json/',
+    url: '/api/playquest/{{ game_id }}/',
+    method: "GET",
+    data: {},
+    success: function(data){
+
+      window.game_data = JSON.parse(data)
+      window.player = things.player
+
+      try {
+        window.current_scene = game_data["game"]["game"]["current_scene"]
+        window.scenes = game_data["game"]["game"].scenes
+        window.scene = game_data["game"]["game"].scenes[current_scene].grid
+
+      } catch (err) {
+        window.current_scene = game_data["game"]["current_scene"]
+        window.scenes = game_data["game"].scenes
+        window.scene = game_data["game"].scenes[current_scene].grid
+      };
+      buildScene();
+      startClock();
+      start();
+    }
+  });
+});
+
+</script>

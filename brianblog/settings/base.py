@@ -56,6 +56,8 @@ INSTALLED_APPS = [
     'langton',
     'yawlih',
     'kings',
+    'playquest',
+    'hashtest', 
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'

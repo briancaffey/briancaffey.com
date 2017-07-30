@@ -4,8 +4,6 @@
 <html>
 <head>
   <title>PlayQuest</title>
-  <script src="https://cdn.jsdelivr.net/emojione/2.2.7/lib/js/emojione.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/emojione/2.2.7/assets/css/emojione.min.css"/>
   <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.js"></script>
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
   <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" />
@@ -19,7 +17,7 @@
 
 <body style="padding-top:30px;">
 
-{% include 'kings/kings_nav.html' %}
+{% include 'playquest/playquest_nav.html' %}
 
   <div style="background-color:white" class="container">
     <div class="row">
@@ -161,12 +159,6 @@
 
 <script>
 // (function(){
-
-
-
-
-
-
 
 $('.togglePlay').click(function(){
   $('#welcomeJumbo').hide();
@@ -507,21 +499,21 @@ $("#save-level").click(function(event){
   if (window.game_id == null){
   $.ajax({
     type : "POST",
-    url : "/api/kings/save/",
+    url : "/api/playquest/save/",
     csrfmiddlewaretoken: "{{ csrf_token }}",
-    data : JSON.stringify({game:scenes, id:false}),
+    data : JSON.stringify({game_data:scenes, id:0}),
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
     success: function(data){
         window.game_id = data["id"]
-        window.APIUpdateURL = "/api/kings/"+String(window.game_id)+"/update/"
+        window.APIUpdateURL = "/api/playquest/"+String(window.game_id)+"/update/"
         var pathArray = location.href.split( '/' );
         var protocol = pathArray[0];
         var host = pathArray[2];
         var url = protocol + '//' + host;
-        var game_url = "/kings/game/"+String(game_id)+"/"
+        var game_url = "/playquest/game/"+String(game_id)+"/edit/"
         var full_url = url + game_url
         $('#new_game_link').attr('href',full_url);
         $('#new_game_link').text(full_url);
@@ -538,19 +530,19 @@ $("#save-level").click(function(event){
     type : "PUT",
     url : window.APIUpdateURL,
     csrfmiddlewaretoken: "{{ csrf_token }}",
-    data : JSON.stringify({game:scenes, id:window.game_id}),
+    data : JSON.stringify({game_data:scenes, id:window.game_id}),
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
     success: function(data){
         window.game_id = data["id"]
-        window.APIUpdateURL = "/api/kings/"+String(window.game_id)+"/update/"
+        window.APIUpdateURL = "/api/playquest/"+String(window.game_id)+"/update/"
         var pathArray = location.href.split( '/' );
         var protocol = pathArray[0];
         var host = pathArray[2];
         var url = protocol + '//' + host;
-        var game_url = "/kings/game/"+String(game_id)+"/"
+        var game_url = "/playquest/game/"+String(game_id)+"/"
         var full_url = url + game_url
         $('#new_game_link').attr('href',full_url);
         $('#new_game_link').text(full_url);
