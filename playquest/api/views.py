@@ -1,6 +1,6 @@
 from ..models import Game
 
-from .serializers import GameSerializer
+from .serializers import GameSerializer, GameSaveSerializer
 
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView, UpdateAPIView
 from rest_framework.views import APIView
@@ -11,7 +11,7 @@ from rest_framework.renderers import JSONRenderer
 
 class GameCreateAPIView(CreateAPIView):
     queryset = Game.objects.all()
-    serializer_class = GameSerializer
+    serializer_class = GameSaveSerializer
     # renderer_classes = (JSONRenderer, )
 
     def perform_create(self, serializer):
