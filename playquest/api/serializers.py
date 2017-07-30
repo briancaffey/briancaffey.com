@@ -8,14 +8,14 @@ from rest_framework import serializers
 from ..models import Game
 
 
-class GameSerializer(ModelSerializer):
+class GameSaveSerializer(ModelSerializer):
     #
-    # id = HashidSerializerCharField(source_field='playquest.Game.id')
+    id = HashidSerializerCharField(source_field='playquest.Game.id')
 
     class Meta:
         model = Game
         fields = [
-            # 'id',
+            'id',
             'game_data',
 
         ]
