@@ -1,6 +1,6 @@
 from ..models import Game
 
-from .serializers import GameSerializer, GameSaveSerializer
+from .serializers import GameSerializer
 
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView, UpdateAPIView
 from rest_framework.views import APIView
