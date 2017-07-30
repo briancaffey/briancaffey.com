@@ -501,7 +501,7 @@ $("#save-level").click(function(event){
     type : "POST",
     url : "/api/playquest/save/",
     csrfmiddlewaretoken: "{{ csrf_token }}",
-    data : JSON.stringify({game_data:scenes, id:false}),
+    data : JSON.stringify({'game_data':scenes, 'id':12}),
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
