@@ -10,14 +10,17 @@ from ..models import Game
 
 class GameSaveSerializer(ModelSerializer):
 
+    id = serializers.SerializerMethodField()
     class Meta:
         model = Game
         fields = [
-
+            'id'
             'game_data',
 
         ]
 
+    def get_id(self, obj):
+        return str(obj.id)
 
 
 
