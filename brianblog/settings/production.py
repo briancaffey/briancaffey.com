@@ -59,6 +59,9 @@ INSTALLED_APPS = [
     'hashtest',
 ]
 
+
+APPEND_SLASH=False
+
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 HASHID_FIELD_SALT = os.environ['HASHID_SALT']
