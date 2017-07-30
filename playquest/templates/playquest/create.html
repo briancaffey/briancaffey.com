@@ -501,7 +501,7 @@ $("#save-level").click(function(event){
     type : "POST",
     url : "/api/playquest/save/",
     csrfmiddlewaretoken: "{{ csrf_token }}",
-    data : JSON.stringify({game_data:scenes, id:0}),
+    data : JSON.stringify({game_data:scenes, id:"this"}),
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
@@ -513,7 +513,7 @@ $("#save-level").click(function(event){
         var protocol = pathArray[0];
         var host = pathArray[2];
         var url = protocol + '//' + host;
-        var game_url = "/playquest/game/"+String(game_id)+"/edit/"
+        var game_url = "/playquest/game/"+String(game_id)+"/"
         var full_url = url + game_url
         $('#new_game_link').attr('href',full_url);
         $('#new_game_link').text(full_url);
