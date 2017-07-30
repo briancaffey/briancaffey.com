@@ -19,6 +19,7 @@ class Game(models.Model):
     game_emoji = models.CharField(max_length=200)
     game_created = models.DateTimeField(auto_now_add=True)
     game_updated = models.DateTimeField(auto_now=True)
+    game_saved = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.id)

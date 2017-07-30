@@ -8,35 +8,16 @@ from rest_framework import serializers
 from ..models import Game
 
 
-# class GameSaveSerializer(ModelSerializer):
-#
-#     id = serializers.SerializerMethodField()
-#     class Meta:
-#         model = Game
-#         fields = [
-#             'id'
-#             'game_data',
-#
-#         ]
-#
-#     def get_id(self, obj):
-#         return str(obj.id)
-#
-#
-
-
-
-
 class GameSerializer(ModelSerializer):
-
-    id = HashidSerializerCharField(source_field='playquest.Game.id')
+    #
+    # id = HashidSerializerCharField(source_field='playquest.Game.id')
 
     class Meta:
         model = Game
         fields = [
-            'id',
+            # 'id',
             'game_data',
-            'game_owner',
+            # 'game_owner',
         ]
 
 
