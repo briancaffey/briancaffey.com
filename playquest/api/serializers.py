@@ -17,8 +17,22 @@ class GameSerializer(ModelSerializer):
         fields = [
             # 'id',
             'game_data',
-            # 'game_owner',
+
         ]
+
+
+class GameSerializer(ModelSerializer):
+    #
+    id = HashidSerializerCharField(source_field='playquest.Game.id')
+
+    class Meta:
+        model = Game
+        fields = [
+            'id',
+            'game_data',
+
+        ]
+
 
 
 class GamePlaySerializer(ModelSerializer):
