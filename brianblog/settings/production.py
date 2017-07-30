@@ -60,7 +60,7 @@ INSTALLED_APPS = [
 ]
 
 
-APPEND_SLASH=False
+
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
