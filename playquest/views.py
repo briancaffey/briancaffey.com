@@ -9,8 +9,8 @@ def demo(request):
 	return render(request, 'playquest/demo.html', {})
 
 def game_id(request, id):
-	game = Game.objects.get(id=id)
-	if game.exists():
+	game = Game.objects.filter(id=id)
+	if len(game) == 1:
 		context = {
 			'game':game,
 			'game_id': id,
