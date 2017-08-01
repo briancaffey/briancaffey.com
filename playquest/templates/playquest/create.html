@@ -497,7 +497,7 @@ $("#save-level").click(function(event){
        }
   });
   if (window.game_id == null){
-    var game_id = _.random(100000, 100000000000000000)
+    var game_id = _.random(10, 1000000000000)
   $.ajax({
     type : "POST",
     url : "/api/playquest/save/",
