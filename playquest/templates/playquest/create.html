@@ -497,11 +497,12 @@ $("#save-level").click(function(event){
        }
   });
   if (window.game_id == null){
+    var game_id = _.random(100000, 100000000000000000)
   $.ajax({
     type : "POST",
     url : "/api/playquest/save/",
     csrfmiddlewaretoken: "{{ csrf_token }}",
-    data : JSON.stringify({game_data:scenes, id:2017}),
+    data : JSON.stringify({game_data:scenes, id:game_id}),
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
