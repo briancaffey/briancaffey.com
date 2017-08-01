@@ -411,7 +411,7 @@ $("#start_btn").click(function(e){
     data: {},
     success: function(data){
 
-      window.game_data = JSON.parse(data)
+      window.game_data = data
       window.player = things.player
 
       try {
