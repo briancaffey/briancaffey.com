@@ -16,7 +16,7 @@ class GameCreateAPIView(CreateAPIView):
     def perform_create(self, serializer):
         game_data = self.request.data
         if self.request.user.is_authenticated:
-            _ = serializer.save(game_data=game_data, user=self.request.user)
+            _ = serializer.save(game_data=game_data, game_owner=self.request.user)
         else:
             _ = serializer.save(game_data=game_data)
 
