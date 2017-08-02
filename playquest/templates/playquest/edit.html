@@ -462,9 +462,9 @@ $("#save-level").click(function(event){
 
   $.ajax({
     type : "PUT",
-    url: "/api/playquest/"+String({{ game_id }})+"/update/",
+    url: "/api/playquest/"+"{{ game_id }}"+"/update/",
     csrfmiddlewaretoken: "{{ csrf_token }}",
-    data : JSON.stringify({game_data:scenes, id:String({{ game_id }})}),
+    data : JSON.stringify({game_data:scenes, id:String("{{ game_id }}")}),
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
