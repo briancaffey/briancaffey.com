@@ -165,7 +165,7 @@
 //   buildScene("starting_scene");
 // })
 
-window.game_id = String("{{ game.id }}")
+window.game_id = String("{{ game_id }}")
 window.cloned_emoji = null;
 var selected = things.blank
 $("#current_emoji").text(selected.emoji);
@@ -462,9 +462,9 @@ $("#save-level").click(function(event){
 
   $.ajax({
     type : "PUT",
-    url: "/api/playquest/"+String({{ game.id }})+"/update/",
+    url: "/api/playquest/"+String({{ game_id }})+"/update/",
     csrfmiddlewaretoken: "{{ csrf_token }}",
-    data : JSON.stringify({game_data:scenes, id:String({{ game.id }})}),
+    data : JSON.stringify({game_data:scenes, id:String({{ game_id }})}),
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
@@ -534,7 +534,7 @@ $("#start_btn").click(function(e){
   $('.stat').show();
   $.ajax({
     //url: '/kings/json/',
-    url: '/api/playquest/{{ game.id }}/',
+    url: '/api/playquest/{{ game_id }}/',
     method: "GET",
     data: {},
     success: function(data){
