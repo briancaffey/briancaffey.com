@@ -101,11 +101,14 @@
 <div class="col-md-4"><h2>🐲😱😲💀<br />Beware of dragons.</h2><p>Crossing paths with dragons will decrease your health.</p></div>
 <div class="col-md-4"><h2>📜👓💡✅<br />Collect scrolls.</h2><p>Scrolls contain hints and important knowledge.</p></div>
 </div>
+<hr>
+{% for game in games %}
 
+    <p><a href="{{ game.play_url }}">{{ game.id }}</a></p>
+
+{% endfor %}
 </span>
 
-<div style="padding-top:40px;" class="col-md-10">
-<div style="align:center;" class="canvas"><table style="font-size:3.5em;" class="grid"><tbody id="scene"></tbody></table>
 
 </div>
 </div>

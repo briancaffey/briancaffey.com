@@ -1,6 +1,7 @@
 from django.db import models
 from hashid_field import HashidAutoField
 from django.contrib.auth.models import User
+from django.urls import reverse
 import uuid
 from django.contrib.postgres.fields import JSONField
 
@@ -23,6 +24,9 @@ class Game(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+    def play_url(self):
+        return reverse('playquest:game_id', args=[self.id])
 
 
 class GamePlay(models.Model):
