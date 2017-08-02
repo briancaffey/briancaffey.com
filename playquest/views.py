@@ -25,7 +25,7 @@ def create(request):
 
 @login_required
 def edit_game(request, id):
-    game = Game.objects.filter()
+    game = Game.objects.filter(id=id)
     context = {}
     if len(game) == 1:
         if game.id == request.user.id:
