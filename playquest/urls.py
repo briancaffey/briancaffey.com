@@ -2,7 +2,7 @@ from django.conf.urls import url, include
 from playquest import views
 from playquest.api.views import GameCreateAPIView, GameListAPIView, GameDetailAPIView, GameUpdateAPIView
 urlpatterns = [
-        url(r'^profile/$', view.profile, name='profile'),
+        url(r'^profile/$', views.profile, name='profile'),
 		url(r'^create/$', views.create, name='create'),
 		url(r'^demo/$', views.demo, name='demo'),
 		url(r'^$', views.playquest_home, name="home"),
