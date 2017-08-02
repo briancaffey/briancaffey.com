@@ -160,10 +160,10 @@
 <script>
 // (function(){
 
-$('.togglePlay').click(function(){
-  $('#welcomeJumbo').hide();
-  buildScene("starting_scene");
-})
+// $('.togglePlay').click(function(){
+//   $('#welcomeJumbo').hide();
+//   buildScene("starting_scene");
+// })
 
 window.game_id = String("{{ game.id }}")
 window.cloned_emoji = null;
@@ -462,22 +462,22 @@ $("#save-level").click(function(event){
 
   $.ajax({
     type : "PUT",
-    url: "/api/playquest/"+String(window.game_id)+"/update/",
+    url: "/api/playquest/"+String({{ game.id }})+"/update/",
     csrfmiddlewaretoken: "{{ csrf_token }}",
-    data : JSON.stringify({game_data:scenes, id:window.game_id}),
+    data : JSON.stringify({game_data:scenes, id:String({{ game.id }})}),
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
     success: function(data){
         window.game_id = data["id"]
-        window.APIUpdateURL = "/api/playquest/"+String(window.game_id)+"/update/"
+        //window.APIUpdateURL = "/api/playquest/"+String({{ game.id }})+"/update/"
         var pathArray = location.href.split( '/' );
         var protocol = pathArray[0];
         var host = pathArray[2];
         var url = protocol + '//' + host;
-        var game_url = "/playquest/game/"+String(game_id)+"/"
-        var full_url = url + game_url
+        var game_url = "/playquest/game/"+String(game_id)+"/";
+        var full_url = url + game_url;
         $('#new_game_link').attr('href',full_url);
         $('#new_game_link').text(full_url);
         $('#myModal-saved').modal("show");
@@ -515,6 +515,49 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
+
+
+
+
+
+
+
+
+
+$("#start_btn").click(function(e){
+  e.preventDefault()
+  $('#welcomeJumbo').hide();
+  buildScene("starting_scene");
+
+  $(this).text('Stop');
+  $('#welcomeJumbo').hide();
+  $('.stat').show();
+  $.ajax({
+    //url: '/kings/json/',
+    url: '/api/playquest/{{ game.id }}/',
+    method: "GET",
+    data: {},
+    success: function(data){
+
+      window.game_data = data
+      window.player = things.player
+
+      try {
+        window.current_scene = game_data["game_data"]["game_data"]["current_scene"]
+        window.scenes = game_data["game_data"]["game_data"].scenes
+        window.scene = game_data["game_data"]["game_data"].scenes[current_scene].grid
+
+      } catch (err) {
+        window.current_scene = game_data["game_data"]["current_scene"]
+        window.scenes = game_data["game_data"].scenes
+        window.scene = game_data["game_data"].scenes[current_scene].grid
+      };
+      buildScene();
+      //startClock();
+      //start();
+    }
+  });
+});
 // })();
 </script>
 </body>
