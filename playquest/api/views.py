@@ -23,9 +23,9 @@ class GameCreateAPIView(CreateAPIView):
             _ = serializer.save(game_data=game_data, game_owner=self.request.user)
         else:
             _ = serializer.save(game_data=game_data)
-        print(_)
-        print("game ID is...")
-        print(_["id"])
+            self.request.session['temp_game_id'] = str(_)
+            print(self.request.session)
+
         return Response(_)
     #
     # def post(self, request, *args, **kwargs):
