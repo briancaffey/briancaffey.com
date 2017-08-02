@@ -5,6 +5,7 @@ urlpatterns = [
 		url(r'^create/$', views.create, name='create'),
 		url(r'^demo/$', views.demo, name='demo'),
 		url(r'^$', views.playquest_home, name="home"),
+		url(r'^game/(?P<id>[A-Za-z0-9]+)/edit/$', views.edit_game, name='edit_game'),
 		url(r'^game/(?P<id>[A-Za-z0-9]+)/$', views.game_id, name='game_id'),
 		url(r'^json/$', views.sample_json, name="sample_json"),
 		## To Do
@@ -15,6 +16,4 @@ urlpatterns = [
         url(r'^list/$', GameListAPIView.as_view(), name="game-list"),
 		url(r'^(?P<pk>[A-Za-z0-9]+)/update/$', GameUpdateAPIView.as_view(), name="update-game"),
 		url(r'^(?P<pk>[A-Za-z0-9]+)/$', GameDetailAPIView.as_view(), name="game-details"),
-
-
 ]
