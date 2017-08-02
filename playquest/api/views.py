@@ -12,17 +12,18 @@ from rest_framework.renderers import JSONRenderer
 class GameCreateAPIView(CreateAPIView):
     queryset = Game.objects.all()
     serializer_class = GameSerializer
-    
 
     def perform_create(self, serializer):
         game_data = self.request.data
+        if self.request.user.is_athenticated:
+            _ = serializer.save(game_data=game_data, user = self.request.user)
+        else:
+            _ = serializer.save(game_data=game_data)
 
-        print(game_data)
-        _ = serializer.save(game_data=game_data)
         return Response(_)
-
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
+    #
+    # def post(self, request, *args, **kwargs):
+    #     return self.create(request, *args, **kwargs)
 
 
 class GameListAPIView(ListAPIView):
