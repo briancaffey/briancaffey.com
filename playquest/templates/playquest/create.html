@@ -509,14 +509,14 @@ $("#save-level").click(function(event){
     },
     success: function(data){
         //console.log(data)
-        window.game_id = data.id
+        window.game_id = data["id"]
         console.log(data.id)
         window.APIUpdateURL = "/api/playquest/"+String(window.game_id)+"/update/"
         var pathArray = location.href.split( '/' );
         var protocol = pathArray[0];
         var host = pathArray[2];
         var url = protocol + '//' + host;
-        var game_url = "/playquest/game/"+String(window.game_id)+"/"
+        var game_url = "/playquest/game/"+String(window.game_id)+"/edit/"
         var full_url = url + game_url;
         $('#new_game_link').attr('href',full_url);
         $('#new_game_link').text(full_url);
