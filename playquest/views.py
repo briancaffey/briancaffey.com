@@ -28,7 +28,13 @@ def edit_game(request, id):
     game = Game.objects.filter(id=id)
     context = {}
     if len(game) == 1:
-        if game.first().game_owner == request.user.id:
+        print("game.first().game_owner")
+        print(game.first().game_owner)
+        print("request.user")
+        print(request.user)
+        print("str(request.user)")
+        print(str(request.user))
+        if str(game.first().game_owner) == str(request.user):
             print("game belongs to user")
             context = {
                 'game':game.first(),
