@@ -28,10 +28,10 @@ def edit_game(request, id):
     game = Game.objects.filter(id=id)
     context = {}
     if len(game) == 1:
-        if game.id == request.user.id:
+        if game.first().id == request.user.id:
             print("game belongs to user")
             context = {
-                'game':game,
+                'game':game.first(),
             }
         else:
             print("You can't edit this game, but you can branch it")
