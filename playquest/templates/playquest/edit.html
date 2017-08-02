@@ -516,14 +516,6 @@ window.onclick = function(event) {
     }
 }
 
-
-
-
-
-
-
-
-
 $("#start_btn").click(function(e){
   e.preventDefault()
   $('#welcomeJumbo').hide();
@@ -544,12 +536,12 @@ $("#start_btn").click(function(e){
 
       try {
         window.current_scene = game_data["game_data"]["game_data"]["current_scene"]
-        window.scenes = game_data["game_data"]["game_data"].scenes
+        window.scenes = game_data["game_data"]["game_data"]
         window.scene = game_data["game_data"]["game_data"].scenes[current_scene].grid
 
       } catch (err) {
         window.current_scene = game_data["game_data"]["current_scene"]
-        window.scenes = game_data["game_data"].scenes
+        window.scenes = game_data["game_data"]
         window.scene = game_data["game_data"].scenes[current_scene].grid
       };
       buildScene();
