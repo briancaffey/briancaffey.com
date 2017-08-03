@@ -4,13 +4,8 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 import uuid
 from django.contrib.postgres.fields import JSONField
-
-
-# Create your models here.
-
 from django.db import models
 from django.contrib.postgres.fields import JSONField
-# Create your models here.
 
 class Game(models.Model):
     id = HashidAutoField(primary_key=True)
@@ -21,13 +16,16 @@ class Game(models.Model):
     game_created = models.DateTimeField(auto_now_add=True)
     game_updated = models.DateTimeField(auto_now=True)
     game_saved = models.BooleanField(default=False)
+    game_featured = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['-game_created']
 
     def __str__(self):
         return str(self.id)
 
     def play_url(self):
         return reverse('playquest:game_id', args=[self.id])
-
 
 class GamePlay(models.Model):
     game_id = models.ForeignKey(Game, blank=True, null=True)

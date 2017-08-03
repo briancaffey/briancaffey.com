@@ -4,10 +4,16 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def playquest_home(request):
-    games = Game.objects.all()
+    featured_games = Game.objects.filter(game_featured=True)[:5]
+    recent_games = Game.objects.all()[:5]
+    popular_games = Game.objects.all()[:5]
+
     context = {
-        'games':games,
+        'featured_games':featured_games,
+        'recent_games':recent_games,
+        'popular_games':popular_games,
     }
+    
     return render(request, 'playquest/playquest_home.html', context)
 
 def demo(request):

@@ -102,11 +102,27 @@
 <div class="col-md-4"><h2>📜👓💡✅<br />Collect scrolls.</h2><p>Scrolls contain hints and important knowledge.</p></div>
 </div>
 <hr>
-{% for game in games %}
+<div style="text-align:center;" class="row">
+  <div class="col-md-4">
+    <h2>Featured</h2>
+    {% for game in featured_games %}
+        <p><a href="{{ game.play_url }}">{{ game.id }}</a></p>
+    {% endfor %}
+  </div>
 
-    <p><a href="{{ game.play_url }}">{{ game.id }}</a></p>
+  <div class="col-md-4">
+    <h2>Popular</h2>
+    {% for game in popular_games %}
+        <p><a href="{{ game.play_url }}">{{ game.id }}</a></p>
+    {% endfor %}
+  </div>
 
-{% endfor %}
+  <div class="col-md-4">
+    <h2>Recent</h2>
+    {% for game in recent_games %}
+        <p><a href="{{ game.play_url }}">{{ game.id }}</a></p>
+    {% endfor %}
+  </div>
 </span>
 
 
@@ -115,7 +131,7 @@
 </div>
 
 <div id="myModal" class="dialogue-modal">
-  <div   class="modal-content">
+  <div class="modal-content">
     <span class="close">&times;</span>
     <p id="dialogue-title" style="text-align:center; font-size:6em"></p>
     <p id="dialogue-body" style="font-size:3em;"></p>
