@@ -349,7 +349,7 @@ function showBlockInfo(){
     var dialogue_body = $("#simple-dialogue-body").val();
     window.cloned_item.dialogue_title = dialogue_title
     window.cloned_item.dialogue_body = dialogue_body
-
+    scenes.scenes[scenes["current_scene"]].grid[pointer.current[0]][pointer.current[1]] = window.cloned_item
   })
 
 
