@@ -143,8 +143,6 @@
       <textarea id="simple-dialogue-body" rows="4" class="form-control text-input"></textarea>
       <br />
       <button id="set-dialogue-button" class="btn btn-success">Set Dialogue</button>
-      <hr>
-      <h3>Last property</h3>
     </div>
   </div>
 
@@ -336,8 +334,8 @@ function showBlockInfo(){
     $("#block-transition-saved").html("<span style='color:green;'>  Set!</span>")
   })
 
-  $("#simple-dialogue-title").empty();
-  $("#simple-dialogue-body").empty();
+  $("#simple-dialogue-title").val("");
+  $("#simple-dialogue-body").val("");
   if (selected_item.dialogue) {
     $("#simple-dialogue-title").val(selected_item.dialogue_title);
     $("#simple-dialogue-body").val(selected_item.dialogue_body);
@@ -389,6 +387,9 @@ function updateStats(){
 
 
 var pushKeys = window.addEventListener("keydown", function(event) {
+  if ($("#simple-dialogue-body").is(":focus") || $("#simple-dialogue-title").is(":focus")){
+
+  } else {
   if (event.keyCode == 81){
     $('#help-modal').modal('toggle');
   }
@@ -461,6 +462,7 @@ var pushKeys = window.addEventListener("keydown", function(event) {
     updateStats();
   }
   buildScene();
+}
 });
 
 function updateEmojiMenu(){
