@@ -238,56 +238,22 @@ function buildScene(){
   }
 };
 
-function checkSquare(square){
-  if (square == things.heart){
-    player.health += 1;
-  }
-  if (square == things.diamond){
-    player.diamonds += 1;
-  }
-  if (square == things.scroll){
-    player.scrolls += 1;
-  }
-  if (square == things.nut){
-    player.nut = true;
-  }
-  if (square == things.key){5
-    player.keys += 1;
-  }
-  if (square == things.owl){
-    box(things.owl.emoji, "HOO! HOO!");
-  }
-  if (square == things.crown){
-    box(things.crown.emoji + ' 💌', "I have already heard about the great deed you did for my sister and the royal family. News travels quickly in our kingdom. I would like to invite you to a royal banquet this evening, please take this envelope and come back to the castle this evening. You may want to go explore the village before the banquet starts, you are sure to meet some interesting folk there. It's just beyond the castle. Thank you again.")
-  }
-  if (square == things.orb){
-    player.orb = true;
-  }
-  if (square == things.squirrle){
-    if (!player.nut){
-      box(things.squirrle.emoji, "I love nuts! If you see any nuts would you mind bringing them to me! If you do I might be able to do you a small favor...");
-    } else {
-      box(things.nut.emoji + "  " + things.squirrle.emoji + "  🎗", "Wow!! Thank you soo much! Chestnuts are my favorite! I want you to have this ribbon, I think it belongs to a wealthy family just outside of the village. They would be very grateful to have it.")
-    }
-  }
-  if (square == things.woman){
-    if (player.orb){
-      if (!player.card){
-      box(things.woman.emoji + " " + things.card.emoji, 'Oh my goodness!! The sacred orb! What a brave young man! For your bravery and courage I would like to give you something... here is a pass to the royal castle 🃏');
-      player.card = true;
-    } else {
-      box(things.woman.emoji, 'Hurry along to the castle, it is just beyong the village up ahead. I will stay here and enjoy this fountain for now.');
-    }
 
-    } else {
-    box(things.woman.emoji, 'Oh would you take this sword and slay that beastly dragon! He has stolen the regal orb! I need it!!! Thank you!');
-    }
+var box = function(header, text){
+  $("#dialogue-title").text(header)
+  $("#dialogue-body").text(text)
+  showModal();
+}
+
+
+function checkSquare(square){
+
+  //dialogue
+  if ( square.dialogue ) {
+    box(square["dialogue-title"], square["dialogue-body"]);
   }
-  if (square == things.sword){
-    player.sword = true;
-    square = things.blank;
-    box(things.sword.emoji, 'Press SPACE to use you sword!')
-  }
+
+  //exitway
   if (square.exitway){
     var entry_point = [square.entry[0],square.entry[1]];
     player.current = entry_point;

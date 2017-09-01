@@ -30,6 +30,8 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 
+APPEND_SLASH=False
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -57,7 +59,7 @@ INSTALLED_APPS = [
     'yawlih',
     'kings',
     'playquest',
-    'hashtest', 
+    'hashtest',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'

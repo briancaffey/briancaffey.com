@@ -56,9 +56,8 @@
         <div style="text-align:center;" class="modal-body">
           <h1>Your game has been saved! 💾✅👌</h1>
           <p>Here's the link to play this game: <b><a id="new_game_link" href="" target="_blank">link</a></b></p>
-          <p>Here's the link to edit this game: <b><a id="edit_game_link" href="" target="_blank">https://playquest.io/game/44/edit</a></p>
+          <a class="btn btn btn-success" id="new_game_link_button" href="">play</a>
           <br />
-          <a class="btn btn btn-success" href="">play</a><br />
           <p>the game you just made will be saved to your profile if you create an account with the button below</p>
           <p>if you don't make an account, anyone with the edit link will be able to edit this game</p>
           <button class="btn btn-success" href="">create account</button>
@@ -334,6 +333,24 @@ function showBlockInfo(){
     scenes.scenes[scenes["current_scene"]].grid[pointer.current[0]][pointer.current[1]] = window.cloned_item
     $("#block-transition-saved").html("<span style='color:green;'>  Set!</span>")
   })
+
+  $("#simple-dialogue-title").empty();
+  $("#simple-dialogue-body").empty();
+  if (selected_item.dialogue) {
+    $("#simple-dialogue-title").val(selected_item.dialogue_title);
+    $("#simple-dialogue-body").val(selected_item.dialogue_body);
+  }
+
+  $("#set-dialogue-button").click(function(){
+    window.cloned_item.dialogue = true
+    var dialogue_title = $("#simple-dialogue-title").val();
+    var dialogue_body = $("#simple-dialogue-body").val();
+    window.cloned_item.dialogue_title = dialogue_title
+    window.cloned_item.dialogue_body = dialogue_body
+
+  })
+
+
   showBlockInfoModal();
 }
 // $("#set-portal-button").click(function(){
@@ -507,9 +524,10 @@ $("#save-level").click(function(event){
         var protocol = pathArray[0];
         var host = pathArray[2];
         var url = protocol + '//' + host;
-        var game_url = "/playquest/game/"+String(window.game_id)+"/edit/"
+        var game_url = "/playquest/game/"+String(window.game_id)
         var full_url = url + game_url;
         $('#new_game_link').attr('href',full_url);
+        $('#new_game_link_button').attr('href', full_url);
         $('#new_game_link').text(full_url);
         $('#myModal-saved').modal("show");
         history.pushState(scenes, "", game_url);
