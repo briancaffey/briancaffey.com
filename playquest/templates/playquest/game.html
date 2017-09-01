@@ -239,18 +239,16 @@ function buildScene(){
 };
 
 
-var box = function(header, text){
-  $("#dialogue-title").text(header)
-  $("#dialogue-body").text(text)
-  showModal();
-}
+
 
 
 function checkSquare(square){
 
   //dialogue
   if ( square.dialogue ) {
-    box(square["dialogue-title"], square["dialogue-body"]);
+    $("#dialogue-title").text(square.dialogue_title);
+    $("#dialogue-body").text(square.dialogue_body);
+    showModal();
   }
 
   //exitway
