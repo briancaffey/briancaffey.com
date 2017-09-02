@@ -24,12 +24,14 @@ var things = {
      'emoji': '❤️',
      'wall': false,
      'name':  'heart',
+     'item': true,
    },
 
     'diamond' : {
      'emoji': '💎',
      'wall': false,
      'name':'diamond',
+     'item': true,
    },
 
 
@@ -39,10 +41,6 @@ var things = {
     'name':'player',
     'current':[1,2],
   },
-
-
-
-
 
 
    'scroll' : {

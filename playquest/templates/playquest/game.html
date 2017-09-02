@@ -37,6 +37,7 @@
               <li style="display:none;" class="stat"><a>📜 ✖️ <span class="scrolls"></span></a></li>
               <li style="display:none;" class="stat"><a>🗝 ✖️ <span class="keys"></span></a></li> -->
               <li style="display:none;" class="stat"><a>⏳&nbsp;&nbsp;<span class="clock">0 : 00</span></a></li>
+              <li id='items-button'><a>Items 🎒</a></li>
               <!-- <li style="display:none;" class="stat"><a>Scene: <span class="scene"></span></a></li> -->
               <!-- <li style="display:none;" class="stat"><a>Pos: <span class="pos"></span></a></li> -->
             </ul>
@@ -387,17 +388,19 @@ $("#start_btn").click(function(e){
     success: function(data){
 
       window.game_data = data
-      window.player = things.player
+      // window.player = things.player
 
       try {
         window.current_scene = game_data["game_data"]["game_data"]["current_scene"]
         window.scenes = game_data["game_data"]["game_data"].scenes
         window.scene = game_data["game_data"]["game_data"].scenes[current_scene].grid
+        window.player = game_data["game_data"]["game_data"]["player"]
 
       } catch (err) {
         window.current_scene = game_data["game_data"]["current_scene"]
         window.scenes = game_data["game_data"].scenes
         window.scene = game_data["game_data"].scenes[current_scene].grid
+        window.player = game_data["game_data"]["player"]
       };
       buildScene();
       startClock();
