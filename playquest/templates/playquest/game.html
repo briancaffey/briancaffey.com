@@ -252,8 +252,8 @@ function checkSquare(square){
     showModal();
   }
 
-  if ( square.item ) {
-    player.items.push(square.name)
+  if ( square.item == true ) {
+    player.items.push(square)
   }
 
   if ( square.name == 'scroll' ) {
