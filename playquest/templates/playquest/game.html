@@ -266,7 +266,7 @@ function displayUserItems() {
   $("#item-modal-items").empty();
   var current_items = [];
   for ( var i in player.items ) {
-    ar.push(player.items[i].emoji)
+    current_items.push(player.items[i].emoji)
   }
   var item_count = _.countBy(current_items)
   for (var i in item_count) {
