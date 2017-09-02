@@ -524,12 +524,14 @@ emoji_map =  [
     'emoji': '❤️',
     'wall': false,
     'name':  'heart',
+    'item': true,
   },
 
 {
     'emoji': '💎',
     'wall': false,
     'name':'diamond',
+    'item':true,
   },
 
   {
