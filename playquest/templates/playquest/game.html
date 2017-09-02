@@ -253,7 +253,7 @@ function checkSquare(square){
   }
 
   if ( square.item ) {
-    if ( player.items[square.name] ) {
+    if ( player.items.hasOwnProperty(square.name) ) {
       player.items[square.name] += 1
     } else {
       player.items[square.name] = 1
