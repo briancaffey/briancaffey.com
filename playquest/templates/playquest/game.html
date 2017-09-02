@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
   <link rel="stylesheet" href="{% static 'css/base.css' %}">
   <link rel="stylesheet" href="{% static 'css/modal.css' %}">
 
@@ -74,6 +75,27 @@
       <!-- if (event.keyCode == 81){
         $('#myModal-q').modal('toggle');
       } -->
+
+      <div class="modal fade" id="item-modal" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div style="text-align:center;" class="modal-body">
+              <h1>Items</h1>
+              <span id='item-modal-items'></span>
+              <p>Controls go here</p>
+              <h2>Scrolls</h2>
+              <span id='item-modal-scrolls'></span>
+            </div>
+            <div class="modal-footer">
+
+              <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
 
       <div class="modal fade" id="help-modal" role="dialog">
         <div class="modal-dialog">
@@ -240,7 +262,12 @@ function buildScene(){
 };
 
 
+function displayUserItems() {
 
+  for ( var i in player.items ) {
+    console.log("OK");
+  }
+}
 
 
 function checkSquare(square){
@@ -306,6 +333,11 @@ function move(the_next_square, axis, operation){
 var pushKeys = window.addEventListener("keydown", function(event) {
   if (event.keyCode == 81){
     $('#help-modal').modal('toggle');
+  }
+
+  if ( event.keyCode == 73 ) {
+    $('#item-modal').modal('toggle');
+    displayUserItems();
   }
 if (modal.style.display == 'block'){
   if (event.keyCode == 32){
