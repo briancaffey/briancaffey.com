@@ -253,11 +253,7 @@ function checkSquare(square){
   }
 
   if ( square.item ) {
-    if ( player.items.hasOwnProperty(square.name) ) {
-      player.items[square.name] += 1
-    } else {
-      player.items[square.name] = 1
-    }
+    player.items.push(square.name)
   }
 
   if ( square.name == 'scroll' ) {
