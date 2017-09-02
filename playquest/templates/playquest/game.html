@@ -263,11 +263,17 @@ function buildScene(){
 
 
 function displayUserItems() {
-
+  $("#item-modal-items").empty();
+  var current_items = [];
   for ( var i in player.items ) {
-    console.log("OK");
+    ar.push(player.items[i].emoji)
+  }
+  var item_count = _.countBy(current_items)
+  for (var i in item_count) {
+    $("#item-modal-items").append("<p>" + i + " ✖️ " + item_count[i] + "</p>")
   }
 }
+
 
 
 function checkSquare(square){
@@ -336,8 +342,8 @@ var pushKeys = window.addEventListener("keydown", function(event) {
   }
 
   if ( event.keyCode == 73 ) {
-    $('#item-modal').modal('toggle');
     displayUserItems();
+    $('#item-modal').modal('toggle');
   }
 if (modal.style.display == 'block'){
   if (event.keyCode == 32){
