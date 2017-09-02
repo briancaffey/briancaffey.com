@@ -252,8 +252,20 @@ function checkSquare(square){
     showModal();
   }
 
+  if ( square.item ) {
+    if ( player.items[square.name] ) {
+      player.items[square.name] += 1
+    } else {
+      player.items[square.name] = 1
+    }
+  }
+
+  if ( square.name == 'scroll' ) {
+    player.scrolls.push(square)
+  }
+
   //exitway
-  if (square.exitway){
+  if ( square.exitway ) {
     var entry_point = [square.entry[0],square.entry[1]];
     player.current = entry_point;
     var _current_scene = square.next;
