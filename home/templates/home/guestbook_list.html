@@ -29,6 +29,7 @@ $(document).ready(function(){
 
       url: gb_endpoint,
       type: "POST",
+      dataType: 'json',
       data: { message : $("#post-text").val(),
               csrfmiddlewaretoken: '{{ csrf_token }}',
               city: "some city",

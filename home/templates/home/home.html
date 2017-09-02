@@ -15,7 +15,7 @@ $(document).ready(function(){
     $.ajax({
       url: gb_endpoint,
       type: "POST",
-      dataType: "application/json",
+      dataType: "json",
       data: { message : $("#post-text").val(),
               csrfmiddlewaretoken: '{{ csrf_token }}',
               city: "some city",
