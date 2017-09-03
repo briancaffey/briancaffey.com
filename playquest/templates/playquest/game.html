@@ -81,15 +81,14 @@
           <!-- Modal content-->
           <div class="modal-content">
             <div style="text-align:center;" class="modal-body">
-              <h1>Items</h1>
-              <span id='item-modal-items'></span>
-              <p>Controls go here</p>
+              <h2>Items</h2>
+              <span style="font-size:3em;" id='item-modal-items'></span>
               <h2>Scrolls</h2>
               <span id='item-modal-scrolls'></span>
             </div>
-            <div class="modal-footer">
+            <!-- <div class="modal-footer">
 
-              <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">close</button> -->
             </div>
           </div>
         </div>
@@ -263,6 +262,15 @@ function buildScene(){
 
 
 function displayUserItems() {
+  $("#item-modal-scrolls").empty();
+  var current_scrolls = [];
+  for (var s in player.scrolls) {
+    current_scrolls.push(player.scrolls[s])
+  }
+  for (var scroll in current_scrolls) {
+    $("#item-modal-scrolls").append("<h3 style='text-align:center;'>"+scroll.dialogue_title+"</h3><br/><p>"+scroll.dialogue_body+"</p>")
+  }
+
   $("#item-modal-items").empty();
   var current_items = [];
   for ( var i in player.items ) {
