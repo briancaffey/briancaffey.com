@@ -268,7 +268,7 @@ function displayUserItems() {
     current_scrolls.push(player.scrolls[s])
   }
   for (var scroll in current_scrolls) {
-    $("#item-modal-scrolls").append("<h3 style='text-align:center;'>"+scroll.dialogue_title+"</h3><br/><p>"+scroll.dialogue_body+"</p>")
+    $("#item-modal-scrolls").append("<h3 style='text-align:center;'>"+current_scrolls[scroll].dialogue_title+"</h3><br/><p>"+current_scrolls[scroll].dialogue_body+"</p>")
   }
 
   $("#item-modal-items").empty();
