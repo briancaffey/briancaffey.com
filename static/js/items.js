@@ -177,6 +177,7 @@ var things = {
     'key' : {
     'emoji':'🗝',
     'name':'key',
+    'item': true,
   },
 
     'woman' : {
@@ -672,6 +673,7 @@ emoji_map =  [
  {
     'emoji':'🗝',
     'name':'key',
+    'item': true,
   },
 
  {

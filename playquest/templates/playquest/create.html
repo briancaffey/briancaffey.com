@@ -143,6 +143,15 @@
       <textarea id="simple-dialogue-body" rows="4" class="form-control text-input"></textarea>
       <br />
       <button id="set-dialogue-button" class="btn btn-success">Set Dialogue</button>
+      <hr>
+      <h3>Key</h3>
+      <small>You can "unlock" certain items with keys</small>
+      <input id="key-value" class="form-control text-input" placeholder="enter the name of this key"></input><br />
+      <button id="set-key" class="btn btn-success">Set Key Name</button>
+      <h3>Lock</h3>
+      <small>Items with "lock" can be accessed once you have the corresponding key. The lock value must match the key value <b>EXACTLY!!!</b>.</small>
+      <input id="lock-value" class="form-control text-input" placeholder="enter the name of the lock (it should have a key with the same name)"></input><br/>
+      <button id="set-lock" class="btn btn-success">Set Lock Name</button>
     </div>
   </div>
 
@@ -205,6 +214,7 @@ var scenes = {
                   'current':[1,2],
                   'scrolls':[],
                   'items':[],
+                  'keys':[],
                 },
                 'scenes':{
                   '0':
@@ -361,6 +371,17 @@ function showBlockInfo(){
     scenes.scenes[scenes["current_scene"]].grid[pointer.current[0]][pointer.current[1]] = window.cloned_item
   })
 
+$("#set-key").click(function(){
+  var key_name = $("#key-value").val();
+  window.cloned_item.key_name = key_name
+  scenes.scenes[scenes["current_scene"]].grid[pointer.current[0]][pointer.current[1]] = window.cloned_item
+})
+
+$("#set-lock").click(function(){
+  var lock_name = $("#lock-value").val();
+  window.cloned_item.lock_name = lock_name
+  scenes.scenes[scenes["current_scene"]].grid[pointer.current[0]][pointer.current[1]] = window.cloned_item
+})
 
   showBlockInfoModal();
 }
@@ -398,7 +419,7 @@ function updateStats(){
 
 
 var pushKeys = window.addEventListener("keydown", function(event) {
-  if ($("#simple-dialogue-body").is(":focus") || $("#simple-dialogue-title").is(":focus")){
+  if ($("#simple-dialogue-body").is(":focus") || $("#simple-dialogue-title").is(":focus") || $("#key-value").is(":focus") || $("#lock-value").is(":focus") ){
 
   } else {
   if (event.keyCode == 81){

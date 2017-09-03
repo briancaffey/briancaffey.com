@@ -268,7 +268,9 @@ function displayUserItems() {
     current_scrolls.push(player.scrolls[s])
   }
   for (var scroll in current_scrolls) {
-    $("#item-modal-scrolls").append("<h3 style='text-align:center;'>"+current_scrolls[scroll].dialogue_title+"</h3><br/><p>"+current_scrolls[scroll].dialogue_body+"</p>")
+    if (current_scrolls[scroll].dialogue_title && current_scrolls[scroll].dialogue_body ) {
+    $("#item-modal-scrolls").unshift("<h3 style='text-align:center;'>"+current_scrolls[scroll].dialogue_title+"</h3><br/><p>"+current_scrolls[scroll].dialogue_body+"</p>")
+  }
   }
 
   $("#item-modal-items").empty();
@@ -293,13 +295,18 @@ function checkSquare(square){
     showModal();
   }
 
-  console.log(square)
+  //item
   if ( square.item == true ) {
     player.items.push(square)
   }
-
+  //scroll
   if ( square.name == 'scroll' ) {
     player.scrolls.push(square)
+  }
+
+  //key
+  if ( square.name == 'key' ) {
+    player.keys.push(square.key_name)
   }
 
   //exitway
@@ -321,7 +328,7 @@ function move(the_next_square, axis, operation){
     scenes[current_scene].grid[player.current[0]][player.current[1]] = things.blank;
 
   }
-  if (!the_next_square.wall && !the_next_square.exitway){
+  if ((!the_next_square.wall && !the_next_square.exitway) || _.contains(player.keys, the_next_square.lock_name)) {
     //scene = scenes[current_scene].grid
 
 
@@ -392,22 +399,6 @@ if (modal.style.display == 'block'){
     move(next_square, 1, "+");
     checkSquare(next_square);
     }
-  // if (event.keyCode == 32){
-  //   event.preventDefault();
-  //   if (player.sword){
-  //     var current = player.current;
-  //     var attack_squares = [scene[current[0]+1][current[1]],
-  //                           scene[current[0]-1][current[1]],
-  //                           scene[current[0]][current[1]+1],
-  //                           scene[current[0]][current[1]-1]]
-  //     for (square in attack_squares){
-  //       if (attack_squares[square] == dragon){
-  //         dragon.health -= 1;
-  //         checkDragonHealth();
-  //       }
-  //     }
-  //   }
-  // }
 }
 
 buildScene();
