@@ -68,8 +68,8 @@ table.qr-code td.black {
     font-size: 26px;
 }
 
-@font-face {
-  font-family: 'abc';
+/*@font-face {
+  font-family: 'emojione-android';
   src: url('../fonts/emojione-android.ttf');
   src: local('../fonts/emojione-android.ttf')
-}
+}*/
