@@ -22,6 +22,7 @@ h3 {
 
 html,body {
   height:100%;
+	font-family: "emojione-android";
 }
 
 .page-wrapper {
@@ -66,4 +67,10 @@ table.qr-code td.black {
 
 .footer-icon {
     font-size: 26px;
+}
+
+@font-face {
+  font-family: 'emojione-android';
+  src: url('../fonts/emojione-android.ttf');
+  src: local('../fonts/emojione-android.ttf')
 }
