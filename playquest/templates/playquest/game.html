@@ -277,11 +277,11 @@ function displayUserItems() {
   $("#item-modal-scrolls").empty();
   var current_scrolls = [];
   for (var s in player.scrolls) {
-    current_scrolls.push(player.scrolls[s])
+    current_scrolls.unshift(player.scrolls[s])
   }
   for (var scroll in current_scrolls) {
     if (current_scrolls[scroll].dialogue_title && current_scrolls[scroll].dialogue_body ) {
-    $("#item-modal-scrolls").unshift("<h3 style='text-align:center;'>"+current_scrolls[scroll].dialogue_title+"</h3><br/><p>"+current_scrolls[scroll].dialogue_body+"</p>")
+    $("#item-modal-scrolls").append("<h3 style='text-align:center;'>"+current_scrolls[scroll].dialogue_title+"</h3><br/><p>"+current_scrolls[scroll].dialogue_body+"</p>")
   }
   }
 
