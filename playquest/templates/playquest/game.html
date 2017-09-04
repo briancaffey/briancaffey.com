@@ -308,19 +308,11 @@ function vw_talkEnded(){
 
 function checkSquare(square){
 
-
   //dialogue
   if ( square.dialogue ) {
     $("#dialogue-title").text(square.dialogue_title);
     $("#dialogue-body").text(square.dialogue_body);
-    // var audio = document.getElementById("music-track");
-    // audio.volume = 0.2;
-    // function vw_talkEnded(){
-    //   var audio = document.getElementById("music-track");
-    //   audio.volume = 1.0;
-    // }
     sayText(square.dialogue_body,5,1,4);
-    // vw_talkEnded();
     showModal();
   }
 
@@ -346,7 +338,6 @@ function checkSquare(square){
     scenes[_current_scene].grid[square.next[0]][square.next[1]] = player;
     current_scene = square.next;
     buildScene();
-
   }
 }
 
@@ -357,7 +348,7 @@ function move(the_next_square, axis, operation){
     scenes[current_scene].grid[player.current[0]][player.current[1]] = things.blank;
 
   }
-  if ((!the_next_square.wall && !the_next_square.exitway) || _.contains(player.keys, the_next_square.lock_name)) {
+  if ((!the_next_square.wall && !the_next_square.exitway) || (_.contains(player.keys, the_next_square.lock_name) && the_next_square.hasOwnProperty("lock_name"))) {
     //scene = scenes[current_scene].grid
 
 
