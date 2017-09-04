@@ -296,10 +296,12 @@ function displayUserItems() {
   }
 }
 
+function vw_talkStarted(){
+    var audio = document.getElementById("music-track");
+    audio.volume = 0.3;
+}
 
-setStatus(1,0,0,0)
-
-function vw_audioProgress(100) {
+function vw_talkEnded(){
   var audio = document.getElementById("music-track");
   audio.volume = 1.0;
 }
@@ -311,8 +313,8 @@ function checkSquare(square){
   if ( square.dialogue ) {
     $("#dialogue-title").text(square.dialogue_title);
     $("#dialogue-body").text(square.dialogue_body);
-    var audio = document.getElementById("music-track");
-    audio.volume = 0.2;
+    // var audio = document.getElementById("music-track");
+    // audio.volume = 0.2;
     // function vw_talkEnded(){
     //   var audio = document.getElementById("music-track");
     //   audio.volume = 1.0;
