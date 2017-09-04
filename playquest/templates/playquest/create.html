@@ -361,7 +361,7 @@ function showBlockInfo(){
 
   $("#set-dialogue-button").click(function(){
     window.cloned_item.dialogue = true
-    if ( (window.cloned_item.name != 'scroll') && (window.cloned_item.name != 'blank') ) {
+    if ( (window.cloned_item.name != 'scroll') && (window.cloned_item.name != 'blank') && (window.cloned_item.name != 'key') ) {
       window.cloned_item.wall = true
     }
     var dialogue_title = $("#simple-dialogue-title").val();
