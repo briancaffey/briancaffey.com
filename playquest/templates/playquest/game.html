@@ -277,7 +277,7 @@ function displayUserItems() {
   $("#item-modal-scrolls").empty();
   var current_scrolls = [];
   for (var s in player.scrolls) {
-    current_scrolls.unshift(player.scrolls[s])
+    current_scrolls.unshift (player.scrolls[s])
   }
   for (var scroll in current_scrolls) {
     if (current_scrolls[scroll].dialogue_title && current_scrolls[scroll].dialogue_body ) {
@@ -304,7 +304,7 @@ function checkSquare(square){
   if ( square.dialogue ) {
     $("#dialogue-title").text(square.dialogue_title);
     $("#dialogue-body").text(square.dialogue_body);
-    sayText(square.dialogue_body,1,1,1);
+    sayText(square.dialogue_body,5,1,4);
     showModal();
   }
 
