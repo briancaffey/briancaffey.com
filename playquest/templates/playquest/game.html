@@ -309,8 +309,8 @@ function checkSquare(square){
     $("#dialogue-body").text(square.dialogue_body);
     var audio = document.getElementById("music-track");
     audio.volume = 0.2;
-    sayText(square.dialogue_body,5,1,4);
-    vw_talkEnded();
+    sayText(square.dialogue_body,5,1,4).vw_talkEnded();
+    // vw_talkEnded();
     showModal();
   }
 
