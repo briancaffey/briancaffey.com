@@ -21,11 +21,11 @@
 
 <script language="JavaScript" type="text/javascript" src="http://vhss.oddcast.com/vocalware_embed_functions.php?acc=6470708&js=1"></script><script language="JavaScript" type="text/javascript">AC_Vocalware_Embed(6470708,300, 400,'',1,1, 2577191, 0,1,0,'a83499e596d9c57bdd7956d3ba53f079',9);</script>
 
-<script>
+<!-- <script>
 function vw_apiLoaded(apiID){
 alert("the API is loaded");
 }
-</script>
+</script> -->
       <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
           <div class="navbar-header">
@@ -304,6 +304,7 @@ function checkSquare(square){
   if ( square.dialogue ) {
     $("#dialogue-title").text(square.dialogue_title);
     $("#dialogue-body").text(square.dialogue_body);
+    sayText(square.dialogue_body,1,1,1);
     showModal();
   }
 
