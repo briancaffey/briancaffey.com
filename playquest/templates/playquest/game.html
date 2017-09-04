@@ -304,7 +304,10 @@ function checkSquare(square){
   if ( square.dialogue ) {
     $("#dialogue-title").text(square.dialogue_title);
     $("#dialogue-body").text(square.dialogue_body);
+    var audio = document.getElementById("music-track");
+    audio.volume = 0.2;
     sayText(square.dialogue_body,5,1,4);
+
     showModal();
   }
 
