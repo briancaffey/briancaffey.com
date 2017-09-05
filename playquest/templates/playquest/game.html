@@ -348,7 +348,7 @@ function move(the_next_square, axis, operation){
     scenes[current_scene].grid[player.current[0]][player.current[1]] = things.blank;
 
   }
-  if ((!the_next_square.wall && !the_next_square.exitway) || (_.contains(player.keys, the_next_square.lock_name) && !the_next_square.hasOwnProperty("lock_name"))) {
+  if ((!the_next_square.wall && !the_next_square.exitway) || (_.contains(player.keys, the_next_square.lock_name) && the_next_square.hasOwnProperty("lock_name"))) {
     //scene = scenes[current_scene].grid
 
 
