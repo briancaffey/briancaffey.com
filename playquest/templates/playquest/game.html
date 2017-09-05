@@ -458,13 +458,13 @@ $("#start_btn").click(function(e){
         var start_scene = game_data["game_data"]["game_data"]["starting_scene"]
         window.current_scene = start_scene //game_data["game_data"]["game_data"]["current_scene"]
         window.scenes = game_data["game_data"]["game_data"].scenes
-        window.scene = game_data["game_data"]["game_data"].scenes[current_scene].grid
+        window.scene = game_data["game_data"]["game_data"].scenes["starting_scene"].grid
         window.player = game_data["game_data"]["game_data"]["player"]
 
       } catch (err) {
-        window.current_scene = game_data["game_data"]["current_scene"]
+        window.current_scene = game_data["game_data"]["starting_scene"]
         window.scenes = game_data["game_data"].scenes
-        window.scene = game_data["game_data"].scenes[current_scene].grid
+        window.scene = game_data["game_data"].scenes["starting_scene"].grid
         window.player = game_data["game_data"]["player"]
       };
       buildScene();
