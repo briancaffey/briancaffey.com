@@ -351,8 +351,6 @@ function move(the_next_square, axis, operation){
   if ((!the_next_square.wall && !the_next_square.exitway) || (_.contains(player.keys, the_next_square.lock_name) && the_next_square.hasOwnProperty("lock_name"))) {
     //scene = scenes[current_scene].grid
 
-
-
     scenes[current_scene].grid[player.current[0]][player.current[1]] = things.blank;
 
     if (operation == "+"){
@@ -457,7 +455,8 @@ $("#start_btn").click(function(e){
       // window.player = things.player
 
       try {
-        window.current_scene = game_data["game_data"]["game_data"]["current_scene"]
+        var start_scene = game_data["game_data"]["game_data"]["starting_scene"]
+        window.current_scene = start_scene //game_data["game_data"]["game_data"]["current_scene"]
         window.scenes = game_data["game_data"]["game_data"].scenes
         window.scene = game_data["game_data"]["game_data"].scenes[current_scene].grid
         window.player = game_data["game_data"]["game_data"]["player"]

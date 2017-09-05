@@ -143,6 +143,33 @@
       <input id="simple-dialogue-title" class="form-control text-input"></input><br />
       <textarea id="simple-dialogue-body" rows="4" class="form-control text-input"></textarea>
       <br />
+      <div class="row">
+        <div class="col-md-4">Language:
+          <select style="width:200px" class="form-control" id="select-language">
+            <option value=1 selected>English 🇬🇧</option>
+            <option value=2>Spanish 🇪🇸</option>
+            <option value=3>French 🇫🇷</option>
+            <option value=4>German 🇩🇪</option>
+            <option value=5>Chinese 🇨🇳</option>
+            <option value=6>Japanese 🇯🇵</option>
+          </select>
+        </div>
+      <div class="col-md-4">Engine:
+        <select style="width:200px" class="form-control" id="select-engine">
+          <option value=1>1</option>
+          <option value=2>2</option>
+          <option value=3>3</option>
+        </select>
+      </div>
+      <div class="col-md-4">Voice:
+        <select style="width:200px" class="form-control" id="select-voice">
+          <option value=1>1</option>
+          <option value=2>2</option>
+          <option value=3>3</option>
+        </select>
+      </div>
+      </div>
+      <br />
       <button id="set-dialogue-button" class="btn btn-success">Set Dialogue</button>
       <hr>
       <h3>Key</h3>
@@ -152,11 +179,6 @@
       <h3>Lock</h3>
       <small>Items with "lock" can be accessed once you have the corresponding key. The lock value must match the key value <b>EXACTLY!!!</b>.</small>
       <input id="lock-value" class="form-control text-input" placeholder="enter the name of the lock (it should have a key with the same name)"></input><br/>
-      <div class="row">
-        <div class="col-md-2">Language: <select style="width:200px" class="form-control" id="portal-select"></select></div>
-        <div class="col-md-2"></div>
-        <div class="col-md-2"></div>
-      </div>
       <button id="set-lock" class="btn btn-success">Set Lock Name</button>
     </div>
   </div>
