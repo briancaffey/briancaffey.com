@@ -15,15 +15,11 @@ class UserProfile(models.Model):
 	def get_absolute_url(self):
 		return "/users/%i/" % self.id
 
-
 	def friend_toggle(self):
 		pass
-
-
 
 def create_profile(sender, **kwargs):
 	if kwargs['created']:
 		user_profile = UserProfile.objects.create(user=kwargs['instance'])
-
 
 post_save.connect(create_profile, sender=User)

@@ -1,10 +1,10 @@
 from django import forms
 
 from django.contrib.auth import (
-	authenticate, 
-	get_user_model, 
-	login, 
-	logout, 
+	authenticate,
+	get_user_model,
+	login,
+	logout,
 )
 
 User = get_user_model()
@@ -40,12 +40,12 @@ class UserRegistrationForm(forms.ModelForm):
 	class Meta:
 		model = User
 		fields = [
-			'username', 
-			'first_name', 
-			'last_name', 
-			'email', 
+			'username',
+			'first_name',
+			'last_name',
+			'email',
 			'email2',
-			'password', 
+			'password',
 
 		]
 
@@ -53,7 +53,7 @@ class UserRegistrationForm(forms.ModelForm):
 		email = self.cleaned_data.get('email')
 		email2 = self.cleaned_data.get('email2')
 		if email != email2:
-			
+
 			raise forms.ValidationError("Emails must match")
 		email_qs = User.objects.filter(email=email)
 		if email_qs.exists():

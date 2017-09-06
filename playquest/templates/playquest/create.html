@@ -79,9 +79,11 @@
       <div class="modal-content">
         <div style="text-align:center;" class="modal-body">
           <h1>Settings ⚙️</h1>
+          <br />
           <h4>Game Title</h4>
           <p>Set a title for this game</p>
           <input class="form-control text-input"></input>
+          <hr>
           <h4>Player Avatar</h4>
           <p>Choose an emoji for the main character: </p>
           <div class="col-md-offset-5"><select class="form-control" style="width:50px">
@@ -92,6 +94,12 @@
             <option value="👩🏽">👩🏽</option>
           </select>
         </div>
+        <hr>
+        <h4>Scene Title</h4>
+        <p>Set a title for this scene</p>
+        <input class="form-control text-input"></input>
+        <br />
+        <button class="btn btn-primary"  value="Save">Save</button>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
@@ -138,15 +146,16 @@
       <p id="dialogue-title" style="text-align:center; font-size:6em"><span id="current_emoji"></span></p>
       <p id="blockInfo" style="font-size:3em;"></p>
       <hr>
-      <h3>Scene transition</h3>
-      <div class="row">
+      <h3 href="" data-toggle="collapse" data-target="#trans"><a style="cursor:pointer;">Scene transition</a></h3>
+      <div id="trans" class="row collapse">
         <div class="col-md-3">Transfer to scene: <select style="width:200px" class="form-control" id="portal-select"></select></div>
         <div class="col-md-3">Vertical: <select style="width:200px" class="form-control" id="vertical-select"></select></div>
         <div class="col-md-3">Horizontal: <select style="width:200px" class="form-control" id="horizontal-select"></select></div>
         <div class="col-md-3"><b><br /></b><button id="set-portal-button" class="btn btn-success">Set</button>&nbsp;&nbsp;&nbsp;<span id="block-transition-saved"><br /></span></div>
       </div>
       <hr>
-      <h3>Simple dialogue</h3>
+      <h3 data-toggle="collapse" data-target="#dialogue"><a style="cursor:pointer;">Dialogue</a></h3>
+      <div id="dialogue" class="collapse">
       <input id="simple-dialogue-title" class="form-control text-input"></input><br />
       <textarea id="simple-dialogue-body" rows="4" class="form-control text-input"></textarea>
       <br />
@@ -198,15 +207,21 @@
       </div>
       <br />
       <button id="set-dialogue-button" class="btn btn-success">Set Dialogue</button>
+    </div>
       <hr>
-      <h3>Key</h3>
+      <h3 data-toggle="collapse" data-target="#key"><a style="cursor:pointer;">Key</a></h3>
+      <div id="key" class="collapse">
       <small>You can "unlock" certain items with keys</small>
       <input id="key-value" class="form-control text-input" placeholder="enter the name of this key"></input><br />
       <button id="set-key" class="btn btn-success">Set Key Name</button>
-      <h3>Lock</h3>
+    </div>
+    <hr>
+      <h3 data-toggle="collapse" data-target="#lock"><a style="cursor:pointer;">Lock</a></h3>
+      <div class="collapse" id="lock">
       <small>Items with "lock" can be accessed once you have the corresponding key. The lock value must match the key value <b>EXACTLY!!!</b>.</small>
       <input id="lock-value" class="form-control text-input" placeholder="enter the name of the lock (it should have a key with the same name)"></input><br/>
       <button id="set-lock" class="btn btn-success">Set Lock Name</button>
+    </div>
     </div>
   </div>
 
