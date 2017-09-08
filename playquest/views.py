@@ -13,7 +13,7 @@ def playquest_home(request):
         'recent_games':recent_games,
         'popular_games':popular_games,
     }
-    
+
     return render(request, 'playquest/playquest_home.html', context)
 
 def demo(request):
@@ -38,12 +38,6 @@ def edit_game(request, id):
     game = Game.objects.filter(id=id)
     context = {}
     if len(game) == 1:
-        # print("game.first().game_owner")
-        # print(game.first().game_owner)
-        # print("request.user")
-        # print(request.user)
-        # print("str(request.user)")
-        # print(str(request.user))
         if str(game.first().game_owner) == str(request.user):
             print("game belongs to user")
             context = {
@@ -65,8 +59,6 @@ def profile_page(request):
     }
 
     return render(request, 'playquest/profile.html', context)
-
-
 
 def sample_json(request):
 	return render(request, 'playquest/sample.json', {})
