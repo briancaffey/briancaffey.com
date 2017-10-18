@@ -54,8 +54,6 @@ INSTALLED_APPS = [
     'srgraph',
     'langton',
     'yawlih',
-    'kings',
-    'playquest',
     'hashtest',
 ]
 

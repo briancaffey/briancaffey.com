@@ -42,14 +42,6 @@ urlpatterns = [
     url(r'^ant/', include('langton.urls', namespace='langton')),
     url(r'^', include('home.urls', namespace="home" )),
 
-    #kings
-    url(r'^kings/', include('kings.urls', namespace='kings')),
-    url(r'^api/kings/', include('kings.urls', namespace='kings_api')),
-
-    #playquest
-    url(r'^playquest/', include('playquest.urls', namespace='playquest')),
-    url(r'^api/playquest/', include('playquest.urls', namespace='kings_api')),
-
 
     #hashtest
     url(r'^hashtest/', include('hashtest.urls', namespace="hastest" )),

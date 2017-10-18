@@ -7,9 +7,9 @@ from accounts.forms import UserLoginForm, UserRegistrationForm
 from .forms import GuestBookForm
 from .models import GuestBook, NewsletterEmails
 from posts.models import Post
-from .utils import get_client_ip, get_subscriptions
+from .utils import get_client_ip, get_subscriptions, get_blog_posts
 from django.contrib.auth import (
-	authenticate,
+    authenticate,
 	get_user_model,
 	login,
 	logout,
@@ -45,13 +45,11 @@ def home(request):
 	guest_book = GuestBook.objects.all()
 	guest_book_count = len(guest_book)
 	guest_book = guest_book[:5]
-	recent_posts = Post.objects.all()[:2]
 
 	subscriptions = get_subscriptions('mrbrian')
 
-	# ip_lookup = pyipinfodb.IPInfo('3a3bdb7e563895cd7d7b27ff9c5efd60d8686be6d75ab117fe40497d3054d8e9')
-	# ip_lookup.get_city(get_client_ip(request))
-	# city = get_client_ip(request)
+	posts = get_blog_posts(4)
+
 
 	context = {
 		'form_':form_,
@@ -63,7 +61,7 @@ def home(request):
 		'city':location,
 		'state': state,
 		'guest_book_count':guest_book_count,
-		'recent_posts': recent_posts,
+		'recent_posts': posts,
 		'subscriptions':subscriptions[:6],
 		'sub_count':len(subscriptions),
 	}
@@ -182,8 +180,6 @@ class CreateGuestBookAPIView(CreateAPIView):
 		else:
 			_ = serializer.save(message=message, city=city, state=state)
 
-		# print(_.city)
-		# return Response(_)
 
 
 class GBListView(CreateGuestBookAPIView):
@@ -193,38 +189,3 @@ class GBListView(CreateGuestBookAPIView):
 		object_list = GuestBook.objects.all()
 		guest_form = GuestBookForm(self.request.POST or None)
 		return render(self.request, 'home/guestbook_list.html', {'guest_form':guest_form, 'object_list':object_list})
-
-
-
-	# def post(self, request, *args, **kwargs):
-	#
-	# 	message = request.POST['message']
-	#
-	# 	ip = get_client_ip(request)
-	# 	base = "http://api.ipinfodb.com/v3/ip-city/?key=3a3bdb7e563895cd7d7b27ff9c5efd60d8686be6d75ab117fe40497d3054d8e9&ip="
-	# 	query = base + ip
-	# 	r = requests.get(query)
-	# 	city = r.text.split(';')[-5]
-	# 	state = r.text.split(';')[-6]
-	# 	if self.request.user.is_authenticated():
-	# 		user = request.user
-	# 	else:
-	# 		user = None
-	# 	item = GuestBook.objects.create(message=message, user=user, city=city, state=state)
-	# 	item.save()
-	# 	# data = self.request.POST.get['message']
-	# 	if item.user:
-	# 		user = user.username
-	# 	else:
-	# 		user = "someone"
-	#
-	#
-	#
-	# 	data = { 	'message': message,
-	# 				'city': item.city,
-	# 				'state': item.state,
-	# 				'user': user,
-	# 	}
-	#
-	#
-	# 	return Response(data)

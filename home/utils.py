@@ -1,4 +1,5 @@
 import requests
+import feedparser
 
 
 def get_client_ip(request):
@@ -15,3 +16,10 @@ def get_subscriptions(user):
     r = requests.get(url)
     subscriptions = r.json()
     return subscriptions
+
+
+def get_blog_posts(number_of_posts):
+    url = "http://briancaffey.github.io/feed"
+    feed = feedparser.parse(url)
+    posts = feed['items'][:number_of_posts]
+    return posts
