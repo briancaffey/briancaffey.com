@@ -1,4 +1,4 @@
-this is a site I built to test some of the ideas I have been learning in Django. Here as some features:
+This is a site I built to test some of the ideas I have been learning in Django. Here as some features:
 
 - Allows users to create accounts and login
 - Users can join my monthly newsletter
